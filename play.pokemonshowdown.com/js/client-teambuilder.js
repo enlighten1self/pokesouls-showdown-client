@@ -1993,7 +1993,7 @@
 						    // Small vertical nudge to apply to injected GIFs that
 						    // fit inside the sprite cell. Tweak this value if
 						    // specific species need further adjustment.
-						    var yAdjust = 15; // pixels downward for injected images
+						    var yAdjust = 10; // pixels downward for injected images
 							// Decide whether to inject the GIF as an <img> into the
 							// `.setcell-sprite` (works well when the GIF fits entirely
 							// within the cell) or to fall back to setting it as a
