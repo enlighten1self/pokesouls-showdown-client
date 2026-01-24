@@ -1240,6 +1240,7 @@
 				buf += '</form></div>';
 			}
 			this.$el.html('<div class="teamwrapper">' + buf + '</div>');
+			this._tryGen5AniSprites();
 			this.$(".teamedit textarea").focus().select();
 			if ($(window).width() < 640) this.show();
 		},
@@ -1254,7 +1255,7 @@
 					buf += '<div class="setmenu setmenu-left"><button name="undeleteSet" class="button"><i class="fa fa-undo"></i> Undo Delete</button></div>';
 				}
 				buf += '<div class="setmenu"><button name="importSet"><i class="fa fa-upload"></i>Import</button></div>';
-				buf += '<div class="setchart" style="background-image:url(' + Dex.resourcePrefix + 'sprites/gen5/0.png);"><div class="setcol setcol-icon"><div class="setcell-sprite"></div><div class="setcell setcell-pokemon"><label>Pok&eacute;mon</label><input type="text" name="pokemon" class="textbox chartinput" value="" autocomplete="off" /></div></div></div>';
+				buf += '<div class="setchart" data-spriteid="0" data-spritedir="sprites/gen5" data-shiny="0" style="background-image:url(' + Dex.resourcePrefix + 'sprites/gen5/0.png);"><div class="setcol setcol-icon"><div class="setcell-sprite"></div><div class="setcell setcell-pokemon"><label>Pok&eacute;mon</label><input type="text" name="pokemon" class="textbox chartinput" value="" autocomplete="off" /></div></div></div>';
 				buf += '</li>';
 				return buf;
 			}
@@ -1262,7 +1263,9 @@
 			buf += '<div class="setchart-nickname">';
 			buf += '<label>Nickname</label><input type="text" name="nickname" class="textbox" value="' + BattleLog.escapeHTML(set.name || '') + '" placeholder="' + BattleLog.escapeHTML(species.baseSpecies) + '" />';
 			buf += '</div>';
-			buf += '<div class="setchart" style="' + Dex.getTeambuilderSprite(set, this.curTeam.gen) + ';">';
+			var __tb_data = Dex.getTeambuilderSpriteData(set, this.curTeam.gen);
+			var __tb_style = Dex.getTeambuilderSprite(set, this.curTeam.gen);
+			buf += '<div class="setchart" data-spriteid="' + __tb_data.spriteid + '" data-spritedir="' + __tb_data.spriteDir + '" data-shiny="' + (__tb_data.shiny ? 1 : 0) + '" style="' + __tb_style + ';">';
 
 			// icon
 			buf += '<div class="setcol setcol-icon">';
@@ -1878,6 +1881,7 @@
 			buf += '</div>';
 
 			this.$el.html('<div class="teamwrapper">' + buf + '</div>');
+			this._tryGen5AniSprites();
 			if ($(window).width() < 640) this.show();
 			this.$chart = this.$('.teambuilder-results');
 			this.search = new BattleSearch(this.$chart, this.$chart);
@@ -1893,6 +1897,7 @@
 		updateSetTop: function () {
 			this.$('.teambar').html(this.renderTeambar());
 			this.$('.teamchart').first().html(this.renderSet(this.curSet, this.curSetLoc));
+			this._tryGen5AniSprites(this.$('.teamchart').first().find('.setchart'));
 		},
 		renderTeambar: function () {
 			var buf = '';
@@ -1931,7 +1936,12 @@
 			var set = this.curSet;
 			if (!set) return;
 
+			var __tb_data_upd = Dex.getTeambuilderSpriteData(set, this.curTeam.gen);
 			this.$('.setchart').attr('style', Dex.getTeambuilderSprite(set, this.curTeam.gen));
+			this.$('.setchart').attr('data-spriteid', __tb_data_upd.spriteid);
+			this.$('.setchart').attr('data-spritedir', __tb_data_upd.spriteDir);
+			this.$('.setchart').attr('data-shiny', __tb_data_upd.shiny ? 1 : 0);
+			this._tryGen5AniSprites(this.$('.setchart'));
 
 			this.$('.pokemonicon-' + this.curSetLoc).css('background', Dex.getPokemonIcon(set).substr(11));
 
@@ -1943,6 +1953,82 @@
 			}
 
 			this.updateStatGraph();
+		},
+
+		_tryGen5AniSprites: function($els) {
+			var $targets;
+			if ($els) {
+				$targets = ($els instanceof jQuery) ? $els : this.$($els);
+			} else {
+				$targets = this.$('.setchart');
+			}
+			var self = this;
+			$targets.each(function() {
+				var $el = $(this);
+				if ($el.data('gen5AniTried')) return;
+				$el.data('gen5AniTried', 1);
+				var spritedir = $el.attr('data-spritedir') || '';
+				if (spritedir.indexOf('gen5') === -1) return;
+				var spriteid = $el.attr('data-spriteid');
+				if (!spriteid) return;
+				var shiny = $el.attr('data-shiny') === '1';
+				var shinySuffix = shiny ? '-shiny' : '';
+				var gifUrl = Dex.resourcePrefix + 'sprites/gen5ani' + shinySuffix + '/' + spriteid + '.gif';
+				// Load both the current PNG and the gen5 GIF, measure sizes, and adjust
+				// background-position so the animated GIF aligns with the PNG.
+				var currentStyle = $el.attr('style') || '';
+				// try to extract the existing PNG URL from the inline style; if missing,
+				// fall back to constructing one from spriteDir/data attributes.
+				var pngUrlMatch = currentStyle.match(/url\(([^)]+)\)/);
+				var pngUrl = null;
+				if (pngUrlMatch) pngUrl = pngUrlMatch[1].replace(/^['\"]|['\"]$/g, '');
+				if (!pngUrl) pngUrl = Dex.resourcePrefix + ($el.attr('data-spritedir') || 'sprites/gen5') + shinySuffix + '/' + spriteid + '.png';
+				var origPosMatch = currentStyle.match(/background-position:\s*([\-0-9]+)px\s+([\-0-9]+)px/);
+				var origX = origPosMatch ? parseInt(origPosMatch[1], 10) : 0;
+				var origY = origPosMatch ? parseInt(origPosMatch[2], 10) : 0;
+
+				var pngImg = new Image();
+				var gifImg = new Image();
+				var pngSize = null;
+				var gifSize = null;
+
+				function applyIfReady() {
+					if (!pngSize || !gifSize) return;
+					// compute deltas (center-align by default)
+					var deltaX = Math.round((pngSize.w - gifSize.w) / 2);
+					var deltaY = Math.round((pngSize.h - gifSize.h) / 2);
+					var newX = origX - deltaX;
+					var newY = origY - deltaY;
+					var newStyle;
+					if (/url\(/.test(currentStyle)) {
+						newStyle = currentStyle.replace(/url\([^\)]+\)/, 'url(' + gifUrl + ')');
+						if (origPosMatch) {
+							newStyle = newStyle.replace(/background-position:\s*[\-0-9]+px\s+[\-0-9]+px/, 'background-position:' + newX + 'px ' + newY + 'px');
+						} else {
+							newStyle += 'background-position:' + newX + 'px ' + newY + 'px;';
+						}
+					} else {
+						newStyle = 'background-image:url(' + gifUrl + ');background-position:' + newX + 'px ' + newY + 'px;' + currentStyle;
+					}
+					$el.attr('style', newStyle);
+				}
+
+				pngImg.onload = function() {
+					pngSize = {w: pngImg.naturalWidth || pngImg.width, h: pngImg.naturalHeight || pngImg.height};
+					applyIfReady();
+				};
+				pngImg.onerror = function() { pngSize = null; /* fallback to simple swap */ };
+				pngImg.src = pngUrl;
+
+				gifImg.onload = function() {
+					gifSize = {w: gifImg.naturalWidth || gifImg.width, h: gifImg.naturalHeight || gifImg.height};
+					applyIfReady();
+				};
+				gifImg.onerror = function() {
+					// If GIF fails, leave original PNG intact.
+				};
+				gifImg.src = gifUrl;
+			});
 		},
 		updateStatGraph: function () {
 			var set = this.curSet;
@@ -3552,7 +3638,7 @@
 			var gen = Math.max(this.room.curTeam.gen, species.gen);
 			var dir = gen > 5 ? 'dex' : 'gen' + gen;
 			if (Dex.prefs('nopastgens')) gen = 'dex';
-			if (Dex.prefs('bwgfx') && dir === 'dex') gen = 'gen5ani';
+			if (Dex.prefs('bwgfx') && dir === 'dex') gen = 'gen5';
 			spriteDir += dir;
 			if (dir === 'dex') {
 				spriteSize = 120;
