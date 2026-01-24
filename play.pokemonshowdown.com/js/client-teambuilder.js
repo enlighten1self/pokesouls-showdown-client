@@ -1973,101 +1973,20 @@
 				if (!spriteid) return;
 				var shiny = $el.attr('data-shiny') === '1';
 				var shinySuffix = shiny ? '-shiny' : '';
-				var gifBaseDirs = ['gen5ani' + shinySuffix, 'gen5ani', 'ani' + shinySuffix, 'ani'];
-				var gifIndex = 0;
-				var gifUrl = Dex.resourcePrefix + 'sprites/' + gifBaseDirs[gifIndex] + '/' + spriteid + '.gif';
-				// Load both the current PNG and the gen5 GIF, measure sizes, and adjust
-				// background-position so the animated GIF aligns with the PNG. Prefer
-				// generator metadata when available (BattlePokemonSpritesBW / BattlePokemonSprites).
-				var currentStyle = $el.attr('style') || '';
-				// try to extract the existing PNG URL from the inline style; if missing,
-				// fall back to constructing one from spriteDir/data attributes.
-				var pngUrlMatch = currentStyle.match(/url\(([^)]+)\)/);
-				var pngUrl = null;
-				if (pngUrlMatch) pngUrl = pngUrlMatch[1].replace(/^['\"]|['\"]$/g, '');
-				if (!pngUrl) pngUrl = Dex.resourcePrefix + ($el.attr('data-spritedir') || 'sprites/gen5') + shinySuffix + '/' + spriteid + '.png';
-				var origPosMatch = currentStyle.match(/background-position:\s*([\-0-9]+)px\s+([\-0-9]+)px/);
-				var origX = origPosMatch ? parseInt(origPosMatch[1], 10) : 0;
-				var origY = origPosMatch ? parseInt(origPosMatch[2], 10) : 0;
-
-				var pngImg = new Image();
-				var gifImg = new Image();
-				var pngSize = null;
-				var gifSize = null;
-				// try to get metadata sizes from generated files
-				var metaId = (typeof Dex !== 'undefined' && Dex.toID) ? Dex.toID(spriteid) : spriteid;
-				var animMeta = null;
-				if (window.BattlePokemonSpritesBW && BattlePokemonSpritesBW[metaId]) animMeta = BattlePokemonSpritesBW[metaId];
-				if (!animMeta && window.BattlePokemonSprites && BattlePokemonSprites[metaId]) animMeta = BattlePokemonSprites[metaId];
-				if (animMeta) {
-					// pick front/back and gendered fields if present; teambuilder uses front by default
-					var field = 'front';
-					if (animMeta.frontf) field = 'front';
-					// if shiny specific metadata exists in a named mapping, prefer it (generator uses same keys)
-					if (animMeta[field]) {
-						gifSize = {w: animMeta[field].w, h: animMeta[field].h};
-					}
-				}
-
-				function applyIfReady() {
-					if (!pngSize || !gifSize) return;
-					// compute deltas (center-align by default)
-					var deltaX = Math.round((pngSize.w - gifSize.w) / 2);
-					var deltaY = Math.round((pngSize.h - gifSize.h) / 2);
-					var newX = origX - deltaX;
-					var newY = origY - deltaY;
+				var gifUrl = Dex.resourcePrefix + 'sprites/gen5ani' + shinySuffix + '/' + spriteid + '.gif';
+				var img = new Image();
+				img.onload = function() {
+					var currentStyle = $el.attr('style') || '';
 					var newStyle;
-					// debug log: show sizes and computed offsets
-					try {
-						console.debug('gen5ani align', {spriteid: spriteid, gifUrl: gifUrl, origX: origX, origY: origY, pngSize: pngSize, gifSize: gifSize});
-					} catch (e) {}
 					if (/url\(/.test(currentStyle)) {
 						newStyle = currentStyle.replace(/url\([^\)]+\)/, 'url(' + gifUrl + ')');
-						if (origPosMatch) {
-							newStyle = newStyle.replace(/background-position:\s*[\-0-9]+px\s+[\-0-9]+px/, 'background-position:' + newX + 'px ' + newY + 'px');
-						} else {
-							newStyle += 'background-position:' + newX + 'px ' + newY + 'px;';
-						}
 					} else {
-						newStyle = 'background-image:url(' + gifUrl + ');background-position:' + newX + 'px ' + newY + 'px;' + currentStyle;
+						newStyle = 'background-image:url(' + gifUrl + ');' + currentStyle;
 					}
 					$el.attr('style', newStyle);
-					try {
-						console.debug('gen5ani applied', {spriteid: spriteid, gifUrl: gifUrl, newX: newX, newY: newY});
-					} catch (e) {}
-				}
-
-				pngImg.onload = function() {
-					pngSize = {w: pngImg.naturalWidth || pngImg.width, h: pngImg.naturalHeight || pngImg.height};
-					applyIfReady();
 				};
-				pngImg.onerror = function() { pngSize = null; /* fallback to simple swap */ };
-				pngImg.src = pngUrl;
-
-				// gif load with retry/fallback
-				function tryGifLoad() {
-					gifImg.onload = function() {
-						// if we don't have gifSize from metadata, measure the GIF
-						if (!gifSize) gifSize = {w: gifImg.naturalWidth || gifImg.width, h: gifImg.naturalHeight || gifImg.height};
-						applyIfReady();
-					};
-					gifImg.onerror = function() {
-						// attempt next gif path in the list
-						try { console.debug('gen5ani gif failed', {spriteid: spriteid, failedUrl: gifUrl}); } catch (e) {}
-						gifIndex++;
-						if (gifIndex < gifBaseDirs.length) {
-							gifUrl = Dex.resourcePrefix + 'sprites/' + gifBaseDirs[gifIndex] + '/' + spriteid + '.gif';
-							try { console.debug('gen5ani trying next', {spriteid: spriteid, nextUrl: gifUrl}); } catch (e) {}
-							gifImg.src = gifUrl;
-							return;
-						}
-						// no more GIFs; give up and leave PNG intact
-						try { console.debug('gen5ani give up, keeping PNG', {spriteid: spriteid}); } catch (e) {}
-					};
-					gifImg.src = gifUrl;
-				}
-				// If we already have metadata gifSize, we can start GIF load and rely on metadata for sizing
-				tryGifLoad();
+				img.onerror = function() {};
+				img.src = gifUrl;
 			});
 		},
 		updateStatGraph: function () {
