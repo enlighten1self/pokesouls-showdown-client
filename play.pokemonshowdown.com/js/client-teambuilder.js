@@ -1972,21 +1972,32 @@
 				var spriteid = $el.attr('data-spriteid');
 				if (!spriteid) return;
 				var shiny = $el.attr('data-shiny') === '1';
-				var shinySuffix = shiny ? '-shiny' : '';
-				var gifUrl = Dex.resourcePrefix + 'sprites/gen5ani' + shinySuffix + '/' + spriteid + '.gif';
-				var img = new Image();
-				img.onload = function() {
-					var currentStyle = $el.attr('style') || '';
-					var newStyle;
-					if (/url\(/.test(currentStyle)) {
-						newStyle = currentStyle.replace(/url\([^\)]+\)/, 'url(' + gifUrl + ')');
-					} else {
-						newStyle = 'background-image:url(' + gifUrl + ');' + currentStyle;
-					}
-					$el.attr('style', newStyle);
-				};
-				img.onerror = function() {};
-				img.src = gifUrl;
+				   var shinySuffix = shiny ? '-shiny' : '';
+				   var gifUrl = Dex.resourcePrefix + 'sprites/gen5ani' + shinySuffix + '/' + spriteid + '.gif';
+				   // Get the correct offsets for this sprite
+				   var tbData = Dex.getTeambuilderSpriteData({species: spriteid, shiny: shiny}, 5);
+				   var img = new Image();
+				   img.onload = function() {
+					   // Compose the style string with background image, position, and size
+					   var styleParts = [
+						   'background-image:url(' + gifUrl + ')',
+						   'background-position:' + tbData.x + 'px ' + tbData.y + 'px',
+						   'background-repeat:no-repeat',
+						   'background-size:contain'
+					   ];
+					   // Preserve any other inline styles (e.g., width/height)
+					   var currentStyle = $el.attr('style') || '';
+					   // Remove any previous background-image/background-position/background-size
+					   currentStyle = currentStyle
+						   .replace(/background-image:[^;]+;?/g, '')
+						   .replace(/background-position:[^;]+;?/g, '')
+						   .replace(/background-size:[^;]+;?/g, '')
+						   .replace(/background-repeat:[^;]+;?/g, '');
+					   var newStyle = styleParts.join(';') + ';' + currentStyle;
+					   $el.attr('style', newStyle);
+				   };
+				   img.onerror = function() {};
+				   img.src = gifUrl;
 			});
 		},
 		updateStatGraph: function () {
