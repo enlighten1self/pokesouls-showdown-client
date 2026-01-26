@@ -1,3 +1,7 @@
+				// Keep canonical teambuilder style including static PNG so
+				// species without a gen5ani GIF still show correctly. The
+				// GIF probe will remove the PNG when an animated GIF is
+				// available.
 
 	(function (exports, $) {
 
@@ -69,8 +73,11 @@
 				'keydown .chartinput': 'chartKeydown',
 				'keyup .chartinput': 'chartKeyup',
 				'focus .chartinput': 'chartFocus',
+				'focus .setchart input': 'chartFocus',
+				'focus .setchart textarea': 'chartFocus',
 				'blur .chartinput': 'chartChange',
 				'keyup .searchinput': 'searchChange',
+				'input input[name=nickname]': 'nicknameInput',
 
 				// drag/drop
 				'click .team': 'edit',
@@ -1250,7 +1257,7 @@
 				var isLetsGo = this.curTeam.format.includes('letsgo');
 				var isBDSP = this.curTeam.format.includes('bdsp');
 				var isNatDex = this.curTeam.format.includes('nationaldex') || this.curTeam.format.includes('natdex');
-				var buf = '<li value="' + i + '">';
+				var buf = '<li value="' + i + '" style="position:relative;">';
 				if (!set.species) {
 					if (this.deletedSet) {
 						buf += '<div class="setmenu setmenu-left"><button name="undeleteSet" class="button"><i class="fa fa-undo"></i> Undo Delete</button></div>';
@@ -1261,12 +1268,23 @@
 					return buf;
 				}
 				buf += '<div class="setmenu"><button name="copySet"><i class="fa fa-files-o"></i>Copy</button> <button name="importSet"><i class="fa fa-upload"></i>Import/Export</button> <button name="moveSet"><i class="fa fa-arrows"></i>Move</button> <button name="deleteSet"><i class="fa fa-trash"></i>Delete</button></div>';
-				buf += '<div class="setchart-nickname">';
+				var __tb_data = Dex.getTeambuilderSpriteData(set, this.curTeam.gen);
+				// Keep canonical teambuilder style including static PNG so
+				// species without a gen5ani GIF still show correctly. The
+				// GIF probe will remove the PNG when an animated GIF is
+				// available. Force `position:relative` so absolutely-
+				// positioned GIFs and the nickname overlay share the
+				// same containing block.
+				var __tb_style = Dex.getTeambuilderSprite(set, this.curTeam.gen) || '';
+				var __tb_style_wrapped = 'position:relative; z-index:1;' + __tb_style;
+				// Nickname: keep input in normal flow (so events/storage
+				// work as before). Ensure it renders above `.setchart`
+				// (so animated sprites can't paint over it) by giving
+				// it a higher stacking order while preserving layout.
+				buf += '<div class="setchart-nickname" style="position:absolute;left:6px;top:6px;z-index:1000;">';
 				buf += '<label>Nickname</label><input type="text" name="nickname" class="textbox" value="' + BattleLog.escapeHTML(set.name || '') + '" placeholder="' + BattleLog.escapeHTML(species.baseSpecies) + '" />';
 				buf += '</div>';
-				var __tb_data = Dex.getTeambuilderSpriteData(set, this.curTeam.gen);
-				var __tb_style = Dex.getTeambuilderSprite(set, this.curTeam.gen);
-				buf += '<div class="setchart" data-spriteid="' + __tb_data.spriteid + '" data-spritedir="' + __tb_data.spriteDir + '" data-shiny="' + (__tb_data.shiny ? 1 : 0) + '" style="' + __tb_style + ';">';
+				buf += '<div class="setchart" data-spriteid="' + __tb_data.spriteid + '" data-spritedir="' + __tb_data.spriteDir + '" data-shiny="' + (__tb_data.shiny ? 1 : 0) + '" style="' + __tb_style_wrapped + '">';
 
 				// icon
 				buf += '<div class="setcol setcol-icon">';
@@ -1588,8 +1606,14 @@
 				var set = this.curSetList[i];
 				var name = $.trim(e.currentTarget.value).replace(/\|/g, '');
 				e.currentTarget.value = set.name = name;
-				this.save();
+					this.save();
+					// no overlay to update; nickname input is in-flow
 			},
+
+				nicknameInput: function (e) {
+					// overlay removed; nothing to do during input beyond normal behavior
+					return;
+				},
 
 			// clipboard
 			clipboard: [],
@@ -1937,12 +1961,57 @@
 				var set = this.curSet;
 				if (!set) return;
 
+				var self = this;
 				var __tb_data_upd = Dex.getTeambuilderSpriteData(set, this.curTeam.gen);
-				this.$('.setchart').attr('style', Dex.getTeambuilderSprite(set, this.curTeam.gen));
-				this.$('.setchart').attr('data-spriteid', __tb_data_upd.spriteid);
-				this.$('.setchart').attr('data-spritedir', __tb_data_upd.spriteDir);
-				this.$('.setchart').attr('data-shiny', __tb_data_upd.shiny ? 1 : 0);
-				this._tryGen5AniSprites(this.$('.setchart'));
+				var $sc = this.$('.setchart').first();
+				$sc.attr('data-spriteid', __tb_data_upd.spriteid);
+				$sc.attr('data-spritedir', __tb_data_upd.spriteDir);
+				$sc.attr('data-shiny', __tb_data_upd.shiny ? 1 : 0);
+
+				// Remove any previously injected gen5ani image for this setchart
+				// to ensure shiny toggles replace the GIF immediately.
+				try {
+					var uid = $sc.attr('data-gen5uid');
+					if (uid) $sc.find('img.gen5ani-img').remove();
+				} catch (e) {}
+
+				// If this is a Gen5 sprite that may have an animated GIF available,
+				// probe the gen5ani GIF first. If it loads, avoid setting the
+				// static PNG background (prevents double-loading the PNG).
+				var spritedir = __tb_data_upd.spriteDir || '';
+				var spriteid = __tb_data_upd.spriteid;
+				var shiny = __tb_data_upd.shiny ? '-shiny' : '';
+				var useGen5Probe = spritedir.indexOf('gen5') !== -1;
+				if (useGen5Probe) {
+					var gifUrl = Dex.resourcePrefix + 'sprites/gen5ani' + shiny + '/' + spriteid + '.gif';
+					var probe = new Image();
+					probe.onload = function() {
+						// Animated GIF exists. Remove background-image from style
+						// so the static PNG is not requested/used. Keep other
+						// style bits (positions) if present.
+						try {
+							var fullStyle = Dex.getTeambuilderSprite(set, self.curTeam.gen) || '';
+							fullStyle = fullStyle
+								.replace(/background-image:[^;]+;?/g, '')
+								.replace(/background-position:[^;]+;?/g, '')
+								.replace(/background-repeat:[^;]+;?/g, '');
+							$sc.attr('style', fullStyle);
+						} catch (e) {}
+						self._tryGen5AniSprites($sc);
+					};
+					probe.onerror = function() {
+						// GIF not available; fall back to static PNG style
+						try {
+							$sc.attr('style', Dex.getTeambuilderSprite(set, self.curTeam.gen));
+						} catch (e) {}
+						self._tryGen5AniSprites($sc);
+					};
+					probe.src = gifUrl;
+				} else {
+					// Not a gen5 animated sprite — use the normal style.
+					$sc.attr('style', Dex.getTeambuilderSprite(set, this.curTeam.gen));
+					this._tryGen5AniSprites($sc);
+				}
 
 				this.$('.pokemonicon-' + this.curSetLoc).css('background', Dex.getPokemonIcon(set).substr(11));
 
@@ -1956,6 +2025,102 @@
 				this.updateStatGraph();
 			},
 
+			// Per-species manual adjustments to nudge specific gen5ani GIFs
+			// so they align with the static PNG placement. Values are in
+			// pixels and are applied as {x: <pixels>, y: <pixels>}.
+			// Tweak these if a species still looks off.
+			perSpeciesOffsets: {
+				"tornadustherian": {x: -20, y: -5},
+				"clefable": {x: 0, y: 4},
+				"abyssalvoid": {x: 0, y: 4},
+				"armarouge": {x: 0, y: 4},
+				"ghoulizard": {x: 0, y: 4},
+				"dungeon": {x: 0, y: 4},
+				"zapoleon-mega": {x: 0, y: 4},
+				"malabyss": {x: 0, y: 4},
+				"kingambit": {x: 0, y: 4},
+				"crystalix-mega": {x: 0, y: 4},
+				"jelliclus": {x: 0, y: 4},
+				"geyserupt-mega": {x: 0, y: 4},
+				"drownoir": {x: 0, y: 4},
+				"kingambit": {x: 0, y: 4},
+				"ogerpon-wellspring": {x: 0, y: 4},
+				"kartana": {x: 0, y: 4},
+				"landorus-therian": {x: 0, y: -6},
+				"quantumsyphon": {x: 0, y: 4},
+				"flamingwrath": {x: 0, y: -6},
+				"ultigigas": {x: 0, y: 4},
+				"freezingking": {x: 0, y: 4},
+				"thalassigon": {x: 0, y: 4},
+				"dondozo": {x: 0, y: 4},
+				"spectoise-mega": {x: 0, y: 4},
+				"lokix": {x: 0, y: 4},
+				"hiveon": {x: 0, y: 4},
+				"cofagrigus": {x: 0, y: 4},
+				"wyveon": {x: 0, y: 4},
+				"champeon": {x: 0, y: 4},
+				"spectreon": {x: 0, y: 4},
+				"acideon": {x: 0, y: 4},
+				"comfey": {x: 0, y: 4},
+				"weezing-galar": {x: 0, y: 4},
+				"garganacl": {x: 0, y: 4},
+				"jellicent": {x: 0, y: 4},
+				"minereon": {x: 0, y: 4},
+				"florges": {x: 0, y: 4},
+				"eeveeon": {x: 0, y: 4},
+				"cyclizar": {x: 0, y: 4},
+				"titaniumdelta": {x: 0, y: 4},
+				"zapoleon": {x: 0, y: 4},
+				"corviknight": {x: 0, y: 4},
+				"corviknight": {x: 0, y: 4},
+				"tinkaton": {x: 0, y: -6},
+				"withorde": {x: 0, y: 4},
+				"plaguekrow": {x: 0, y: 4},
+				"hawlucha": {x: 0, y: 4},
+				"hatterene": {x: 0, y: 4},
+				"dorderra": {x: 0, y: 4},
+				"chocopert": {x: 0, y: 4},
+				"flareloom": {x: 0, y: 4},
+				"typhtesla": {x: 0, y: 4},
+				"volcarona": {x: 0, y: 4},
+				"sneasler": {x: 0, y: 4},
+				"glimmora": {x: 0, y: 4},
+				"kringuin": {x: 0, y: 4},
+				"gyarados": {x: 0, y: 4},
+				"charizard-megax": {x: 0, y: -6},
+				"gliscor": {x: -6, y: 0},
+				"kyogre": {x: -6, y: 0},
+				"scizormega": {x: -6, y: 0},
+				"rotom-wash": {x: -10, y: 0},
+				"slowkinggalar": {x: 6, y: 0},
+				"aegislash": {x: -6, y: 0},
+				"tapukoko": {x: -6, y: 0},
+				"boarbaque": {x: -16, y: 10},
+				"terapagos": {x: 0, y: 0},
+				"garchomp": {x: -4, y: 30},
+				"garchompmega": {x: -6, y: 0},
+				"manaphy": {x: 0, y: 0},
+				"celesteela": {x: -10, y: -8},
+				"hydrapple": {x: -4, y: 0},
+				"weavile": {x: 0, y: -4},
+				"jirachi": {x: 0, y: 0},
+				"porygonz": {x: 4, y: 0},
+				"zapdosgalar": {x: -4, y: 0},
+				"moltres": {x: -10, y: 0},
+				"hydreigon": {x: -10, y: -14},
+				"dragonite": {x: -6, y: 0},
+				"ironmoth": {x: -6, y: 0},
+				"alomomola": {x: -6, y: 0},
+				"blacephalon": {x: -12, y: -30},
+				"chansey": {x: 0, y: 6},
+				"cobalion": {x: -6, y: 0},
+				"rotomheat": {x: -4, y: 0},
+				"mimikyu": {x: -2, y: 0},
+				"lucario": {x: 0, y: 2},
+				"slowking": {x: 0, y: 2},
+				"durant": {x: 0, y: 10}
+			},
+
 			_tryGen5AniSprites: function($els) {
 				var $targets;
 				if ($els) {
@@ -1964,10 +2129,30 @@
 					$targets = this.$('.setchart');
 				}
 				var self = this;
+				// Cleanup any orphaned injected images whose host setchart
+				// elements no longer exist (prevents leaking images when
+				// setcharts are replaced).
+				$('img.gen5ani-img').each(function() {
+					var $i = $(this);
+					var uid = $i.attr('data-gen5uid');
+					if (uid && $('[data-gen5uid="' + uid + '"]').length === 0) {
+						$i.remove();
+					}
+				});
+
 				$targets.each(function() {
 					var $el = $(this);
-					if ($el.data('gen5AniTried')) return;
-					$el.data('gen5AniTried', 1);
+					// Always attempt to inject gen5ani GIFs on each call so
+					// the builder preserves the animated sprite across
+					// re-renders (typing, edits, etc.).
+					// Create or reuse a unique id for this setchart so injected
+					// images are scoped per-instance instead of by species.
+					var gen5Uid = $el.data('gen5aniUid');
+					if (!gen5Uid) {
+						gen5Uid = 'g5-' + (Date.now() % 1000000) + '-' + Math.floor(Math.random() * 100000);
+						$el.data('gen5aniUid', gen5Uid);
+						$el.attr('data-gen5uid', gen5Uid);
+					}
 					var spritedir = $el.attr('data-spritedir') || '';
 					if (spritedir.indexOf('gen5') === -1) return;
 					var spriteid = $el.attr('data-spriteid');
@@ -1977,23 +2162,21 @@
 					var gifUrl = Dex.resourcePrefix + 'sprites/gen5ani' + shinySuffix + '/' + spriteid + '.gif';
 					// Get the correct offsets for this sprite
 					var tbData = Dex.getTeambuilderSpriteData({species: spriteid, shiny: shiny}, 5);
-					// Optimistically set the GIF as the background immediately so
-					// the UI doesn't flash the static PNG while the GIF is
-					// fetched/loaded during quick re-renders (e.g., while the
-					// user types). If the GIF fails to load, we'll restore the
-					// previous style in img.onerror below.
-					var _prevStyle = $el.attr('style') || '';
-					$el.css({
-						'background-image': 'url(' + gifUrl + ')',
-						'background-position': tbData.x + 'px ' + tbData.y + 'px',
-						'background-repeat': 'no-repeat'
-					});
+					// Inject gif as an <img>; remove any prior injected image
+					// Remove any gen5 images inside this setchart so old
+					// sprites do not persist when the sprite changes.
+					$el.find('img.gen5ani-img').remove();
 					var img = new Image();
 					    img.onload = function() {
 						    // Small vertical nudge to apply to injected GIFs that
 						    // fit inside the sprite cell. Tweak this value if
 						    // specific species need further adjustment.
-						    var yAdjust = 10; // pixels downward for injected images
+							var yAdjust = 35; // pixels downward for injected images
+							// Per-species manual adjustments. Add entries here to
+							// nudge specific spriteids in pixels. Example:
+							// {clefable: {x: 0, y: 4}, tornadustherian: {x: -8, y: 10}}
+							var perSpeciesOffsets = (self && self.perSpeciesOffsets) ? self.perSpeciesOffsets : {};
+							var defaultAdj = (perSpeciesOffsets && perSpeciesOffsets.__default) ? perSpeciesOffsets.__default : {x: 0, y: 3};
 							// Decide whether to inject the GIF as an <img> into the
 							// `.setcell-sprite` (works well when the GIF fits entirely
 							// within the cell) or to fall back to setting it as a
@@ -2002,9 +2185,11 @@
 							// downward nudge when the GIF is large and we use the
 							// background approach.
 							var spriteCell = $el.find('.setcell-sprite').first();
-							var currentStyle = $el.attr('style') || '';
-							// Remove any previous background-image/background-position/background-size/repeat
-							currentStyle = currentStyle
+							var origStyle = $el.attr('style') || '';
+							// cleanedStyle removes background so injected GIFs don't
+							// show the underlying static PNG. Keep origStyle so we
+							// can restore it if the GIF fails to load.
+							var cleanedStyle = origStyle
 								.replace(/background-image:[^;]+;?/g, '')
 								.replace(/background-position:[^;]+;?/g, '')
 								.replace(/background-size:[^;]+;?/g, '')
@@ -2018,43 +2203,215 @@
 								var imgH = img.naturalHeight || 0;
 
 								if (imgW <= cellW && imgH <= cellH) {
-									// Inject as an absolutely-positioned <img> so it
-									// doesn't get unexpectedly clipped or scaled.
+									// Inject inside the sprite cell and position
+									// relative to that cell. This keeps the GIF
+									// scoped to the correct setchart and allows it
+									// to move naturally with scrolling.
 									spriteCell.css({position: 'relative'});
-									spriteCell.find('.gen5ani-img').remove();
+									// remove any existing image for this uid inside this set
+									$el.find('img.gen5ani-img[data-gen5uid="' + gen5Uid + '"]').remove();
+									// Remove the background-image from the setchart so
+									// the static PNG isn't visible under the injected GIF.
+									try { $el.attr('style', cleanedStyle); } catch (e) {}
+									// Resolve spriteid to canonical species id when possible
+									var resolvedId = spriteid;
+									try {
+										var sObj = (self && self.curTeam && self.curTeam.dex && self.curTeam.dex.species) ? self.curTeam.dex.species.get(spriteid) : (Dex && Dex.species ? Dex.species.get(spriteid) : null);
+										if (sObj && sObj.id) resolvedId = sObj.id;
+									} catch (e) {}
+									var lookupId = (resolvedId || spriteid || '').toString().toLowerCase().replace(/[^a-z0-9]+/g, '');
+									var speciesAdj = perSpeciesOffsets[lookupId] || perSpeciesOffsets[resolvedId] || perSpeciesOffsets[spriteid] || {};
+									var xAdj = (typeof defaultAdj.x === 'number') ? defaultAdj.x : 0;
+									if (speciesAdj && speciesAdj.x !== undefined) {
+										var nx = Number(speciesAdj.x);
+										if (!isNaN(nx)) xAdj = nx; else console.warn('perSpeciesOffsets x not numeric for', spriteid, speciesAdj.x);
+									}
+									var yAdj = (typeof defaultAdj.y === 'number') ? defaultAdj.y : 4;
+									if (speciesAdj && speciesAdj.y !== undefined) {
+										var ny = Number(speciesAdj.y);
+										if (!isNaN(ny)) yAdj = ny; else console.warn('perSpeciesOffsets y not numeric for', spriteid, speciesAdj.y);
+									}
+									// compute coordinates relative to the sprite cell
+									// using the setchart offset so tbData coordinates
+									// match the background-position logic. Reintroduce
+									// a half-difference centering to handle sprites
+									// with different natural sizes (this restores the
+									// previous visual centering behavior).
 									var setchartOffset = $el.offset();
-									var spriteOffset = spriteCell.offset();
-									var left = Math.round(setchartOffset.left + tbData.x - spriteOffset.left);
-									// Apply the downward nudge for injected images
-									var top = Math.round(setchartOffset.top + tbData.y - spriteOffset.top + yAdjust);
+									var spriteCellOffset = spriteCell.offset();
+									var centerX = Math.round((cellW - imgW) / 2);
+									var centerY = Math.round((cellH - imgH) / 2);
+									var defaultXAdjust = -2; // small global nudge to the left to correct slight right bias
+									var leftRel = Math.round(tbData.x + setchartOffset.left - spriteCellOffset.left + xAdj + centerX + defaultXAdjust);
+									var topRel = Math.round(tbData.y + setchartOffset.top - spriteCellOffset.top + yAdj + centerY);
+									// Clamp so injected GIF stays within the sprite cell
+									// and doesn't overlap other UI elements such as the
+									// nickname input.
+									// Allow negative leftRel so per-species negative
+									// x adjustments can move the GIF left. Only enforce
+									// an upper bound so the image doesn't overflow to the right.
+									leftRel = Math.min(leftRel, Math.max(0, cellW - imgW));
+									var minTopRel = -Math.floor((imgH || 0) / 2);
+									var maxTopRel = Math.max(0, cellH - imgH);
+									topRel = Math.max(minTopRel, Math.min(topRel, maxTopRel));
+									// If the nickname box overlaps the computed image
+									// position, nudge the image downward so it doesn't
+									// visually interfere with the nickname input.
+									try {
+										var $nick = $el.prev('.setchart-nickname');
+										if (!$nick.length) $nick = $el.parent().find('.setchart-nickname').first();
+										if ($nick.length) {
+											var nickOff = $nick.offset();
+											var nickTop = nickOff.top;
+											var nickBottom = nickTop + $nick.outerHeight();
+											var imgTopDoc = spriteCellOffset.top + topRel;
+											var imgBottomDoc = imgTopDoc + imgH;
+											var imgLeftDoc = spriteCellOffset.left + leftRel;
+											var imgRightDoc = imgLeftDoc + imgW;
+											var nickLeft = nickOff.left;
+											var nickRight = nickLeft + $nick.outerWidth();
+											// Check horizontal overlap
+											var horizOverlap = !(imgRightDoc <= nickLeft || imgLeftDoc >= nickRight);
+											// If overlapping horizontally and vertically, push image below nickname
+											if (horizOverlap && imgTopDoc < nickBottom && imgBottomDoc > nickTop) {
+												// If a per-species Y adjustment or a global default
+												// Y adjustment was provided, respect it (it was
+												// likely chosen to avoid overlap).
+												if (!((speciesAdj && speciesAdj.y !== undefined) || (defaultAdj && defaultAdj.y !== undefined))) {
+													var push = (nickBottom - spriteCellOffset.top) + 4; // 4px gap
+													topRel = Math.max(topRel, push);
+													// ensure still within cell
+													topRel = Math.max(0, Math.min(topRel, Math.max(0, cellH - imgH)));
+												}
+											}
+										}
+									} catch (e) {}
 									var $imgEl = $('<img class="gen5ani-img"/>').attr('src', gifUrl).css({
 										position: 'absolute',
-										left: left + 'px',
-										top: top + 'px',
+										left: leftRel + 'px',
+										top: topRel + 'px',
 										border: 0,
 										margin: 0,
 										padding: 0,
 										display: 'block',
 										width: imgW + 'px',
 										height: imgH + 'px',
-										'max-width': 'none'
+										'max-width': 'none',
+										'pointer-events': 'none',
+										'z-index': 0
 									});
+									$imgEl.attr('data-spriteid', spriteid).addClass('gen5ani-img');
+									$imgEl.attr('data-gen5uid', gen5Uid).attr('data-spriteid', spriteid);
 									spriteCell.append($imgEl);
-									// clear any background that may have been set on the .setchart
-									$el.attr('style', currentStyle);
+									if (window.console) {
+										console.log('gen5ani in-cell:', spriteid, 'lookupId', lookupId, 'speciesAdj', speciesAdj, 'xAdj', xAdj, 'yAdj', yAdj, 'leftRel,topRel', leftRel + ',' + topRel);
+									}
+									// overlay removed; no visual overlay to position
+									if (window.console && window.console.debug) {
+										console.debug('gen5ani injected (in cell):', spriteid, 'imgWxH', imgW + 'x' + imgH, 'cellWxH', cellW + 'x' + cellH, 'tbData', tbData.x + ',' + tbData.y, 'leftRel,topRel', leftRel + ',' + topRel, 'adj', xAdj + ',' + yAdj);
+									}
 								} else {
-									// GIF is larger than the sprite cell; use background
-									// on .setchart so the sprite can extend without
-									// being clipped. Do NOT apply the injected-image
-									// nudge here — keep background-position as the
-									// canonical tbData values.
-									var styleParts = [
-										'background-image:url(' + gifUrl + ')',
-										'background-position:' + tbData.x + 'px ' + tbData.y + 'px',
-										'background-repeat:no-repeat'
-									];
-									var newStyle = styleParts.join(';') + ';' + currentStyle;
-									$el.attr('style', newStyle);
+									// GIF is larger than the sprite cell; append it
+									// to the .setchart so it can overflow but still
+									// remain scoped to the correct chart and scroll
+									// with it.
+									$el.css({position: 'relative'});
+									// remove any existing gen5 images inside this setchart
+									$el.find('img.gen5ani-img').remove();
+									// Remove background-image so static PNG doesn't show
+									try { $el.attr('style', cleanedStyle); } catch (e) {}
+									// Compute positioning for large GIFs so they align with
+									// the same visual placement as the in-cell centering logic.
+									var spriteCell = $el.find('.setcell-sprite').first();
+									var setchartOffset = $el.offset();
+									var spriteCellOffset = spriteCell.length ? spriteCell.offset() : setchartOffset;
+									// When the GIF is larger than the sprite cell, compute
+									// the center relative to the setchart so the oversized
+									// image lines up visually with the static PNG placement.
+									var centerX = spriteCell.length ? Math.round((spriteCell.width() - img.naturalWidth) / 2) : 0;
+									var centerY = spriteCell.length ? Math.round((spriteCell.height() - img.naturalHeight) / 2) : 0;
+									// Resolve spriteid to canonical species id when possible
+									var resolvedId2 = spriteid;
+									try {
+										var sObj2 = (self && self.curTeam && self.curTeam.dex && self.curTeam.dex.species) ? self.curTeam.dex.species.get(spriteid) : (Dex && Dex.species ? Dex.species.get(spriteid) : null);
+										if (sObj2 && sObj2.id) resolvedId2 = sObj2.id;
+									} catch (e) {}
+									var lookupId = (resolvedId2 || spriteid || '').toString().toLowerCase().replace(/[^a-z0-9]+/g, '');
+									var speciesAdj = perSpeciesOffsets[lookupId] || perSpeciesOffsets[resolvedId2] || perSpeciesOffsets[spriteid] || {};
+									var xAdj = (typeof defaultAdj.x === 'number') ? defaultAdj.x : 0;
+									if (speciesAdj && speciesAdj.x !== undefined) {
+										var nx2 = Number(speciesAdj.x);
+										if (!isNaN(nx2)) xAdj = nx2; else console.warn('perSpeciesOffsets x not numeric for', spriteid, speciesAdj.x);
+									}
+									var yAdj = (typeof defaultAdj.y === 'number') ? defaultAdj.y : 4;
+									if (speciesAdj && speciesAdj.y !== undefined) {
+										var ny2 = Number(speciesAdj.y);
+										if (!isNaN(ny2)) yAdj = ny2; else console.warn('perSpeciesOffsets y not numeric for', spriteid, speciesAdj.y);
+									}
+									var defaultXAdjust = -2;
+									var relCellLeft = spriteCellOffset.left - setchartOffset.left;
+									var relCellTop = spriteCellOffset.top - setchartOffset.top;
+									var left2 = Math.round(tbData.x + relCellLeft + xAdj + centerX + defaultXAdjust);
+									var top2 = Math.round(tbData.y + relCellTop + yAdj + centerY);
+									// Clamp so injected GIF doesn't start outside the chart
+									// Allow negative left2 (so negative xAdj can shift
+									// the GIF left). Clamp lower bound to half the image
+									// width to avoid completely hiding the sprite.
+									var minLeft2 = -Math.floor((img.naturalWidth || 0) / 2);
+									left2 = Math.max(minLeft2, left2);
+									var minTop2 = -Math.floor((img.naturalHeight || 0) / 2);
+									top2 = Math.max(minTop2, top2);
+									// Avoid overlapping the nickname area when appending
+									// large GIFs to the .setchart: if the computed
+									// position would intersect the nickname box, nudge
+									// downward so the nickname remains readable.
+									try {
+										var $nick2 = $el.prev('.setchart-nickname');
+										if (!$nick2.length) $nick2 = $el.parent().find('.setchart-nickname').first();
+										if ($nick2.length) {
+											var nickOff2 = $nick2.offset();
+											var nickTop2 = nickOff2.top;
+											var nickBottom2 = nickTop2 + $nick2.outerHeight();
+											var imgTopDoc2 = setchartOffset.top + top2;
+											var imgBottomDoc2 = imgTopDoc2 + img.naturalHeight;
+											var imgLeftDoc2 = setchartOffset.left + left2;
+											var imgRightDoc2 = imgLeftDoc2 + img.naturalWidth;
+											var nickLeft2 = nickOff2.left;
+											var nickRight2 = nickLeft2 + $nick2.outerWidth();
+											var horizOverlap2 = !(imgRightDoc2 <= nickLeft2 || imgLeftDoc2 >= nickRight2);
+											if (horizOverlap2 && imgTopDoc2 < nickBottom2 && imgBottomDoc2 > nickTop2) {
+												// Respect explicit per-species or default Y adjustments.
+												if (!((speciesAdj && speciesAdj.y !== undefined) || (defaultAdj && defaultAdj.y !== undefined))) {
+													var push2 = (nickBottom2 - setchartOffset.top) + 4;
+													top2 = Math.max(top2, push2);
+													top2 = Math.max(0, top2);
+												}
+											}
+										}
+									} catch (e) {}
+									var $imgEl2 = $('<img class="gen5ani-img" data-spriteid="' + spriteid + '"/>').attr('src', gifUrl).css({
+										position: 'absolute',
+										left: left2 + 'px',
+										top: top2 + 'px',
+										border: 0,
+										margin: 0,
+										padding: 0,
+										display: 'block',
+										width: img.naturalWidth + 'px',
+										height: img.naturalHeight + 'px',
+										'max-width': 'none',
+										'pointer-events': 'none',
+										'z-index': 0
+									});
+									$imgEl2.attr('data-gen5uid', gen5Uid).attr('data-spriteid', spriteid);
+									$el.append($imgEl2);
+									if (window.console) {
+										console.log('gen5ani in-setchart:', spriteid, 'lookupId', lookupId, 'speciesAdj', speciesAdj, 'xAdj', xAdj, 'yAdj', yAdj, 'left2,top2', left2 + ',' + top2);
+									}
+									// overlay removed; no visual overlay to position
+									if (window.console && window.console.debug) {
+										console.debug('gen5ani injected (in setchart):', spriteid, 'left,top', left2 + ',' + top2);
+									}
 								}
 							} else {
 								// No sprite cell available; fallback to background on .setchart
@@ -2063,18 +2420,32 @@
 									'background-position:' + tbData.x + 'px ' + tbData.y + 'px',
 									'background-repeat:no-repeat'
 								];
-								var newStyle = styleParts.join(';') + ';' + currentStyle;
+								var newStyle = styleParts.join(';') + ';' + cleanedStyle;
 								$el.attr('style', newStyle);
 							}
 					};
 					img.onerror = function() {
-						// GIF failed to load — restore previous style so the
-						// static PNG (or whatever the previous background was)
-						// remains.
-						$el.attr('style', _prevStyle);
+						// GIF failed to load — remove any injected image and
+						// restore the original setchart style so the static PNG
+						// is visible as the fallback.
+						try {
+							$el.find('img.gen5ani-img').remove();
+							$el.removeAttr('data-gen5ani');
+							try { $el.attr('style', origStyle); } catch (er) {}
+							if ($el[0] && $el[0]._gen5ani_observer) {
+								$el[0]._gen5ani_observer.disconnect();
+								$el[0]._gen5ani_observer = null;
+							}
+						} catch (e) {}
+						// overlay removed; nothing to hide on error
 					};
 					img.src = gifUrl;
+                    
+						// No overlay: the existing in-flow `.setchart-nickname`
+						// is styled to sit above `.setchart` via inline z-index.
 				});
+
+				// overlay removed; no repositioning needed
 			},
 			updateStatGraph: function () {
 				var set = this.curSet;
@@ -3158,6 +3529,11 @@
 				this.updateChart();
 			},
 			chartFocus: function (e) {
+				// Ensure gen5ani GIF is present/positioned when focusing any
+				// input inside the setchart (nickname, moves, item, etc.).
+				try {
+					this._tryGen5AniSprites($(e.currentTarget).closest('.setchart'));
+				} catch (err) {}
 				var $target = $(e.currentTarget);
 				var name = e.currentTarget.name;
 				var type = this.chartTypes[name];
