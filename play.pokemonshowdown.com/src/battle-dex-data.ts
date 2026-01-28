@@ -706,6 +706,16 @@ const BattlePokemonIconIndexes: {[id: string]: number} = {
 	resurgentjustice: 1512 + 168,
 	miloticmega: 1512 + 169,
 	flamingwrath: 1512 + 170,
+	caimanragomega: 1512 + 171,
+	cereblazemega: 1512 + 172,
+	forroguemega: 1512 + 173,
+	tempervianmegaashen: 1512 + 174,
+	tempervianmega: 1512 + 175,
+	wyrmperiormega: 1512 + 176,
+	phroggeist: 1512 + 177,
+	phroggeistyoseigo: 1512 + 178,
+	phroggeistbushigo: 1512 + 179,
+	phroggeistjimengo: 1512 + 180,
 };
 
 const BattlePokemonIconIndexesLeft: {[id: string]: number} = {
