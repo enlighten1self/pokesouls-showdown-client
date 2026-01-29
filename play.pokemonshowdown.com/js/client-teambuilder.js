@@ -628,9 +628,10 @@
 					if (format === '+') {
 						e.stopImmediatePropagation();
 						var self = this;
-						app.addPopup(FormatPopup, {format: '', sourceEl: e.currentTarget, selectType: 'teambuilder', onselect: function (newFormat) {
+						var _fmtPopup_local = app.addPopup(FormatPopup, {format: '', sourceEl: e.currentTarget, selectType: 'teambuilder', onselect: function (newFormat) {
 							self.selectFolder(newFormat);
 						}});
+						try { if (_fmtPopup_local && _fmtPopup_local.$el) _fmtPopup_local.$el.css('z-index', 100000); } catch (er) {}
 						return;
 					}
 					if (format === '++') {
@@ -1276,12 +1277,12 @@
 				// positioned GIFs and the nickname overlay share the
 				// same containing block.
 				var __tb_style = Dex.getTeambuilderSprite(set, this.curTeam.gen) || '';
-				var __tb_style_wrapped = 'position:relative; z-index:1;' + __tb_style;
+				var __tb_style_wrapped = 'position:relative; z-index:1; overflow:visible;' + __tb_style;
 				// Nickname: keep input in normal flow (so events/storage
 				// work as before). Ensure it renders above `.setchart`
 				// (so animated sprites can't paint over it) by giving
 				// it a higher stacking order while preserving layout.
-				buf += '<div class="setchart-nickname" style="position:absolute;left:6px;top:6px;z-index:1000;">';
+				buf += '<div class="setchart-nickname" style="position:absolute;left:6px;top:6px;z-index:2;">';
 				buf += '<label>Nickname</label><input type="text" name="nickname" class="textbox" value="' + BattleLog.escapeHTML(set.name || '') + '" placeholder="' + BattleLog.escapeHTML(species.baseSpecies) + '" />';
 				buf += '</div>';
 				buf += '<div class="setchart" data-spriteid="' + __tb_data.spriteid + '" data-spritedir="' + __tb_data.spriteDir + '" data-shiny="' + (__tb_data.shiny ? 1 : 0) + '" style="' + __tb_style_wrapped + '">';
@@ -1583,9 +1584,10 @@
 					return;
 				}
 				var self = this;
-				app.addPopup(FormatPopup, {format: format, sourceEl: button, selectType: 'teambuilder', onselect: function (newFormat) {
+				var _fmtPopup_local2 = app.addPopup(FormatPopup, {format: format, sourceEl: button, selectType: 'teambuilder', onselect: function (newFormat) {
 					self.changeFormat(newFormat);
 				}});
+				try { if (_fmtPopup_local2 && _fmtPopup_local2.$el) _fmtPopup_local2.$el.css('z-index', 100000); } catch (er) {}
 			},
 			changeFormat: function (format) {
 				this.curTeam.format = format;
@@ -2237,13 +2239,17 @@
 									// a half-difference centering to handle sprites
 									// with different natural sizes (this restores the
 									// previous visual centering behavior).
-									var setchartOffset = $el.offset();
-									var spriteCellOffset = spriteCell.offset();
+									// Use position() (coordinates relative to the containing
+									// `.setchart`) instead of offset() (document coords). This
+									// prevents jitter when the document reflows or UI
+									// elements change, since left/top will remain stable
+									// relative to the `.setchart` container.
+									var spritePos = spriteCell.position() || {left: 0, top: 0};
 									var centerX = Math.round((cellW - imgW) / 2);
 									var centerY = Math.round((cellH - imgH) / 2);
 									var defaultXAdjust = -2; // small global nudge to the left to correct slight right bias
-									var leftRel = Math.round(tbData.x + setchartOffset.left - spriteCellOffset.left + xAdj + centerX + defaultXAdjust);
-									var topRel = Math.round(tbData.y + setchartOffset.top - spriteCellOffset.top + yAdj + centerY);
+									var leftRel = Math.round(tbData.x + (spritePos.left || 0) + xAdj + centerX + defaultXAdjust);
+									var topRel = Math.round(tbData.y + (spritePos.top || 0) + yAdj + centerY);
 									// Clamp so injected GIF stays within the sprite cell
 									// and doesn't overlap other UI elements such as the
 									// nickname input.
@@ -2323,11 +2329,11 @@
 									// Compute positioning for large GIFs so they align with
 									// the same visual placement as the in-cell centering logic.
 									var spriteCell = $el.find('.setcell-sprite').first();
-									var setchartOffset = $el.offset();
-									var spriteCellOffset = spriteCell.length ? spriteCell.offset() : setchartOffset;
-									// When the GIF is larger than the sprite cell, compute
-									// the center relative to the setchart so the oversized
-									// image lines up visually with the static PNG placement.
+									// Use position() so coordinates are stable relative
+									// to the `.setchart` container instead of document
+									// offsets which can change when the UI is interacted
+									// with.
+									var spritePos2 = spriteCell.length ? spriteCell.position() : {left: 0, top: 0};
 									var centerX = spriteCell.length ? Math.round((spriteCell.width() - img.naturalWidth) / 2) : 0;
 									var centerY = spriteCell.length ? Math.round((spriteCell.height() - img.naturalHeight) / 2) : 0;
 									// Resolve spriteid to canonical species id when possible
@@ -2349,8 +2355,8 @@
 										if (!isNaN(ny2)) yAdj = ny2; else console.warn('perSpeciesOffsets y not numeric for', spriteid, speciesAdj.y);
 									}
 									var defaultXAdjust = -2;
-									var relCellLeft = spriteCellOffset.left - setchartOffset.left;
-									var relCellTop = spriteCellOffset.top - setchartOffset.top;
+									var relCellLeft = (spritePos2.left || 0);
+									var relCellTop = (spritePos2.top || 0);
 									var left2 = Math.round(tbData.x + relCellLeft + xAdj + centerX + defaultXAdjust);
 									var top2 = Math.round(tbData.y + relCellTop + yAdj + centerY);
 									// Clamp so injected GIF doesn't start outside the chart
