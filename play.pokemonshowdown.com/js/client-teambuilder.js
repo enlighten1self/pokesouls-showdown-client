@@ -1373,7 +1373,6 @@
 				// stats
 				buf += '<div class="setcol setcol-stats"><div class="setrow"><label>Stats</label><button class="textbox setstats" name="stats">';
 				buf += '<span class="statrow statrow-head"><label></label> <span class="statgraph"></span> <em>' + (!isLetsGo ? 'EV' : 'AV') + '</em></span>';
-				buf += '</button></div></div>';
 				var stats = {};
 				var defaultEV = (this.curTeam.gen > 2 ? 0 : 252);
 
@@ -1384,7 +1383,7 @@
 				// Get species
 				var species = this.curTeam.dex.species.get(set.species);
 
-				// Tier Shift boost helper
+				// Tier Shift boost helper (updated tiers)
 				function getTierShiftBoost(species) {
 					var tier = species.natDexTier || species.tier || '';
 					switch (tier) {
@@ -1454,6 +1453,7 @@
 					buf += '<span class="statrow"><label>' + statName + '</label> <span class="statgraph"><span style="width:' +
 						width + 'px;background:hsl(' + color + ',40%,75%);"></span></span> ' + evBuf + '</span>';
 				}
+				buf += '</button></div></div>';
 
 				buf += '</div></li>';
 				return buf;
