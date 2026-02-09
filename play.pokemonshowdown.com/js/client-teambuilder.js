@@ -1372,27 +1372,87 @@
 				// stats
 				buf += '<div class="setcol setcol-stats"><div class="setrow"><label>Stats</label><button class="textbox setstats" name="stats">';
 				buf += '<span class="statrow statrow-head"><label></label> <span class="statgraph"></span> <em>' + (!isLetsGo ? 'EV' : 'AV') + '</em></span>';
+				buf += '</button></div></div>';
 				var stats = {};
 				var defaultEV = (this.curTeam.gen > 2 ? 0 : 252);
+
+				// Detect Tier Shift format
+				var format = this.curTeam.format || '';
+				var isTierShift = format.toLowerCase().includes('tiershift');
+
+				// Get species
+				var species = this.curTeam.dex.species.get(set.species);
+
+				// Tier Shift boost helper
+				function getTierShiftBoost(species) {
+					var tier = species.natDexTier || species.tier || '';
+					switch (tier) {
+					case 'UU': return 15;
+					case '(UU)': return 15;
+					case 'BUBL': return 15;
+					case 'BU': return 20;
+					case 'RUBL': return 20;
+					case 'RU': return 25;
+					case 'NUBL': return 25;
+					case 'NU': return 30;
+					case 'PUBL': return 30;
+					case 'PU': return 35;
+					case 'ZUBL': return 35;
+					case 'ZU': return 35;
+					case 'NFE': return 35;
+					case 'LC': return 35;
+					default: return 0;
+					}
+				}
+
+				var tierBoost = (isTierShift ? getTierShiftBoost(species) : 0);
+
 				for (var j in BattleStatNames) {
 					if (j === 'spd' && this.curTeam.gen === 1) continue;
-					stats[j] = this.getStat(j, set);
+				
 					var ev = (set.evs[j] === undefined ? defaultEV : set.evs[j]);
+					var iv = (set.ivs && set.ivs[j] !== undefined ? set.ivs[j] : 31);
+					var level = set.level || 100;
+				
+					var base = species.baseStats[j] || 0;
+				
+					// Apply Tier Shift boost (NOT HP)
+					if (isTierShift && tierBoost && j !== 'hp') {
+						base += tierBoost;
+					}
+				
+					// Recalculate stat
+					if (j === 'hp') {
+						stats[j] = Math.floor(((base * 2 + iv + Math.floor(ev / 4)) * level) / 100) + level + 10;
+					} else {
+						var natureMod = 1;
+						if (BattleNatures[set.nature]) {
+							if (BattleNatures[set.nature].plus === j) natureMod = 1.1;
+							if (BattleNatures[set.nature].minus === j) natureMod = 0.9;
+						}
+						stats[j] = Math.floor((Math.floor(((base * 2 + iv + Math.floor(ev / 4)) * level) / 100) + 5) * natureMod);
+					}
+				
+					// EV display
 					var evBuf = '<em>' + (ev === defaultEV ? '' : ev) + '</em>';
 					if (BattleNatures[set.nature] && BattleNatures[set.nature].plus === j) {
 						evBuf += '<small>+</small>';
 					} else if (BattleNatures[set.nature] && BattleNatures[set.nature].minus === j) {
 						evBuf += '<small>&minus;</small>';
 					}
+				
+					// Stat bar rendering
 					var width = stats[j] * 75 / 504;
-					if (j == 'hp') width = stats[j] * 75 / 704;
+					if (j === 'hp') width = stats[j] * 75 / 704;
 					if (width > 75) width = 75;
+				
 					var color = Math.floor(stats[j] * 180 / 714);
 					if (color > 360) color = 360;
+				
 					var statName = this.curTeam.gen === 1 && j === 'spa' ? 'Spc' : BattleStatNames[j];
-					buf += '<span class="statrow"><label>' + statName + '</label> <span class="statgraph"><span style="width:' + width + 'px;background:hsl(' + color + ',40%,75%);"></span></span> ' + evBuf + '</span>';
+					buf += '<span class="statrow"><label>' + statName + '</label> <span class="statgraph"><span style="width:' +
+						width + 'px;background:hsl(' + color + ',40%,75%);"></span></span> ' + evBuf + '</span>';
 				}
-				buf += '</button></div></div>';
 
 				buf += '</div></li>';
 				return buf;
