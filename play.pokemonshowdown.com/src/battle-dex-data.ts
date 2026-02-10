@@ -141,6 +141,7 @@ const BattleBaseSpeciesChart = [
 	"unown", "burmy", "shellos", "gastrodon", "deerling", "sawsbuck", "vivillon", "flabebe", "floette", "florges", "furfrou", "minior", "alcremie", "tatsugiri", "pokestarufo", "pokestarbrycenman", "pokestarmt", "pokestarmt2", "pokestartransport", "pokestargiant", "pokestarhumanoid", "pokestarmonster", "pokestarf00", "pokestarf002", "pokestarspirit", "pokestarblackdoor", "pokestarwhitedoor", "pokestarblackbelt",
 ] as ID[];
 
+
 const BattlePokemonIconIndexes: {[id: string]: number} = {
 	// alt forms
 	egg: 1032 + 1,
@@ -1143,6 +1144,36 @@ const BattleAvatarNumbers: {[k: string]: string} = {
 	1010: '#1010',
 };
 
+function getTierShiftBoost(tier?: string): number {
+	if (!tier) return 0;
+	switch (tier) {
+		case 'UU': case '(UU)': case 'BUBL': return 15;
+		case 'BU': case 'RUBL': return 20;
+		case 'RU': case 'NUBL': return 25;
+		case 'NU': case 'PUBL': return 30;
+		case 'PU': case 'ZUBL': case 'ZU': case 'NFE': case 'LC': return 35;
+	}
+	return 0;
+}
+
+function applyTierShift(
+	baseStats: Dex.StatsTable,
+	tier?: string
+): Dex.StatsTable {
+	const boost = getTierShiftBoost(tier);
+	if (!boost) return baseStats;
+
+	return {
+		hp: baseStats.hp, // 🚫 HP NEVER boosted
+		atk: baseStats.atk + boost,
+		def: baseStats.def + boost,
+		spa: baseStats.spa + boost,
+		spd: baseStats.spd + boost,
+		spe: baseStats.spe + boost,
+	};
+}
+
+
 type StatName = 'hp' | 'atk' | 'def' | 'spa' | 'spd' | 'spe';
 type NatureName = 'Adamant' | 'Bashful' | 'Bold' | 'Brave' | 'Calm' | 'Careful' | 'Docile' | 'Gentle' |
 	'Hardy' | 'Hasty' | 'Impish' | 'Jolly' | 'Lax' | 'Lonely' | 'Mild' | 'Modest' | 'Naive' | 'Naughty' |
@@ -1619,7 +1650,31 @@ class Species implements Effect {
 		this.num = data.num || 0;
 		this.types = data.types || ['???'];
 		this.abilities = data.abilities || {0: "No Ability"};
-		this.baseStats = data.baseStats || {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0};
+		const rawBaseStats = data.baseStats || {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0};
+		const formatId = (window as any)?.Battle?.format?.id;
+			
+		if (formatId === 'tiershift') {
+			let boost = 0;
+			switch (data.tier) {
+				case 'UU': case '(UU)': case 'BUBL': boost = 15; break;
+				case 'BU': case 'RUBL': boost = 20; break;
+				case 'RU': case 'NUBL': boost = 25; break;
+				case 'NU': case 'PUBL': boost = 30; break;
+				case 'PU': case 'ZUBL': case 'ZU': case 'NFE': case 'LC': boost = 35; break;
+			}
+		
+			this.baseStats = {
+				hp: rawBaseStats.hp, // 🚫 HP NOT boosted
+				atk: rawBaseStats.atk + boost,
+				def: rawBaseStats.def + boost,
+				spa: rawBaseStats.spa + boost,
+				spd: rawBaseStats.spd + boost,
+				spe: rawBaseStats.spe + boost,
+			};
+		} else {
+			this.baseStats = rawBaseStats;
+		}
+
 		this.bst = this.baseStats.hp + this.baseStats.atk + this.baseStats.def +
 			this.baseStats.spa + this.baseStats.spd + this.baseStats.spe;
 		this.weightkg = data.weightkg || 0;
