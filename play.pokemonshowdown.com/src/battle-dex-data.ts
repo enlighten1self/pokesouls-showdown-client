@@ -1650,10 +1650,13 @@ class Species implements Effect {
 		this.num = data.num || 0;
 		this.types = data.types || ['???'];
 		this.abilities = data.abilities || {0: "No Ability"};
-		const rawBaseStats = data.baseStats || {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0};
+		const rawBaseStats = data.baseStats || {
+			hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0,
+		};
+
 		const formatId = (window as any)?.Battle?.format?.id;
 
-		if (formatId.includes('tiershift')) {
+		if (formatId === 'gen9nationaldextiershift') {
 			let boost = 0;
 			switch (data.tier) {
 				case 'UU': case '(UU)': case 'BUBL': boost = 15; break;
@@ -1664,7 +1667,7 @@ class Species implements Effect {
 			}
 		
 			this.baseStats = {
-				hp: rawBaseStats.hp, // 🚫 HP NOT boosted
+				hp: rawBaseStats.hp, // HP untouched
 				atk: rawBaseStats.atk + boost,
 				def: rawBaseStats.def + boost,
 				spa: rawBaseStats.spa + boost,
