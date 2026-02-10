@@ -1653,9 +1653,9 @@ class Species implements Effect {
 		const rawBaseStats = data.baseStats || {
 			hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0,
 		};
-
+		
 		const formatId = (window as any)?.Battle?.format?.id;
-
+		
 		if (formatId === 'gen9nationaldextiershift') {
 			let boost = 0;
 			switch (data.tier) {

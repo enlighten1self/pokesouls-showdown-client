@@ -1392,19 +1392,19 @@ for (var j in BattleStatNames) {
 	var nature = set.nature || 'Hardy';
 	var species = this.curTeam.dex.species.get(set.species);
 	var base = species.baseStats[j] || 0;
+	var tierShiftBoost = 0;
 
 	// Apply Tier Shift boost (Atk/Def/SpA/SpD/Spe) only
 	if (isTierShift && j !== 'hp') {
 		var tier = species.natDexTier || species.tier || '';
-		var boost = 0;
 		switch (tier) {
-			case 'UU': case '(UU)': case 'BUBL': boost = 15; break;
-			case 'BU': case 'RUBL': boost = 20; break;
-			case 'RU': case 'NUBL': boost = 25; break;
-			case 'NU': case 'PUBL': boost = 30; break;
-			case 'PU': case 'ZUBL': case 'ZU': case 'NFE': case 'LC': boost = 35; break;
+			case 'UU': case '(UU)': case 'BUBL': tierShiftBoost = 15; break;
+			case 'BU': case 'RUBL': tierShiftBoost = 20; break;
+			case 'RU': case 'NUBL': tierShiftBoost = 25; break;
+			case 'NU': case 'PUBL': tierShiftBoost = 30; break;
+			case 'PU': case 'ZUBL': case 'ZU': case 'NFE': case 'LC': tierShiftBoost = 35; break;
 		}
-		base += boost;
+		base += tierShiftBoost;
 	}
 
 	// Calculate stat
@@ -1425,6 +1425,11 @@ for (var j in BattleStatNames) {
 		evBuf += '<small>+</small>';
 	} else if (BattleNatures[nature] && BattleNatures[nature].minus === j) {
 		evBuf += '<small>&minus;</small>';
+	}
+
+	// Add Tier Shift boost display
+	if (isTierShift && tierShiftBoost > 0) {
+		evBuf += ' <span style="color: #4CAF50; font-weight: bold;">(+' + tierShiftBoost + ')</span>';
 	}
 
 	// Stat bar rendering
@@ -2508,6 +2513,9 @@ for (var j in BattleStatNames) {
 
 				var supportsEVs = !this.curTeam.format.includes('letsgo');
 
+				// Get species for boost calculation
+				var species = this.curTeam.dex.species.get(set.species);
+
 				// stat cell
 				var buf = '<span class="statrow statrow-head"><label></label> <span class="statgraph"></span> <em>' + (supportsEVs ? 'EV' : 'AV') + '</em></span>';
 				var defaultEV = (this.curTeam.gen > 2 ? 0 : 252);
@@ -2521,6 +2529,13 @@ for (var j in BattleStatNames) {
 					} else if (BattleNatures[set.nature] && BattleNatures[set.nature].minus === stat) {
 						evBuf += '<small>&minus;</small>';
 					}
+
+					// Add Tier Shift boost display
+					var tierShiftBoost = this.getTierShiftBoost(stat, species);
+					if (tierShiftBoost > 0) {
+						evBuf += ' <span style="color: #4CAF50; font-weight: bold;">(+' + tierShiftBoost + ')</span>';
+					}
+
 					var width = stats[stat] * 75 / 504;
 					if (stat == 'hp') width = stats[stat] * 75 / 704;
 					if (width > 75) width = 75;
@@ -3980,6 +3995,24 @@ for (var j in BattleStatNames) {
 			 *********************************************************/
 
 			// Stat calculator
+
+			getTierShiftBoost: function (stat, species) {
+				if (!species || stat === 'hp') return 0;
+				
+				var format = this.curTeam.format || '';
+				if (format.toLowerCase() !== 'gen9nationaldextiershift') return 0;
+				
+				var tier = species.natDexTier || species.tier || '';
+				var boost = 0;
+				switch (tier) {
+					case 'UU': case '(UU)': case 'BUBL': boost = 15; break;
+					case 'BU': case 'RUBL': boost = 20; break;
+					case 'RU': case 'NUBL': boost = 25; break;
+					case 'NU': case 'PUBL': boost = 30; break;
+					case 'PU': case 'ZUBL': case 'ZU': case 'NFE': case 'LC': boost = 35; break;
+				}
+				return boost;
+			},
 
 			getStat: function (stat, set, evOverride, natureOverride) {
 				var supportsEVs = !this.curTeam.format.includes('letsgo');
