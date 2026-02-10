@@ -1652,8 +1652,8 @@ class Species implements Effect {
 		this.abilities = data.abilities || {0: "No Ability"};
 		const rawBaseStats = data.baseStats || {hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0};
 		const formatId = (window as any)?.Battle?.format?.id;
-			
-		if (formatId === 'tiershift') {
+
+		if (formatId.includes('tiershift')) {
 			let boost = 0;
 			switch (data.tier) {
 				case 'UU': case '(UU)': case 'BUBL': boost = 15; break;
