@@ -717,6 +717,9 @@ const BattlePokemonIconIndexes: {[id: string]: number} = {
 	phroggeistyoseigo: 1512 + 178,
 	phroggeistbushigo: 1512 + 179,
 	phroggeistjimengo: 1512 + 180,
+	chesnaughtmega: 1512 + 181,
+	delphoxmega: 1512 + 182,
+	greninjamega: 1512 + 183,
 };
 
 const BattlePokemonIconIndexesLeft: {[id: string]: number} = {
