@@ -646,7 +646,7 @@ const BattlePokemonIconIndexes: {[id: string]: number} = {
 	voltago: 1512 + 102,
 	ultigigas: 1512 + 106,
 	arkidna: 1512 + 109,
-	boarbaque: 1512 + 110,
+	boarbeque: 1512 + 110,
 	zeranheit: 1512 + 111,
 	cereblaze: 1512 + 112,
 	tempervian: 1512 + 113,
