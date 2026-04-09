@@ -1410,7 +1410,7 @@ class Move implements Effect {
 		this.basePower = data.basePower || 0;
 		this.accuracy = data.accuracy || 0;
 		this.pp = data.pp || 1;
-		this.ppOverride = data.ppOverride || 1;
+		this.ppOverride = data.ppOverride || null;
 		this.type = data.type || '???';
 		this.category = data.category || 'Physical';
 		this.priority = data.priority || 0;
