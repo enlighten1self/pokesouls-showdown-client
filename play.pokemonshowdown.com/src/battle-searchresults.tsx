@@ -192,19 +192,26 @@ class PSSearchResults extends preact.Component<{search: DexSearch}> {
 			const table = (window as any).BattleTeambuilderTable;
 			if (table) {
 				const dex = search.dex as any;
-				// scan past-gen override tables
+				// scan past-gen override tables — prefer ppOverride, fall back to pp
 				for (let i = Dex.gen - 1; i >= dex.gen; i--) {
 					const t = table[`gen${i}`];
-					if (t && t.overrideMoveData && id in t.overrideMoveData && t.overrideMoveData[id].pp !== undefined) {
-						ppBase = t.overrideMoveData[id].pp;
+					if (!t || !t.overrideMoveData || !(id in t.overrideMoveData)) continue;
+					const o = t.overrideMoveData[id];
+					if (o.ppOverride !== undefined) {
+						ppBase = o.ppOverride;
+						break;
+					} else if (o.pp !== undefined) {
+						ppBase = o.pp;
 						break;
 					}
 				}
-				// check mod-specific override table
+				// check mod-specific override table if nothing found
 				if (ppBase === move.pp && dex.modid !== `gen${dex.gen}`) {
 					const tmod = table[dex.modid];
-					if (tmod && tmod.overrideMoveData && id in tmod.overrideMoveData && tmod.overrideMoveData[id].pp !== undefined) {
-						ppBase = tmod.overrideMoveData[id].pp;
+					if (tmod && tmod.overrideMoveData && id in tmod.overrideMoveData) {
+						const o = tmod.overrideMoveData[id];
+						if (o.ppOverride !== undefined) ppBase = o.ppOverride;
+						else if (o.pp !== undefined) ppBase = o.pp;
 					}
 				}
 			}

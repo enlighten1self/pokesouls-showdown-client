@@ -237,9 +237,35 @@ class PSTeambuilder {
 				if (displayMove) {
 					try {
 						const baseMove = Dex.moves.get(originalMove);
-						const modMove = modDex.moves.get(originalMove);
-						if (modMove && baseMove && modMove.pp !== baseMove.pp) {
-							displayMove += ` (${modMove.pp} PP)`;
+						let overridePP: number | undefined;
+						const table = (window as any).BattleTeambuilderTable;
+						if (table) {
+							const dex = Dex as any;
+							// scan past-gen override tables — prefer ppOverride then pp
+							for (let i = Dex.gen - 1; i >= dex.gen; i--) {
+								const t = table[`gen${i}`];
+								if (!t || !t.overrideMoveData) continue;
+								const id = toID(originalMove);
+								if (id in t.overrideMoveData) {
+									const o = t.overrideMoveData[id];
+									if (o.ppOverride !== undefined) overridePP = o.ppOverride;
+									else if (o.pp !== undefined) overridePP = o.pp;
+									break;
+								}
+							}
+							// check mod-specific override table
+							if (overridePP === undefined && dex.modid !== `gen${dex.gen}`) {
+								const tmod = table[dex.modid];
+								const id = toID(originalMove);
+								if (tmod && tmod.overrideMoveData && id in tmod.overrideMoveData) {
+									const o = tmod.overrideMoveData[id];
+									if (o.ppOverride !== undefined) overridePP = o.ppOverride;
+									else if (o.pp !== undefined) overridePP = o.pp;
+								}
+							}
+						}
+						if (overridePP !== undefined && baseMove) {
+							displayMove += ` (${overridePP} PP)`;
 						}
 					} catch (e) {
 						// ignore lookup errors and just show the move name
