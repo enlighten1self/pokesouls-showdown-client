@@ -208,6 +208,8 @@ class PSTeambuilder {
 	static exportSet(set: PokemonSet) {
 		let text = '';
 
+		const modDex = new ModdedDex(Dex.modid);
+
 		// core
 		if (set.name && set.name !== set.species) {
 			text += `${set.name} (${set.species})`;
@@ -225,13 +227,24 @@ class PSTeambuilder {
 		}
 		if (set.moves) {
 			for (let move of set.moves) {
-				if (move.substr(0, 13) === 'Hidden Power ') {
-					const hpType = move.slice(13);
-					move = move.slice(0, 13);
-					move = `${move}[${hpType}]`;
+				const originalMove = move;
+				let displayMove = move;
+				if (displayMove.substr(0, 13) === 'Hidden Power ') {
+					const hpType = displayMove.slice(13);
+					displayMove = displayMove.slice(0, 13);
+					displayMove = `${displayMove}[${hpType}]`;
 				}
-				if (move) {
-					text += `- ${move}  \n`;
+				if (displayMove) {
+					try {
+						const baseMove = Dex.moves.get(originalMove);
+						const modMove = modDex.moves.get(originalMove);
+						if (modMove && baseMove && modMove.pp !== baseMove.pp) {
+							displayMove += ` (${modMove.pp} PP)`;
+						}
+					} catch (e) {
+						// ignore lookup errors and just show the move name
+					}
+					text += `- ${displayMove}  \n`;
 				}
 			}
 		}

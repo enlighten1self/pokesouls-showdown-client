@@ -186,7 +186,32 @@ class PSSearchResults extends preact.Component<{search: DexSearch}> {
 			</a></li>;
 		}
 
-		let pp = (move.pp === 1 || move.noPPBoosts ? move.pp : move.pp * 8 / 5);
+		// Prefer PP overrides from BattleTeambuilderTable when available (teambuilder-specific overrides)
+		let ppBase = move.pp;
+		try {
+			const table = (window as any).BattleTeambuilderTable;
+			if (table) {
+				const dex = search.dex as any;
+				// scan past-gen override tables
+				for (let i = Dex.gen - 1; i >= dex.gen; i--) {
+					const t = table[`gen${i}`];
+					if (t && t.overrideMoveData && id in t.overrideMoveData && t.overrideMoveData[id].pp !== undefined) {
+						ppBase = t.overrideMoveData[id].pp;
+						break;
+					}
+				}
+				// check mod-specific override table
+				if (ppBase === move.pp && dex.modid !== `gen${dex.gen}`) {
+					const tmod = table[dex.modid];
+					if (tmod && tmod.overrideMoveData && id in tmod.overrideMoveData && tmod.overrideMoveData[id].pp !== undefined) {
+						ppBase = tmod.overrideMoveData[id].pp;
+					}
+				}
+			}
+		} catch (e) {
+			// ignore and fall back to move.pp
+		}
+		let pp = (ppBase === 1 || move.noPPBoosts ? ppBase : ppBase * 8 / 5);
 		if (search.dex.gen < 3) pp = Math.min(61, pp);
 		return <li class="result"><a href={`${this.URL_ROOT}move/${id}`} data-target="push" data-entry={`move|${move.name}`}>
 			<span class="col movenamecol">{this.renderName(move.name, matchStart, matchEnd, tagStart)}</span>
