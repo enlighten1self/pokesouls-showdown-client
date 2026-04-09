@@ -739,7 +739,7 @@ const BattlePokemonIconIndexes: {[id: string]: number} = {
 	crabominablemega: 1512 + 200,
 	scovillainmega: 1512 + 201,
 	glimmoramega: 1512 + 202,
-	emboarmega: 1512 + 202,
+	emboarmega: 1512 + 203,
 };
 
 const BattlePokemonIconIndexesLeft: {[id: string]: number} = {
