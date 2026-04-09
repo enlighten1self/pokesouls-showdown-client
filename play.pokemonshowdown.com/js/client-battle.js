@@ -664,8 +664,36 @@
 					var moveData = curActive.moves[i];
 					var move = this.battle.dex.moves.get(moveData.move);
 					var name = move.name;
-					var pp = moveData.pp + '/' + moveData.maxpp;
-					if (!moveData.maxpp) pp = '&ndash;';
+					var displayedMaxPP = moveData.maxpp;
+					try {
+						var table = window.BattleTeambuilderTable;
+						if (table) {
+							var dex = Dex;
+							var basePP = move.pp;
+							for (var j = Dex.gen - 1; j >= dex.gen; j--) {
+								var t = table['gen' + j];
+								if (!t || !t.overrideMoveData) continue;
+								var id = move.id;
+								if (id in t.overrideMoveData) {
+									var o = t.overrideMoveData[id];
+									if (o.ppOverride !== undefined) { basePP = o.ppOverride; break; }
+									if (o.pp !== undefined) { basePP = o.pp; break; }
+								}
+							}
+							if (basePP === move.pp && dex.modid !== 'gen' + dex.gen) {
+								var tmod = table[dex.modid];
+								if (tmod && tmod.overrideMoveData && move.id in tmod.overrideMoveData) {
+									var o2 = tmod.overrideMoveData[move.id];
+									if (o2.ppOverride !== undefined) basePP = o2.ppOverride;
+									else if (o2.pp !== undefined) basePP = o2.pp;
+								}
+							}
+							displayedMaxPP = (basePP === 1 || move.noPPBoosts ? basePP : basePP * 8 / 5);
+							if (Dex.gen < 3) displayedMaxPP = Math.min(61, displayedMaxPP);
+						}
+					} catch (e) {}
+					var pp = moveData.pp + '/' + displayedMaxPP;
+					if (!displayedMaxPP) pp = '&ndash;';
 					if (move.id === 'Struggle' || move.id === 'Recharge') pp = '&ndash;';
 					if (move.id === 'Recharge') move.type = '&ndash;';
 					if (name.substr(0, 12) === 'Hidden Power') name = 'Hidden Power';
