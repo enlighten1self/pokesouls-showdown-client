@@ -143,36 +143,12 @@ class BattleTooltips {
 
 	getMoveBasePP(move: Move) {
 		let ppBase = (move as any).pp || 1;
-		try {
-			const table = (window as any).BattleTeambuilderTable;
-			if (table) {
-				const dex = this.battle.dex as any;
-				for (let i = Dex.gen - 1; i >= dex.gen; i--) {
-					const t = table[`gen${i}`];
-					if (!t || !t.overrideMoveData) continue;
-					if (!(move.id in t.overrideMoveData)) continue;
-					const o = t.overrideMoveData[move.id];
-					if (o.ppOverride !== undefined) {
-						ppBase = o.ppOverride;
-						break;
-					} else if (o.pp !== undefined) {
-						ppBase = o.pp;
-						break;
-					}
-				}
-				if (ppBase === move.pp && (dex.modid !== `gen${dex.gen}`)) {
-					const tmod = table[dex.modid];
-					if (tmod && tmod.overrideMoveData && move.id in tmod.overrideMoveData) {
-						const o = tmod.overrideMoveData[move.id];
-						if (o.ppOverride !== undefined) ppBase = o.ppOverride;
-						else if (o.pp !== undefined) ppBase = o.pp;
-					}
-				}
-			}
-		} catch (e) {
-			// ignore and fall back to move.pp
-		}
 		return ppBase;
+	}
+
+	getMoveppOverride(move: Move) {
+		let ppO = (move as any).ppOverride || null;
+		return ppO;
 	}
 
 	constructor(battle: Battle) {
@@ -1383,7 +1359,9 @@ class BattleTooltips {
 		} else {
 			move = this.battle.dex.moves.get(moveName);
 			const basePP = this.getMoveBasePP(move);
+			const ppO = this.getMoveppOverride(move);
 			maxpp = (basePP === 1 || move.noPPBoosts ? basePP : basePP * 8 / 5);
+			if (ppO !== null) maxpp = ppO
 			if (this.battle.gen < 3) maxpp = Math.min(61, maxpp);
 		}
 		const bullet = moveName.charAt(0) === '*' || move.isZ ? '<span style="color:#888">&#8226;</span>' : '&#8226;';
@@ -1815,7 +1793,9 @@ class BattleTooltips {
 			value.set(20 + 20 * boostCount);
 		}
 		if (move.id === 'trumpcard') {
-			const basePP = this.getMoveBasePP(move);
+			let basePP = this.getMoveBasePP(move);
+			const ppO = this.getMoveppOverride(move);
+			if (ppO !== null) basePP = ppO
 			const ppLeft = basePP - this.ppUsed(move, pokemon);
 			let basePower = 40;
 			if (ppLeft === 1) basePower = 200;

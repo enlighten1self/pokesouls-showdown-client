@@ -567,19 +567,10 @@
 
 		// power, accuracy, pp
 		var basePP = move.pp;
-		var usedPPOverride = false;
-		if (typeof window !== 'undefined' && window.BattleTeambuilderTable && window.BattleTeambuilderTable.overrideMoveData) {
-			var _ov = window.BattleTeambuilderTable.overrideMoveData[toID(move.name)];
-			if (_ov) {
-				if (_ov.ppOverride != null) {
-					basePP = _ov.ppOverride;
-					usedPPOverride = true;
-				} else if (_ov.pp != null) basePP = _ov.pp;
-			}
-		}
+		var PPO = move.ppOverride;
 		var pp;
-		if (usedPPOverride) {
-			pp = basePP;
+		if (PPO !== null) {
+			pp = PPO;
 		} else {
 			pp = (basePP === 1 || move.noPPBoosts ? basePP : basePP * 8 / 5);
 			if (this.engine && this.engine.dex.gen < 3) pp = Math.min(61, pp);
@@ -620,19 +611,10 @@
 
 		// power, accuracy, pp
 		var basePP = move.pp;
-		var usedPPOverride = false;
-		if (typeof window !== 'undefined' && window.BattleTeambuilderTable && window.BattleTeambuilderTable.overrideMoveData) {
-			var _ov = window.BattleTeambuilderTable.overrideMoveData[toID(move.name)];
-			if (_ov) {
-				if (_ov.ppOverride != null) {
-					basePP = _ov.ppOverride;
-					usedPPOverride = true;
-				} else if (_ov.pp != null) basePP = _ov.pp;
-			}
-		}
+		var PPO = move.ppOverride;
 		var pp;
-		if (usedPPOverride) {
-			pp = basePP;
+		if (PPO !== null) {
+			pp = PPO;
 		} else {
 			pp = (basePP === 1 || move.noPPBoosts ? basePP : basePP * 8 / 5);
 			if (this.engine && this.engine.dex.gen < 3) pp = Math.min(61, pp);
@@ -675,21 +657,13 @@
 
 		// power, accuracy, pp
 		var basePP = move.pp;
-		var usedPPOverride = false;
-		if (typeof window !== 'undefined' && window.BattleTeambuilderTable && window.BattleTeambuilderTable.overrideMoveData) {
-			var _ov = window.BattleTeambuilderTable.overrideMoveData[toID(move.name)];
-			if (_ov) {
-				if (_ov.ppOverride != null) {
-					basePP = _ov.ppOverride;
-					usedPPOverride = true;
-				} else if (_ov.pp != null) basePP = _ov.pp;
-			}
-		}
+		var PPO = move.ppOverride;
 		var pp;
-		if (usedPPOverride) {
-			pp = basePP;
+		if (PPO !== null) {
+			pp = PPO;
 		} else {
 			pp = (basePP === 1 || move.noPPBoosts ? basePP : basePP * 8 / 5);
+			if (this.engine && this.engine.dex.gen < 3) pp = Math.min(61, pp);
 		}
 		buf += '<span class="col labelcol">' + (move.category !== 'Status' ? ('<em>Power</em><br />' + (move.basePower || '&mdash;')) : '') + '</span> ';
 		buf += '<span class="col widelabelcol"><em>Accuracy</em><br />' + (move.accuracy && move.accuracy !== true ? move.accuracy + '%' : '&mdash;') + '</span> ';
