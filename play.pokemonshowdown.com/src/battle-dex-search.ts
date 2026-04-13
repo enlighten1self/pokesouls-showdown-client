@@ -1072,6 +1072,15 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			}
 		}
 
+		if (dex.gen >= 5) {
+			if ((format === 'convergence' || format.startsWith('monothreat')) && table.convergenceBans) {
+				tierSet = tierSet.filter(([type, id]) => {
+					if (id in table.convergenceBans) return false;
+					return true;
+				});
+			}
+		}
+
 		// Filter out Gmax Pokemon from standard tier selection
 		if (!/^(battlestadium|vgc|doublesubers)/g.test(format)) {
 			tierSet = tierSet.filter(([type, id]) => {
@@ -1698,78 +1707,32 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 			}
 		}
 		if (isConvergence) {
-	var excludedFormes = [
-		'Alola','Alola-Totem','Galar','Galar-Zen','Hisui',
-		'Paldea','Paldea-Combat','Paldea-Blaze','Paldea-Aqua',
-	];
-
-	function excludedForme(s: Species) {
-		return excludedFormes.includes(s.forme);
-	}
-
-	var table = this.getTable();
-	for (var id in table) {
-		var move = dex.moves.get(id);
-		if (moves.includes(move.id)) continue;
-		if (move.gen > dex.gen) continue;
-		if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
-
-		var speciesTypes = new Set<string>();
-
-		for (var i = dex.gen; i >= species.gen && i >= move.gen; i--) {
-			var genDex = Dex.forGen(i);
-			var mon = genDex.species.get(species.name);
-
-			var baseSpecies = genDex.species.get(mon.changesFrom || mon.name);
-
-			if (!mon.battleOnly) {
-				for (var j = 0; j < mon.types.length; j++) {
-					speciesTypes.add(mon.types[j]);
-				}
-			}
-
-			var prevo = mon.prevo;
-			while (prevo) {
-				var prevoMon = genDex.species.get(prevo);
-				for (var j = 0; j < prevoMon.types.length; j++) {
-					speciesTypes.add(prevoMon.types[j]);
-				}
-				prevo = prevoMon.prevo;
-			}
-
-			if (mon.battleOnly && typeof mon.battleOnly === 'string') {
-				baseSpecies = genDex.species.get(mon.battleOnly);
-			}
-
-			if (baseSpecies.otherFormes && !['Wormadam','Urshifu'].includes(baseSpecies.baseSpecies)) {
-				if (!excludedForme(mon)) {
-					for (var j = 0; j < baseSpecies.types.length; j++) {
-						speciesTypes.add(baseSpecies.types[j]);
-					}
-				}
-
-				for (var k = 0; k < baseSpecies.otherFormes.length; k++) {
-					var forme = genDex.species.get(baseSpecies.otherFormes[k]);
-					if (!forme.battleOnly && !excludedForme(forme)) {
-						for (var j = 0; j < forme.types.length; j++) {
-							speciesTypes.add(forme.types[j]);
+			var table = this.getTable();
+			for (var id in table) {
+				var move = dex.moves.get(id);
+				if (moves.includes(move.id)) continue;
+				if (move.gen > dex.gen) continue;
+				if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
+				var valid = false;
+				for (var pid in table) {
+					var other = dex.species.get(pid);
+					if (!other.exists) continue;
+					if (other.gen > dex.gen) continue;
+					if (other.isNonstandard && other.isNonstandard !== 'Unobtainable') continue;
+					if (
+						other.types.length === species.types.length &&
+						other.types.every(t => species.types.includes(t))
+					) {
+						const learnset = BattleTeambuilderTable.learnsets[pid];
+						if (learnset?.[id]) {
+							valid = true;
+							break;
 						}
 					}
 				}
+				if (valid) moves.push(id);
 			}
 		}
-
-		var valid = false;
-		for (var t of species.types) {
-			if (speciesTypes.has(t)) {
-				valid = true;
-				break;
-			}
-		}
-
-		if (valid) moves.push(id);
-	}
-}
 		moves.sort();
 		sketchMoves.sort();
 
