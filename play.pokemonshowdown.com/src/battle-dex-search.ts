@@ -1698,66 +1698,78 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 			}
 		}
 		if (isConvergence) {
-			const excludedFormes = [
-				'Alola','Alola-Totem','Galar','Galar-Zen','Hisui',
-				'Paldea','Paldea-Combat','Paldea-Blaze','Paldea-Aqua',
-			];
-		
-			const excludedForme = (s: Species) => excludedFormes.includes(s.forme);
-		
-			for (let id in this.getTable()) {
-				const move = dex.moves.get(id);
-				if (moves.includes(move.id)) continue;
-				if (move.gen > dex.gen) continue;
-				if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
-			
-				const speciesTypes = new Set<string>();
-			
-				for (let i = dex.gen; i >= species.gen && i >= move.gen; i--) {
-					const genDex = Dex.forGen(i);
-					const mon = genDex.species.get(species.name);
-				
-					let baseSpecies = genDex.species.get(mon.changesFrom || mon.name);
-				
-					// current form
-					if (!mon.battleOnly) {
-						for (const t of mon.types) speciesTypes.add(t);
+	var excludedFormes = [
+		'Alola','Alola-Totem','Galar','Galar-Zen','Hisui',
+		'Paldea','Paldea-Combat','Paldea-Blaze','Paldea-Aqua',
+	];
+
+	function excludedForme(s: Species) {
+		return excludedFormes.includes(s.forme);
+	}
+
+	var table = this.getTable();
+	for (var id in table) {
+		var move = dex.moves.get(id);
+		if (moves.includes(move.id)) continue;
+		if (move.gen > dex.gen) continue;
+		if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
+
+		var speciesTypes = new Set<string>();
+
+		for (var i = dex.gen; i >= species.gen && i >= move.gen; i--) {
+			var genDex = Dex.forGen(i);
+			var mon = genDex.species.get(species.name);
+
+			var baseSpecies = genDex.species.get(mon.changesFrom || mon.name);
+
+			if (!mon.battleOnly) {
+				for (var j = 0; j < mon.types.length; j++) {
+					speciesTypes.add(mon.types[j]);
+				}
+			}
+
+			var prevo = mon.prevo;
+			while (prevo) {
+				var prevoMon = genDex.species.get(prevo);
+				for (var j = 0; j < prevoMon.types.length; j++) {
+					speciesTypes.add(prevoMon.types[j]);
+				}
+				prevo = prevoMon.prevo;
+			}
+
+			if (mon.battleOnly && typeof mon.battleOnly === 'string') {
+				baseSpecies = genDex.species.get(mon.battleOnly);
+			}
+
+			if (baseSpecies.otherFormes && !['Wormadam','Urshifu'].includes(baseSpecies.baseSpecies)) {
+				if (!excludedForme(mon)) {
+					for (var j = 0; j < baseSpecies.types.length; j++) {
+						speciesTypes.add(baseSpecies.types[j]);
 					}
-				
-					// prevos
-					let prevo = mon.prevo;
-					while (prevo) {
-						const prevoMon = genDex.species.get(prevo);
-						for (const t of prevoMon.types) speciesTypes.add(t);
-						prevo = prevoMon.prevo;
-					}
-				
-					// DO NOT mutate outer species
-					if (mon.battleOnly && typeof mon.battleOnly === 'string') {
-						baseSpecies = genDex.species.get(mon.battleOnly);
-					}
-				
-					// formes
-					if (baseSpecies.otherFormes && !['Wormadam','Urshifu'].includes(baseSpecies.baseSpecies)) {
-						if (!excludedForme(mon)) {
-							for (const t of baseSpecies.types) speciesTypes.add(t);
-						}
-					
-						for (const formeName of baseSpecies.otherFormes) {
-							const forme = genDex.species.get(formeName);
-							if (!forme.battleOnly && !excludedForme(forme)) {
-								for (const t of forme.types) speciesTypes.add(t);
-							}
+				}
+
+				for (var k = 0; k < baseSpecies.otherFormes.length; k++) {
+					var forme = genDex.species.get(baseSpecies.otherFormes[k]);
+					if (!forme.battleOnly && !excludedForme(forme)) {
+						for (var j = 0; j < forme.types.length; j++) {
+							speciesTypes.add(forme.types[j]);
 						}
 					}
 				}
-			
-				// check overlap
-				const valid = species.types.some(t => speciesTypes.has(t));
-			
-				if (valid) moves.push(id);
 			}
 		}
+
+		var valid = false;
+		for (var t of species.types) {
+			if (speciesTypes.has(t)) {
+				valid = true;
+				break;
+			}
+		}
+
+		if (valid) moves.push(id);
+	}
+}
 		moves.sort();
 		sketchMoves.sort();
 
