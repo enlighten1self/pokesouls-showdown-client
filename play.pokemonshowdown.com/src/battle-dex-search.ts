@@ -1707,27 +1707,25 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 			}
 		}
 		if (isConvergence) {
-			var table = this.getTable();
-			for (var id in table) {
-				var move = dex.moves.get(id);
+			const allSpecies = dex.species.all();
+			const sameTypeSpecies = allSpecies.filter(other =>
+				other.exists &&
+				other.gen <= dex.gen &&
+				(!other.isNonstandard || other.isNonstandard === 'Unobtainable') &&
+				other.types.length === species.types.length &&
+				other.types.every(t => species.types.includes(t as TypeName))
+			);
+			for (let id in this.getTable()) {
+				const move = dex.moves.get(id);
 				if (moves.includes(move.id)) continue;
 				if (move.gen > dex.gen) continue;
 				if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
-				var valid = false;
-				for (var pid in table) {
-					var other = dex.species.get(pid);
-					if (!other.exists) continue;
-					if (other.gen > dex.gen) continue;
-					if (other.isNonstandard && other.isNonstandard !== 'Unobtainable') continue;
-					if (
-						other.types.length === species.types.length &&
-						other.types.every(t => species.types.includes(t))
-					) {
-						const learnset = BattleTeambuilderTable.learnsets[pid];
-						if (learnset?.[id]) {
-							valid = true;
-							break;
-						}
+				let valid = false;
+				for (const other of sameTypeSpecies) {
+					const learnset = BattleTeambuilderTable.learnsets[other.id];
+					if (learnset?.[id]) {
+						valid = true;
+						break;
 					}
 				}
 				if (valid) moves.push(id);

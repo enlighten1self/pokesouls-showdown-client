@@ -369,7 +369,6 @@ fxPrefix = 'https://raw.githubusercontent.com/SanjiTheLord/cobblesouls-showdown-
 	species = {
 		get: (nameOrSpecies: string | Species | null | undefined): Species => {
 			if (nameOrSpecies && typeof nameOrSpecies !== 'string') {
-				// TODO: don't accept Species' here
 				return nameOrSpecies;
 			}
 			let name = nameOrSpecies || '';
@@ -390,7 +389,6 @@ fxPrefix = 'https://raw.githubusercontent.com/SanjiTheLord/cobblesouls-showdown-
 			}
 			if (!window.BattlePokedex) window.BattlePokedex = {};
 			let data = window.BattlePokedex[id];
-
 			let species: Species;
 			if (data && typeof data.exists === 'boolean') {
 				species = data;
@@ -405,7 +403,6 @@ fxPrefix = 'https://raw.githubusercontent.com/SanjiTheLord/cobblesouls-showdown-
 				species = new Species(id, name, data);
 				window.BattlePokedex[id] = species;
 			}
-
 			if (species.cosmeticFormes) {
 				for (const forme of species.cosmeticFormes) {
 					if (toID(forme) === formid) {
@@ -422,8 +419,16 @@ fxPrefix = 'https://raw.githubusercontent.com/SanjiTheLord/cobblesouls-showdown-
 					}
 				}
 			}
-
 			return species;
+		},
+		all: (): Species[] => {
+			if (!window.BattlePokedex) return [];
+			const result: Species[] = [];
+			for (const id in window.BattlePokedex) {
+				const s = this.species.get(id);
+				if (s.exists) result.push(s);
+			}
+			return result;
 		},
 	};
 
@@ -993,6 +998,14 @@ class ModdedDex {
 			const species = new Species(id, name, data);
 			this.cache.Species[id] = species;
 			return species;
+		},
+		all: (): Species[] => {
+			const result: Species[] = [];
+			for (const id in window.BattlePokedex) {
+				const species = this.species.get(id);
+				if (species.exists) result.push(species);
+			}
+			return result;
 		},
 	};
 
