@@ -1698,25 +1698,64 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 			}
 		}
 		if (isConvergence) {
-			const speciesTypes = [...species.types];
-			for (let id in this.getTable()) {
-				const pokemon = dex.species.get(id);
-				if (!pokemon.exists) continue;
-				if (pokemon.gen > dex.gen) continue;
-				if (pokemon.isNonstandard && pokemon.isNonstandard !== 'Unobtainable') continue;
-				const pokemonTypes = pokemon.types;
-				if (
-					pokemonTypes.length === speciesTypes.length &&
-					pokemonTypes.every(t => speciesTypes.includes(t)) &&
-					speciesTypes.every(t => pokemonTypes.includes(t))
-				) {
-					const learnset = BattleTeambuilderTable.learnsets[id];
-					if (learnset) {
-						for (let moveid in learnset) {
-							if (!moves.includes(moveid)) moves.push(moveid);
+			const excludedFormes = [
+				'Alola','Alola-Totem','Galar','Galar-Zen','Hisui',
+				'Paldea','Paldea-Combat','Paldea-Blaze','Paldea-Aqua',
+			];
+		
+			const excludedForme = (s: Species) => excludedFormes.includes(s.forme);
+		
+			for (const id in this.getTable()) {
+				const move = dex.moves.get(id);
+				if (moves.includes(move.id)) continue;
+				if (move.gen > dex.gen) continue;
+				if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
+			
+				const speciesTypes = new Set<string>();
+			
+				for (let i = dex.gen; i >= species.gen && i >= move.gen; i--) {
+					const genDex = Dex.forGen(i);
+					const mon = genDex.species.get(species.name);
+				
+					let baseSpecies = genDex.species.get(mon.changesFrom || mon.name);
+				
+					// current form
+					if (!mon.battleOnly) {
+						for (const t of mon.types) speciesTypes.add(t);
+					}
+				
+					// prevos
+					let prevo = mon.prevo;
+					while (prevo) {
+						const prevoMon = genDex.species.get(prevo);
+						for (const t of prevoMon.types) speciesTypes.add(t);
+						prevo = prevoMon.prevo;
+					}
+				
+					// DO NOT mutate outer species
+					if (mon.battleOnly && typeof mon.battleOnly === 'string') {
+						baseSpecies = genDex.species.get(mon.battleOnly);
+					}
+				
+					// formes
+					if (baseSpecies.otherFormes && !['Wormadam','Urshifu'].includes(baseSpecies.baseSpecies)) {
+						if (!excludedForme(mon)) {
+							for (const t of baseSpecies.types) speciesTypes.add(t);
+						}
+					
+						for (const formeName of baseSpecies.otherFormes) {
+							const forme = genDex.species.get(formeName);
+							if (!forme.battleOnly && !excludedForme(forme)) {
+								for (const t of forme.types) speciesTypes.add(t);
+							}
 						}
 					}
 				}
+			
+				// check overlap
+				const valid = species.types.some(t => speciesTypes.has(t));
+			
+				if (valid) moves.push(id);
 			}
 		}
 		moves.sort();
