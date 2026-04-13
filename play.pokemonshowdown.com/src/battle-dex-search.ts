@@ -1707,7 +1707,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 				if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
 
 				for (const otherId in BattlePokedex) {
-					const other = dex.species.get(otherId as ID);
+					const other = dex.species.get(species.name);
 					if (other.gen > dex.gen) continue;
 					if (other.isNonstandard && other.isNonstandard !== 'Unobtainable') continue;
 
