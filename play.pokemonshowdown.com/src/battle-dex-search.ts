@@ -1699,34 +1699,26 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		}
 		if (isConvergence) {
 			const speciesTypes = [...species.types];
-
 			for (let id in this.getTable()) {
-				const move = dex.moves.get(id);
-				if (moves.includes(move.id)) continue;
-				if (move.gen > dex.gen) continue;
-				if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
-
-				for (const otherId in BattlePokedex) {
-					const other = dex.species.get(species.name);
-					if (other.gen > dex.gen) continue;
-					if (other.isNonstandard && other.isNonstandard !== 'Unobtainable') continue;
-
-					const otherTypes = other.types;
-					if (
-						otherTypes.length === speciesTypes.length &&
-						otherTypes.every(t => speciesTypes.includes(t)) &&
-						speciesTypes.every(t => otherTypes.includes(t))
-					) {
-						const learnset = BattleTeambuilderTable.learnsets[otherId];
-						if (learnset?.[id]) {
-							moves.push(id);
-							break;
+				const pokemon = dex.species.get(id);
+				if (!pokemon.exists) continue;
+				if (pokemon.gen > dex.gen) continue;
+				if (pokemon.isNonstandard && pokemon.isNonstandard !== 'Unobtainable') continue;
+				const pokemonTypes = pokemon.types;
+				if (
+					pokemonTypes.length === speciesTypes.length &&
+					pokemonTypes.every(t => speciesTypes.includes(t)) &&
+					speciesTypes.every(t => pokemonTypes.includes(t))
+				) {
+					const learnset = BattleTeambuilderTable.learnsets[id];
+					if (learnset) {
+						for (let moveid in learnset) {
+							if (!moves.includes(moveid)) moves.push(moveid);
 						}
 					}
 				}
 			}
 		}
-
 		moves.sort();
 		sketchMoves.sort();
 
