@@ -1063,6 +1063,15 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			}
 		}
 
+		if (dex.gen >= 5) {
+			if ((format === 'stabmons' || format.startsWith('monothreat')) && table.STABmonsBans) {
+				tierSet = tierSet.filter(([type, id]) => {
+					if (id in table.STABmonsBans) return false;
+					return true;
+				});
+			}
+		}
+
 		// Filter out Gmax Pokemon from standard tier selection
 		if (!/^(battlestadium|vgc|doublesubers)/g.test(format)) {
 			tierSet = tierSet.filter(([type, id]) => {
@@ -1554,6 +1563,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		const format = this.format;
 		const isHackmons = (format.includes('hackmons') || format.endsWith('bh'));
 		const isSTABmons = (format.includes('stabmons') || format === 'staaabmons');
+		const isConvergence = (format.includes('convergence') || format === 'convergence');
 		const isTradebacks = format.includes('tradebacks');
 		const regionBornLegality = dex.gen >= 6 &&
 			(/^battle(spot|stadium|festival)/.test(format) || format.startsWith('bss') ||
@@ -1685,6 +1695,35 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 					}
 				}
 				if (valid) moves.push(id);
+			}
+		}
+		if (isConvergence) {
+			const speciesTypes = [...species.types];
+
+			for (let id in this.getTable()) {
+				const move = dex.moves.get(id);
+				if (moves.includes(move.id)) continue;
+				if (move.gen > dex.gen) continue;
+				if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
+
+				for (const otherId in BattlePokedex) {
+					const other = dex.species.get(otherId as ID);
+					if (other.gen > dex.gen) continue;
+					if (other.isNonstandard && other.isNonstandard !== 'Unobtainable') continue;
+
+					const otherTypes = other.types;
+					if (
+						otherTypes.length === speciesTypes.length &&
+						otherTypes.every(t => speciesTypes.includes(t)) &&
+						speciesTypes.every(t => otherTypes.includes(t))
+					) {
+						const learnset = BattleTeambuilderTable.learnsets[otherId];
+						if (learnset?.[id]) {
+							moves.push(id);
+							break;
+						}
+					}
+				}
 			}
 		}
 
