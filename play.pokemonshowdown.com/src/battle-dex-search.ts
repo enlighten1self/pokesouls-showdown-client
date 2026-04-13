@@ -1705,7 +1705,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		
 			const excludedForme = (s: Species) => excludedFormes.includes(s.forme);
 		
-			for (const id in this.getTable()) {
+			for (let id in this.getTable()) {
 				const move = dex.moves.get(id);
 				if (moves.includes(move.id)) continue;
 				if (move.gen > dex.gen) continue;
