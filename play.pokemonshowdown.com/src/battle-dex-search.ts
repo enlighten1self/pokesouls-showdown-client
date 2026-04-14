@@ -1073,7 +1073,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		}
 
 		if (dex.gen >= 5) {
-			if ((format === 'convergence' || format.startsWith('monothreat')) && table.convergenceBans) {
+			if ((format === 'convergence' || format.startsWith('convergence')) && table.convergenceBans) {
 				tierSet = tierSet.filter(([type, id]) => {
 					if (id in table.convergenceBans) return false;
 					return true;
@@ -1082,7 +1082,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		}
 
 		if (dex.gen >= 5) {
-			if ((format === 'franticmovepools' || format.startsWith('monothreat')) && table.franticMovepoolsBans) {
+			if ((format === 'franticmovepools' || format.startsWith('franticmovepools')) && table.franticMovepoolsBans) {
 				tierSet = tierSet.filter(([type, id]) => {
 					if (id in table.franticMovepoolsBans) return false;
 					return true;
@@ -1751,18 +1751,15 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 			}
 		}
 		if (isConvergence) {
-			const table = this.getTable();
-			const sameTypeSpecies = dex.species.all().filter(other =>
+			const allSpecies = dex.species.all();
+			const sameTypeSpecies = allSpecies.filter(other =>
 				other.exists &&
 				other.gen <= dex.gen &&
 				(!other.isNonstandard || other.isNonstandard === 'Unobtainable') &&
-				!(other.id in table.convergenceBans) &&
 				other.types.length === species.types.length &&
 				other.types.every(t => species.types.includes(t as TypeName))
 			);
-		
-			// Moves
-			for (let id in table) {
+			for (let id in this.getTable()) {
 				const move = dex.moves.get(id);
 				if (moves.includes(move.id)) continue;
 				if (move.gen > dex.gen) continue;
