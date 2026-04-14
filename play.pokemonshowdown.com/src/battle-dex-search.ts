@@ -1777,40 +1777,9 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 				}
 				if (valid) moves.push(id);
 			}
-			// Abilities
-			const slots = ['0', '1', 'H', 'S'] as const;
-
-			const convergenceAbilities = new Set<string>();
-
-			for (const other of sameTypeSpecies) {
-				for (const slot of slots) {
-					const abilityName = other.abilities[slot];
-					if (!abilityName) continue;
-				
-					const ability = dex.abilities.get(abilityName);
-					if (!ability?.exists) continue;
-					if (ability.gen > dex.gen) continue;
-					if (toID(abilityName) in table.convergenceBans) continue;
-				
-					convergenceAbilities.add(abilityName);
-				}
-			}
-
-			const abilityList = [...convergenceAbilities];
-
-			// build NEW object instead of mutating readonly one
-			const newAbilities: Record<string, string> = {};
-
-			for (let i = 0; i < abilityList.length; i++) {
-				newAbilities[String(i)] = abilityList[i];
-			}
-
-			Object.assign(species, { abilities: newAbilities });
 		}
 
 		if (isfranticmovepools) {
-			const table = this.getTable();
-
 			const nicknameId = species.name ? toID(species.name) : '';
 			const baseSpecies = dex.species.get(species.baseSpecies);
 			const match = dex.species.get(nicknameId);
@@ -1830,31 +1799,6 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 						moves.push(id);
 					}
 				}
-			
-				// ABILITIES
-				const slots = ['0', '1', 'H', 'S'] as const;
-				const franticAbilities = new Set<string>();
-			
-				for (const slot of slots) {
-					const abilityName = match.abilities[slot];
-					if (!abilityName) continue;
-				
-					const ability = dex.abilities.get(abilityName);
-					if (!ability?.exists) continue;
-					if (ability.gen > dex.gen) continue;
-					if (toID(abilityName) in table.convergenceBans) continue;
-				
-					franticAbilities.add(abilityName);
-				}
-			
-				const abilityList = [...franticAbilities];
-			
-				const newAbilities: Record<string, string> = {};
-				for (let i = 0; i < abilityList.length; i++) {
-					newAbilities[String(i)] = abilityList[i];
-				}
-			
-				Object.assign(species, { abilities: newAbilities });
 			}
 		}
 		moves.sort();
