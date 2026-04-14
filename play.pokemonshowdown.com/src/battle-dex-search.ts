@@ -1081,6 +1081,15 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			}
 		}
 
+		if (dex.gen >= 5) {
+			if ((format === 'franticmovepools' || format.startsWith('monothreat')) && table.franticMovepoolsBans) {
+				tierSet = tierSet.filter(([type, id]) => {
+					if (id in table.franticMovepoolsBans) return false;
+					return true;
+				});
+			}
+		}
+
 		// Filter out Gmax Pokemon from standard tier selection
 		if (!/^(battlestadium|vgc|doublesubers)/g.test(format)) {
 			tierSet = tierSet.filter(([type, id]) => {
@@ -1523,6 +1532,40 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 			return species.baseStats.spe <= 100;
 		case 'wildcharge':
 			return !moves.includes('supercellslam');
+		case 'shadowrush':
+			return true;
+		case 'plasmaflare':
+			return true;
+		case 'soulanchor':
+			return true;
+		case 'soulsecretion':
+			return true;
+		case 'primalrage':
+			return true;
+		case 'endlesstorment':
+			return true;
+		case 'photonhaymaker':
+			return true;
+		case 'davysmash':
+			return true;
+		case 'pumpkinmash':
+			return true;
+		case 'tremorturn':
+			return true;
+		case 'spectraltail':
+			return true;
+		case 'dragonfangs':
+			return true;
+		case 'altitude':
+			return true;
+		case 'sulphuricdownpour':
+			return true;
+		case 'stainlessslash':
+			return true;
+		case 'trickyreception':
+			return true;
+		case 'foliageturn':
+			return true;
 		}
 
 		if (this.formatType === 'doubles' && BattleMoveSearch.GOOD_DOUBLES_MOVES.includes(id)) {
@@ -1573,6 +1616,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		const isHackmons = (format.includes('hackmons') || format.endsWith('bh'));
 		const isSTABmons = (format.includes('stabmons') || format === 'staaabmons');
 		const isConvergence = (format.includes('convergence') || format === 'convergence');
+		const isfranticmovepools = (format.includes('franticmovepools') || format === 'franticmovepools');
 		const isTradebacks = format.includes('tradebacks');
 		const regionBornLegality = dex.gen >= 6 &&
 			(/^battle(spot|stadium|festival)/.test(format) || format.startsWith('bss') ||
@@ -1734,22 +1778,83 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 				if (valid) moves.push(id);
 			}
 			// Abilities
+			const slots = ['0', '1', 'H', 'S'] as const;
+
 			const convergenceAbilities = new Set<string>();
+
 			for (const other of sameTypeSpecies) {
-				for (const slot of ['0', '1', '2'] as const) {
-					const abilityName = (other.abilities as any)[slot];
+				for (const slot of slots) {
+					const abilityName = other.abilities[slot];
 					if (!abilityName) continue;
+				
 					const ability = dex.abilities.get(abilityName);
-					if (!ability.exists) continue;
+					if (!ability?.exists) continue;
 					if (ability.gen > dex.gen) continue;
 					if (toID(abilityName) in table.convergenceBans) continue;
+				
 					convergenceAbilities.add(abilityName);
 				}
 			}
+
 			const abilityList = [...convergenceAbilities];
-			const writableAbilities = species.abilities as any;
+
+			// build NEW object instead of mutating readonly one
+			const newAbilities: Record<string, string> = {};
+
 			for (let i = 0; i < abilityList.length; i++) {
-				writableAbilities[`${i}`] = abilityList[i];
+				newAbilities[String(i)] = abilityList[i];
+			}
+
+			Object.assign(species, { abilities: newAbilities });
+		}
+
+		if (isfranticmovepools) {
+			const table = this.getTable();
+
+			const nicknameId = species.name ? toID(species.name) : '';
+			const baseSpecies = dex.species.get(species.baseSpecies);
+			const match = dex.species.get(nicknameId);
+
+			if (match?.exists && match.id !== baseSpecies.id) {
+			
+				// MOVES
+				const learnset = BattleTeambuilderTable.learnsets[match.id];
+				if (learnset) {
+					for (const id in learnset) {
+						const move = dex.moves.get(id);
+					
+						if (moves.includes(move.id)) continue;
+						if (move.gen > dex.gen) continue;
+						if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
+					
+						moves.push(id);
+					}
+				}
+			
+				// ABILITIES
+				const slots = ['0', '1', 'H', 'S'] as const;
+				const franticAbilities = new Set<string>();
+			
+				for (const slot of slots) {
+					const abilityName = match.abilities[slot];
+					if (!abilityName) continue;
+				
+					const ability = dex.abilities.get(abilityName);
+					if (!ability?.exists) continue;
+					if (ability.gen > dex.gen) continue;
+					if (toID(abilityName) in table.convergenceBans) continue;
+				
+					franticAbilities.add(abilityName);
+				}
+			
+				const abilityList = [...franticAbilities];
+			
+				const newAbilities: Record<string, string> = {};
+				for (let i = 0; i < abilityList.length; i++) {
+					newAbilities[String(i)] = abilityList[i];
+				}
+			
+				Object.assign(species, { abilities: newAbilities });
 			}
 		}
 		moves.sort();
