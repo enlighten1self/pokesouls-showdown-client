@@ -1707,15 +1707,17 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 			}
 		}
 		if (isConvergence) {
+			const table = this.getTable();
 			const allSpecies = dex.species.all();
 			const sameTypeSpecies = allSpecies.filter(other =>
 				other.exists &&
 				other.gen <= dex.gen &&
 				(!other.isNonstandard || other.isNonstandard === 'Unobtainable') &&
+				!(other.id in table.convergenceBans) &&
 				other.types.length === species.types.length &&
 				other.types.every(t => species.types.includes(t as TypeName))
 			);
-			for (let id in this.getTable()) {
+			for (let id in table) {
 				const move = dex.moves.get(id);
 				if (moves.includes(move.id)) continue;
 				if (move.gen > dex.gen) continue;
