@@ -1708,8 +1708,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		}
 		if (isConvergence) {
 			const table = this.getTable();
-			const allSpecies = dex.species.all();
-			const sameTypeSpecies = allSpecies.filter(other =>
+			const sameTypeSpecies = dex.species.all().filter(other =>
 				other.exists &&
 				other.gen <= dex.gen &&
 				(!other.isNonstandard || other.isNonstandard === 'Unobtainable') &&
@@ -1717,6 +1716,8 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 				other.types.length === species.types.length &&
 				other.types.every(t => species.types.includes(t as TypeName))
 			);
+		
+			// Moves
 			for (let id in table) {
 				const move = dex.moves.get(id);
 				if (moves.includes(move.id)) continue;
@@ -1731,6 +1732,24 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 					}
 				}
 				if (valid) moves.push(id);
+			}
+			// Abilities
+			const convergenceAbilities = new Set<string>();
+			for (const other of sameTypeSpecies) {
+				for (const slot of ['0', '1', '2'] as const) {
+					const abilityName = (other.abilities as any)[slot];
+					if (!abilityName) continue;
+					const ability = dex.abilities.get(abilityName);
+					if (!ability.exists) continue;
+					if (ability.gen > dex.gen) continue;
+					if (toID(abilityName) in table.convergenceBans) continue;
+					convergenceAbilities.add(abilityName);
+				}
+			}
+			const abilityList = [...convergenceAbilities];
+			const writableAbilities = species.abilities as any;
+			for (let i = 0; i < abilityList.length; i++) {
+				writableAbilities[`${i}`] = abilityList[i];
 			}
 		}
 		moves.sort();
