@@ -8,6 +8,16 @@
         "nature": "Careful",
         "evs": { "hp": 248, "def": 8, "spd": 252 }
       }
+    },
+    "Abyssal Void": {
+      "Defensive Utility": {
+        "moves": ["Endless Torment", "Will-O-Wisp", "Hex", "Substitute"],
+        "ability": "Protomorphosis",
+        "item": "Leftovers",
+        "nature": "Timid",
+        "ivs": { "atk": 0} ,
+        "evs": { "hp": 252, "def": 4, "spe": 252 }
+      }
     }
   }
 }
