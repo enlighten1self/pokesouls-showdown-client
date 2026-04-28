@@ -1818,10 +1818,8 @@
 					this.importSetButtons();
 					return;
 				}
-				// We fetch this as 'text' and JSON.parse it ourserves in order to have consistent behavior
-				// between the localdev CORS helper and the real jQuery.get function, which would already parse
-				// this into an object based on the content-type header.
-				$.get('https://' + Config.routes.client + '/data/sets/' + format + '.json', {}, function (data) {
+				// Load sets from local data/sets/(format).json file
+				$.get('./data/sets/' + format + '.json', {}, function (data) {
 					try {
 						self.smogonSets[format] = JSON.parse(data);
 					} catch (e) {
