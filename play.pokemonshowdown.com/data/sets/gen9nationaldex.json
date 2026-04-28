@@ -1,0 +1,13 @@
+{
+  "dex": {
+    "Tempervian": {
+      "IronPress": {
+        "moves": ["Body Press", "Iron Defense", "Flare Blitz", "Roost"],
+        "ability": "Levitate",
+        "item": "Leftovers",
+        "nature": "Careful",
+        "evs": { "hp": 248, "def": 8, "spd": 252 }
+      }
+    }
+  }
+}
