@@ -1818,8 +1818,8 @@
 					this.importSetButtons();
 					return;
 				}
-				// Load sets from local data/sets/(format).json file
-				$.get('./data/sets/' + format + '.json', {}, function (data) {
+				// Load sets from GitHub for auto-update
+				$.get('https://raw.githubusercontent.com/enlighten1self/pokesouls-showdown-client/refs/heads/master/play.pokemonshowdown.com/data/sets/' + format + '.json', {}, function (data) {
 					try {
 						self.smogonSets[format] = JSON.parse(data);
 					} catch (e) {
