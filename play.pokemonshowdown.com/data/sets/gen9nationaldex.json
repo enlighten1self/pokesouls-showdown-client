@@ -15,7 +15,7 @@
         "ability": "Protomorphosis",
         "item": "Leftovers",
         "nature": "Timid",
-        "ivs": { "atk": 0} ,
+        "ivs": { "atk": 0},
         "evs": { "hp": 252, "def": 4, "spe": 252 }
       },
       "Defensive Utility + Knock Off": {
@@ -48,7 +48,7 @@
         "ability": "Rocky Payload",
         "item": "Assault Vest",
         "nature": "Brave",
-        "ivs": { "spe": 0} ,
+        "ivs": { "spe": 0},
         "evs": { "hp": 252, "atk": 252, "spd": 4 }
       }
     },
@@ -58,7 +58,7 @@
         "ability": "Blaze",
         "item": "Charizardite Y",
         "nature": "Timid",
-        "ivs": { "atk": 0} ,
+        "ivs": { "atk": 0},
         "evs": { "spa": 252, "def": 4, "spe": 252 }
       }
     },
@@ -69,6 +69,52 @@
         "item": "Chesnaughtite",
         "nature": "Impish",
         "evs": { "hp": 252, "def": 252, "atk": 4 }
+      }
+    },
+    "Chimecho-Mega": {
+      "Defensive": {
+        "moves": ["Psychic Noise", "Flash Cannon", "Recover", "Thunder Wave"],
+        "ability": "Levitate",
+        "item": "Chimechite",
+        "nature": "Calm",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 252, "spd": 252, "def": 4 }
+      }
+    },
+    "Chocopert": {
+      "Defensive": {
+        "moves": ["Earthquake", "Flip Turn", "Stealth Rock", "Shore Up"],
+        "ability": "Water Absorb",
+        "item": "Leftovers",
+        "nature": "Sassy",
+        "ivs": { "spe": 0},
+        "evs": { "hp": 252, "spd": 252, "def": 4 }
+      }
+    },
+    "Chocopert-Mega": {
+      "Defensive": {
+        "moves": ["Earth Power", "Moonblast", "Ice Beam", "Shore Up"],
+        "ability": "Water Absorb",
+        "item": "Chocopertite",
+        "nature": "Modest",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 252, "spa": 252, "spd": 4 }
+      }
+    },
+    "Cinderace": {
+      "Pivot": {
+        "moves": ["Pyro Ball", "Court Change", "Will-O-Wisp", "U-turn"],
+        "ability": "Blaze",
+        "item": "Heavy-Duty Boots",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      },
+      "Swords Dance": {
+        "moves": ["Pyro Ball", "Swords Dance", "Double-Edge", "Sucker Punch"],
+        "ability": "Libero",
+        "item": "Normalium Z",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
       }
     }
   }
