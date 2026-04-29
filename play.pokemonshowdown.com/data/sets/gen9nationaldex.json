@@ -116,6 +116,54 @@
         "nature": "Jolly",
         "evs": { "atk": 252, "spe": 252, "spd": 4 }
       }
+    },
+    "Clefable": {
+      "Defensive": {
+        "moves": ["Moonblast", "Soft-Boiled", "Knock Off", "Thunder Wave"],
+        "ability": "Magic Guard",
+        "item": "Leftovers",
+        "nature": "Bold",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 252, "def": 252, "spd": 4 }
+      }
+    },
+    "Clefable-Mega": {
+      "Defensive": {
+        "moves": ["Moonblast", "Soft-Boiled", "Knock Off", "Thunder Wave"],
+        "ability": "Magic Guard",
+        "item": "Clefablite",
+        "nature": "Bold",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 252, "def": 252, "spd": 4 }
+      }
+    },
+    "Corviknight": {
+      "Defensive Pivot": {
+        "moves": ["Body Press", "Iron Defense", "U-turn", "Roost"],
+        "ability": "Pressure",
+        "item": "Leftovers",
+        "nature": "Careful",
+        "evs": { "hp": 248, "def": 8, "spd": 252 }
+      }
+    },
+    "Despharos-Mega": {
+      "Wallbreaker": {
+        "moves": ["Earth Power", "Flamethrower", "Hidden Power Ice", "Calm Mind"],
+        "ability": "Lightning Rod",
+        "item": "Despharosite",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Diancie-Mega": {
+      "Wallbreaker": {
+        "moves": ["Moonblast", "Earth Power", "Mystical Fire", "Diamond Storm"],
+        "ability": "Clear Body",
+        "item": "Diancite",
+        "nature": "Hasty",
+        "evs": { "spa": 228, "atk": 28, "spe": 252 }
+      }
     }
   }
 }
