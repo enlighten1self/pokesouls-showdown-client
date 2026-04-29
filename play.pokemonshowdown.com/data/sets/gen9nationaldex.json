@@ -33,6 +33,42 @@
         "item": "Heavy-Duty Boots",
         "nature": "Relaxed",
         "evs": { "hp": 252, "def": 252, "spd": 4 }
+      },
+      "Assault Vest": {
+        "moves": ["Scald", "Flip Turn", "Mirror Coat", "Knock Off"],
+        "ability": "Regenerator",
+        "item": "Assault Vest",
+        "nature": "Sassy",
+        "evs": { "hp": 4, "def": 252, "spd": 252 }
+      }
+    },
+    "Boomkeldurr": {
+      "Assault Vest": {
+        "moves": ["Accelerock", "Earthquake", "Gyro Ball", "Knock Off"],
+        "ability": "Rocky Payload",
+        "item": "Assault Vest",
+        "nature": "Brave",
+        "ivs": { "spe": 0} ,
+        "evs": { "hp": 252, "def": 252, "spd": 4 }
+      }
+    },
+    "Charizard-Mega-Y": {
+      "Drought Wallbreaker": {
+        "moves": ["Weather Ball", "Solar Beam", "Scorching Sands", "Roost"],
+        "ability": "Blaze",
+        "item": "Charizardite Y",
+        "nature": "Timid",
+        "ivs": { "atk": 0} ,
+        "evs": { "spa": 252, "def": 4, "spe": 252 }
+      }
+    },
+    "Chesnaught-Mega": {
+      "Defensive": {
+        "moves": ["Body Press", "Knock Off", "Spikes", "Synthesis"],
+        "ability": "Bulletproof",
+        "item": "Chesnaughtite",
+        "nature": "Impish",
+        "evs": { "hp": 252, "def": 252, "atk": 4 }
       }
     }
   }
