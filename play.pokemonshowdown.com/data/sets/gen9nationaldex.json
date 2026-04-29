@@ -164,6 +164,15 @@
         "nature": "Hasty",
         "evs": { "spa": 228, "atk": 28, "spe": 252 }
       }
+    },
+    "Dragonite": {
+      "Dragon Dance + Z-Move": {
+        "moves": ["Outrage", "Earthquake", "Fire Punch", "Dragon Dance"],
+        "ability": "Multiscale",
+        "item": "Dragonium Z",
+        "nature": "Adamant",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      }
     }
   }
 }
