@@ -92,7 +92,7 @@
       }
     },
     "Chocopert-Mega": {
-      "Defensive": {
+      "Offensive": {
         "moves": ["Earth Power", "Moonblast", "Ice Beam", "Shore Up"],
         "ability": "Water Absorb",
         "item": "Chocopertite",
