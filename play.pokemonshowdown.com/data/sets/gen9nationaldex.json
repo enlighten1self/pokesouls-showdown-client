@@ -173,6 +173,138 @@
         "nature": "Adamant",
         "evs": { "atk": 252, "spe": 252, "spd": 4 }
       }
+    },
+    "Drakura-Mega": {
+      "Offensive Dragon Dance": {
+        "moves": ["Headlong Rush", "Play Rough", "Synthesis", "Dragon Dance"],
+        "ability": "Grassy Surge",
+        "item": "Drakurite",
+        "nature": "Adamant",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      }
+    },
+    "Excadrill-Mega": {
+      "Offensive Utility": {
+        "moves": ["Earthquake", "Iron Head", "Rapid Spin", "Stealth Rock"],
+        "ability": "Mold Breaker",
+        "item": "Excadrite",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      }
+    },
+    "Ferrothorn": {
+      "Utility": {
+        "moves": ["Leech Seed", "Knock Off", "Gyro Ball", "Stealth Rock"],
+        "ability": "Iron Barbs",
+        "item": "Leftovers",
+        "nature": "Relaxed",
+        "ivs": { "spe": 0},
+        "evs": { "hp": 252, "spd": 176, "def": 80 }
+      }
+    },
+    "Froslass-Mega": {
+      "Offensive Nasty Plot": {
+        "moves": ["Blizzard", "Shadow Ball", "Thunderbolt", "Nasty Plot"],
+        "ability": "Cursed Body",
+        "item": "Froslassite",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spe": 252, "spd": 4 }
+      }
+    },
+    "Garchomp": {
+      "Offensive Swords Dance": {
+        "moves": ["Swords Dance", "Earthquake", "Outrage", "Stealth Rock"],
+        "ability": "Rough Skin",
+        "item": "Dragonium Z",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      },
+      "Swords Dance + Loaded Dice": {
+        "moves": ["Swords Dance", "Earthquake", "Scale Shot", "Fire Fang"],
+        "ability": "Rough Skin",
+        "item": "Loaded Dice",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      },
+      "TankChomp": {
+        "moves": ["Toxic", "Earthquake", "Protect", "Stealth Rock"],
+        "ability": "Rough Skin",
+        "item": "Leftovers",
+        "nature": "Careful",
+        "evs": { "hp": 252, "def": 200, "spe": 56 }
+      }
+    },
+    "Garchomp-Mega": {
+      "Mixed Attacker": {
+        "moves": ["Draco Meteor", "Earthquake", "Fire Blast", "Stealth Rock"],
+        "ability": "Rough Skin",
+        "item": "Garchompite",
+        "nature": "Naive",
+        "evs": { "spa": 252, "spe": 252, "atk": 4 }
+      }
+    },
+    "Gholdengo": {
+      "Offensive Nasty Plot": {
+        "moves": ["Nasty Plot", "Shadow Ball", "Make It Rain", "Focus Blast"],
+        "ability": "Good as Gold",
+        "item": "Air Balloon",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spe": 252, "spd": 4 }
+      },
+      "Bulky Nasty Plot": {
+        "moves": ["Nasty Plot", "Shadow Ball", "Recover", "Focus Blast"],
+        "ability": "Good as Gold",
+        "item": "Ghostium Z",
+        "nature": "Bold",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 252, "def": 112, "spd": 84, "spe": 60}
+      },
+      "Thunder Wave + Hex": {
+        "moves": ["Hex", "Focus Blast", "Recover", "Thunder Wave"],
+        "ability": "Good as Gold",
+        "item": "Ghostium Z",
+        "nature": "Bold",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 252, "def": 112, "spd": 84, "spe": 60}
+      }
+    },
+    "Ghoulizard": {
+      "Offensive Dragon Dance": {
+        "moves": ["Flare Blitz", "Shadow Rush", "Roost", "Dragon Dance"],
+        "ability": "Levitate",
+        "item": "Heavy-Duty Boots",
+        "nature": "Adamant",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      }
+    },
+    "Ghoulizard-Mega": {
+      "Offensive Dragon Dance": {
+        "moves": ["Earthquake", "Shadow Rush", "Dragon Claw", "Dragon Dance"],
+        "ability": "Levitate",
+        "item": "Ghoulizardite",
+        "nature": "Adamant",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      }
+    },
+    "Gliscor": {
+      "Utility": {
+        "moves": ["Earthquake", "Toxic", "Spikes", "Protect"],
+        "ability": "Poison Heal",
+        "item": "Toxic Orb",
+        "nature": "Careful",
+        "evs": { "hp": 244, "spd": 228, "def": 36 }
+      }
+    },
+    "Great Tusk": {
+      "Offensive Utility": {
+        "moves": ["Headlong Rush", "Rapid Spin", "Ice Spinner", "Stealth Rock"],
+        "ability": "Protosynthesis",
+        "item": "Heavy-Duty Boots",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      }
     }
   }
 }
