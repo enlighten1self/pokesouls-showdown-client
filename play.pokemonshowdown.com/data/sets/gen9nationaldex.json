@@ -18,6 +18,15 @@
         "ivs": { "atk": 0} ,
         "evs": { "hp": 252, "def": 4, "spe": 252 }
       }
+    },
+    "Alomomola": {
+      "Defensive": {
+        "moves": ["Wish", "Flip Turn", "Protect", "Toxic"],
+        "ability": "Regenerator",
+        "item": "Heavy-Duty Boots",
+        "nature": "Relaxed",
+        "evs": { "hp": 252, "def": 252, "spd": 252 }
+      }
     }
   }
 }
