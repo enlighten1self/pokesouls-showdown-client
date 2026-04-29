@@ -22,7 +22,7 @@
         "moves": ["Endless Torment", "Will-O-Wisp", "Knock Off", "Substitute"],
         "ability": "Protomorphosis",
         "item": "Leftovers",
-        "nature": "Timid",
+        "nature": "Jolly",
         "evs": { "hp": 252, "def": 4, "spe": 252 }
       }
     },
