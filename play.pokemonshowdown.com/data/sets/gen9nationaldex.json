@@ -25,7 +25,7 @@
         "ability": "Regenerator",
         "item": "Heavy-Duty Boots",
         "nature": "Relaxed",
-        "evs": { "hp": 252, "def": 252, "spd": 252 }
+        "evs": { "hp": 252, "def": 252, "spd": 4 }
       }
     }
   }
