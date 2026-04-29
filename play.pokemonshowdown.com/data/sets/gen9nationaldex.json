@@ -49,7 +49,7 @@
         "item": "Assault Vest",
         "nature": "Brave",
         "ivs": { "spe": 0} ,
-        "evs": { "hp": 252, "def": 252, "spd": 4 }
+        "evs": { "hp": 252, "atk": 252, "spd": 4 }
       }
     },
     "Charizard-Mega-Y": {
