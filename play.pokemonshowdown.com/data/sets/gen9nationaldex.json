@@ -305,6 +305,123 @@
         "nature": "Jolly",
         "evs": { "atk": 252, "spe": 252, "spd": 4 }
       }
+    },
+    "Heatran": {
+      "Specially Defensive": {
+        "moves": ["Magma Storm", "Earth Power", "Toxic", "Stealth Rock"],
+        "ability": "Flash Fire",
+        "item": "Leftovers",
+        "nature": "Calm",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 248, "spd": 220, "spe": 40 }
+      },
+      "Offensive": {
+        "moves": ["Magma Storm", "Earth Power", "Solar Beam", "Stealth Rock"],
+        "ability": "Flash Fire",
+        "item": "Grassium Z",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Iron Valiant": {
+      "Choice Specs": {
+        "moves": ["Moonblast", "Focus Blast", "Thunderbolt", "Shadow Ball"],
+        "ability": "Quark Drive",
+        "item": "Choice Specs",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spd": 4, "spe": 252 }
+      },
+      "Mixed": {
+        "moves": ["Moonblast", "Close Combat", "Knock Off", "Encore"],
+        "ability": "Quark Drive",
+        "item": "Booster Energy",
+        "nature": "Naive",
+        "evs": { "hp": 0, "atk": 108, "def": 0, "spa": 148, "spd": 0, "spe": 252 }
+      },
+      "Swords Dance": {
+        "moves": ["Swords Dance", "Close Combat", "Knock Off", "Ice Punch"],
+        "ability": "Quark Drive",
+        "item": "Booster Energy",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Jellicent": {
+      "Status Spam": {
+        "moves": ["Hex", "Will-O-Wisp", "Mist", "Recover"],
+        "ability": "Water Absorb",
+        "item": "Leftovers",
+        "nature": "Bold",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 252, "atk": 0, "def": 252, "spa": 0, "spd": 4, "spe": 0 }
+      }
+    },
+    "Kingambit": {
+      "Swords Dance": {
+        "moves": ["Swords Dance", "Knock Off", "Sucker Punch", "Low Kick"],
+        "ability": "Supreme Overlord",
+        "item": "Black Glasses",
+        "nature": "Adamant",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Kyurem": {
+      "SubRoost": {
+        "moves": ["Freeze-Dry", "Earth Power", "Substitute", "Roost"],
+        "ability": "Pressure",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":56,"atk":0,"def":0,"spa":200,"spd":0,"spe":252}
+      },
+      "Offensive": {
+        "moves": ["Freeze-Dry", "Hidden Power Fire", "Draco Meteor", "Ice Beam"],
+        "ability": "Pressure",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      },
+      "Choice Specs": {
+        "moves": ["Freeze-Dry", "Hidden Power Fire", "Draco Meteor", "Ice Beam"],
+        "ability": "Pressure",
+        "item": "Choice Specs",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Landorus-Therian": {
+      "Defensive": {
+        "moves": ["U-turn", "Toxic", "Earthquake", "Stealth Rock"],
+        "ability": "Intimidate",
+        "item": "Rocky Helmet",
+        "nature": "Jolly",
+        "evs": {"hp":252,"atk":0,"def":32,"spa":0,"spd":0,"spe":224}
+      },
+      "Swords Dance": {
+        "moves": ["Swords Dance", "Stone Edge", "Earthquake", "Fly"],
+        "ability": "Intimidate",
+        "item": "Flyinium Z",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Choice Scarf": {
+        "moves": ["Earthquake", "Stone Edge", "U-turn", "Defog"],
+        "ability": "Intimidate",
+        "item": "Choice Scarf",
+        "nature": "Jolly",
+        "evs": {"hp":8,"atk":248,"def":0,"spa":0,"spd":0,"spe":252}
+      },
+      "Lead": {
+        "moves": ["Earthquake", "Stealth Rock", "Taunt", "Explosion"],
+        "ability": "Intimidate",
+        "item": "Focus Sash",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
     }
   }
 }
