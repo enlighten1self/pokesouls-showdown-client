@@ -422,6 +422,79 @@
         "nature": "Jolly",
         "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
       }
+    },
+    "Latios-Mega": {
+      "Wallbreaker": {
+        "moves": ["Luster Purge", "Mystical Fire", "Aura Sphere", "Roost"],
+        "ability": "Levitate",
+        "item": "Latiosite",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":4,"spa":252,"spd":0,"spe":252}
+      }
+    },
+    "Meganium-Mega": {
+      "Offensive": {
+        "moves": ["Solar Beam", "Earth Power", "Weather Ball", "Synthesis"],
+        "ability": "Leaf Guard",
+        "item": "Meganiumite",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Melmetal": {
+      "Assault Vest": {
+        "moves": ["Double Iron Bash", "Earthquake", "Ice Punch", "Thunder Punch"],
+        "ability": "Iron Fist",
+        "item": "Assault Vest",
+        "nature": "Adamant",
+        "evs": {"hp":72,"atk":172,"def":0,"spa":0,"spd":252,"spe":12}
+      },
+      "Toxic + Protect": {
+        "moves": ["Double Iron Bash", "Earthquake", "Toxic", "Protect"],
+        "ability": "Iron Fist",
+        "item": "Leftovers",
+        "nature": "Adamant",
+        "evs": {"hp":220,"atk":96,"def":0,"spa":0,"spd":180,"spe":12}
+      }
+    },
+    "Milotic-Mega": {
+      "Calm Mind": {
+        "moves": ["Scald", "Alluring Voice", "Calm Mind", "Recover"],
+        "ability": "Competitive",
+        "item": "Milotite",
+        "nature": "Bold",
+        "ivs": { "atk": 0},
+        "evs": {"hp":252,"atk":0,"def":252,"spa":4,"spd":0,"spe":0}
+      }
+    },
+    "Ogerpon-Wellspring": {
+      "Swords Dance": {
+        "moves": ["Ivy Cudgel", "Power Whip", "Superpower", "Swords Dance"],
+        "ability": "Water Absorb",
+        "item": "Wellspring Mask",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Phroggeist-Jimengo": {
+      "Defensive": {
+        "moves": ["Soul Secretion", "Poltergeist", "Will-O-Wisp", "Shore Up"],
+        "ability": "Thick Fat",
+        "item": "Leftovers",
+        "nature": "Careful",
+        "evs": {"hp":252,"atk":4,"def":0,"spa":0,"spd":252,"spe":0}
+      }
+    },
+    "Plaguekrow": {
+      "Swords Dance": {
+        "moves": ["Knock Off", "Sucker Punch", "Superpower", "Swords Dance"],
+        "ability": "Neutralizing Gas",
+        "item": "Black Sludge",
+        "nature": "Adamant",
+        "evs": {"hp":252,"atk":252,"def":0,"spa":0,"spd":4,"spe":0}
+      }
     }
   }
 }
