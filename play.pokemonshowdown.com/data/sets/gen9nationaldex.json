@@ -1155,6 +1155,83 @@
         "nature": "Adamant",
         "evs": { "hp": 4, "atk": 252, "def": 0, "spa": 0, "spd": 0, "spe": 252 }
       }
+    },
+    "Manaphy": {
+      "Tail Glow + 3 Attacks": {
+        "moves": ["Tail Glow", "Surf", "Ice Beam", "Psychic"],
+        "ability": "Hydration",
+        "item": "Leftovers",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spd": 4, "spe": 252 }
+      },
+      "Rain Wallbreaker": {
+        "moves": ["Tail Glow", "Surf", "Ice Beam", "Rest"],
+        "ability": "Hydration",
+        "item": "Waterium Z",
+        "nature": "Modest",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Mawile-Mega": {
+      "Swords Dance": {
+        "moves": ["Swords Dance", "Play Rough", "Knock Off", "Sucker Punch"],
+        "ability": "Intimidate",
+        "item": "Mawilite",
+        "nature": "Adamant",
+        "evs": { "hp": 116, "atk": 252, "def": 0, "spa": 0, "spd": 0, "spe": 140 }
+      },
+      "All-Out Attacker": {
+        "moves": ["Ice Punch", "Play Rough", "Knock Off", "Thunder Punch"],
+        "ability": "Intimidate",
+        "item": "Mawilite",
+        "nature": "Adamant",
+        "evs": { "hp": 52, "atk": 252, "def": 0, "spa": 0, "spd": 0, "spe": 204 }
+      }
+    },
+    "Medicham-Mega": {
+      "All-Out Attacker": {
+        "moves": ["Fake Out", "Close Combat", "Zen Headbutt", "Ice Punch"],
+        "ability": "Telepathy",
+        "item": "Medichamite",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Meowscarada": {
+      "Offensive Pivot": {
+        "moves": ["Flower Trick", "Knock Off", "Triple Axel", "U-turn"],
+        "ability": "Protean",
+        "item": "Protective Pads",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Choice Scarf": {
+        "moves": ["Flower Trick", "Knock Off", "Triple Axel", "U-turn"],
+        "ability": "Protean",
+        "item": "Choice Scarf",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Ogerpon-Cornerstone": {
+      "Swords Dance": {
+        "moves": ["Ivy Cudgel", "Power Whip", "Swords Dance", "Superpower"],
+        "ability": "Sturdy",
+        "item": "Cornerstone Mask",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Okidogi": {
+      "Bulk Up + Z Move": {
+        "moves": ["Bulk Up", "Drain Punch", "Gunk Shot", "Ice Punch"],
+        "ability": "Toxic Chain",
+        "item": "Poisonium Z",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
     }
   }
 }
