@@ -900,6 +900,47 @@
         "item": "Leftovers",
         "nature": "Jolly",
         "evs": {"hp":252,"atk":0,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Dual Screens": {
+        "moves": ["Reflect", "Light Screen", "Roar", "Body Press"],
+        "ability": "Dauntless Shield",
+        "item": "Light Clay",
+        "nature": "Jolly",
+        "evs": {"hp":252,"atk":0,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Zapdos": {
+      "Defensive": {
+        "moves": ["Volt Switch", "Hurricane", "Heat Wave", "Roost"],
+        "ability": "Static",
+        "item": "Heavy-Duty Boots",
+        "nature": "Bold",
+        "ivs": { "atk": 0},
+        "evs": {"hp":248,"atk":0,"def":188,"spa":0,"spd":0,"spe":72}
+      },
+      "Offensive": {
+        "moves": ["Volt Switch", "Hurricane", "Thunderbolt", "Roost"],
+        "ability": "Static",
+        "item": "Flyinium Z",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Zeranheit": {
+      "Offensive Pivot": {
+        "moves": ["Plasma Fists", "Flare Blitz", "Knock Off", "Volt Switch"],
+        "ability": "Thermal Exchange",
+        "item": "Heavy-Duty Boots",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Choice Band": {
+        "moves": ["Plasma Fists", "Flare Blitz", "Knock Off", "Volt Switch"],
+        "ability": "Thermal Exchange",
+        "item": "Choice Band",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
       }
     }
   }
