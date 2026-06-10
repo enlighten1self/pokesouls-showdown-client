@@ -1060,6 +1060,101 @@
         "ivs": { "atk": 0},
         "evs": { "spa": 252, "spd": 4, "spe": 252 }
       }
+    },
+    "Greninja-Bond": {
+      "Offensive": {
+        "moves": ["Hydro Pump", "Dark Pulse", "Ice Beam", "U-turn"],
+        "ability": "Protean",
+        "item": "Life Orb",
+        "gender": "M",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Gyarados": {
+      "Z Move": {
+        "moves": ["Waterfall", "Earthquake", "Bounce", "Dragon Dance"],
+        "ability": "Moxie",
+        "item": "Flyinium Z",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Gyarados-Mega": {
+      "Setup Sweeper": {
+        "moves": ["Waterfall", "Earthquake", "Crunch", "Dragon Dance"],
+        "ability": "Intimidate",
+        "item": "Gyaradosite",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Hoopa-Unbound": {
+      "Choice Band": {
+        "moves": ["Hyperspace Fury", "Psychic Fangs", "Drain Punch", "Gunk Shot"],
+        "ability": "Magician",
+        "item": "Choice Band",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Assault Vest": {
+        "moves": ["Knock Off", "Psychic Noise", "Drain Punch", "Thunderbolt"],
+        "ability": "Magician",
+        "item": "Assault Vest",
+        "nature": "Lonely",
+        "evs": {"hp":252,"atk":64,"def":0,"spa":120,"spd":56,"spe":16}
+      }
+    },
+    "Iron Hands": {
+      "Swords Dance": {
+        "moves": ["Swords Dance", "Supercell Slam", "Drain Punch", "Ice Punch"],
+        "ability": "Quark Drive",
+        "item": "Leftovers",
+        "nature": "Adamant",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 116, "spe": 140 }
+      }
+    },
+    "Kartana": {
+      "Paper Cut": {
+        "moves": ["Swords Dance", "Leaf Blade", "Sacred Sword", "Giga Impact"],
+        "ability": "Beast Boost",
+        "item": "Normalium Z",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      },
+      "Paper Plane": {
+        "moves": ["Knock Off", "Leaf Blade", "Sacred Sword", "Defog"],
+        "ability": "Beast Boost",
+        "item": "Choice Scarf",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Kommo-o": {
+      "Offensive Z-Move": {
+        "moves": ["Clanging Scales", "Close Combat", "Flamethrower", "Stealth Rock"],
+        "ability": "Bulletproof",
+        "item": "Kommonium Z",
+        "nature": "Hasty",
+        "evs": { "hp": 0, "atk": 4, "def": 0, "spa": 252, "spd": 0, "spe": 252 }
+      },
+      "Defensive": {
+        "moves": ["Body Press", "Toxic", "Earthquake", "Stealth Rock"],
+        "ability": "Bulletproof",
+        "item": "Leftovers",
+        "nature": "Impish",
+        "evs": { "hp": 248, "atk": 0, "def": 32, "spa": 0, "spd": 176, "spe": 52 }
+      }
+    },
+    "Lordfetch’d": {
+      "Setup Sweeper": {
+        "moves": ["Close Combat", "Knock Off", "Roost", "Victory Dance"],
+        "ability": "Mold Breaker",
+        "item": "Leftovers",
+        "nature": "Adamant",
+        "evs": { "hp": 4, "atk": 252, "def": 0, "spa": 0, "spd": 0, "spe": 252 }
+      }
     }
   }
 }
