@@ -129,7 +129,7 @@
     },
     "Clefable-Mega": {
       "Defensive": {
-        "moves": ["Moonblast", "Soft-Boiled", "Knock Off", "Thunder Wave"],
+        "moves": ["Moonblast", "Soft-Boiled", "Calm Mind", "Flamethrower"],
         "ability": "Magic Guard",
         "item": "Clefablite",
         "nature": "Bold",
@@ -511,7 +511,85 @@
         "ability": "Levitate",
         "item": "Heavy-Duty Boots",
         "nature": "Timid",
+        "ivs": { "atk": 0},
         "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Samurott-Hisui": {
+      "Offensive": {
+        "moves": ["Ceaseless Edge", "Razor Shell", "Sucker Punch", "Sacred Sword"],
+        "ability": "Sharpness",
+        "item": "Black Glasses",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Choice Scarf": {
+        "moves": ["Ceaseless Edge", "Razor Shell", "Flip Turn", "Sacred Sword"],
+        "ability": "Sharpness",
+        "item": "Choice Scarf",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Assault Vest": {
+        "moves": ["Ceaseless Edge", "Razor Shell", "Flip Turn", "Knock Off"],
+        "ability": "Sharpness",
+        "item": "Assault Vest",
+        "nature": "Adamant",
+        "evs": {"hp":168,"atk":176,"def":0,"spa":0,"spd":80,"spe":84}
+      }
+    },
+    "Scizor-Mega": {
+      "Bulky Swords Dance": {
+        "moves": ["Swords Dance", "Bullet Punch", "Knock Off", "Roost"],
+        "ability": "Light Metal",
+        "item": "Scizorite",
+        "nature": "Impish",
+        "evs": {"hp":232,"atk":0,"def":184,"spa":0,"spd":72,"spe":20}
+      },
+      "Offensive Swords Dance": {
+        "moves": ["Swords Dance", "Bullet Punch", "Knock Off", "Close Combat"],
+        "ability": "Light Metal",
+        "item": "Scizorite",
+        "nature": "Adamant",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Slowbro": {
+      "Defensive Pivot": {
+        "moves": ["Scald", "Future Sight", "Teleport", "Slack Off"],
+        "ability": "Regenerator",
+        "item": "Heavy-Duty Boots",
+        "nature": "Relaxed",
+        "ivs": { "atk": 0, "spe": 0},
+        "evs": {"hp":248,"atk":0,"def":252,"spa":0,"spd":8,"spe":0}
+      }
+    },
+    "Slowbro-Mega": {
+      "Defensive Pivot": {
+        "moves": ["Calm Mind", "Scald", "Psychic", "Slack Off"],
+        "ability": "Regenerator",
+        "item": "Slowbronite",
+        "nature": "Bold",
+        "ivs": { "atk": 0 },
+        "evs": {"hp":248,"atk":0,"def":252,"spa":0,"spd":8,"spe":0}
+      }
+    },
+    "Slowking-Galar": {
+      "Defensive Pivot": {
+        "moves": ["Sludge Bomb", "Future Sight", "Chilly Reception", "Thunder Wave"],
+        "ability": "Regenerator",
+        "item": "Heavy-Duty Boots",
+        "nature": "Sassy",
+        "ivs": { "atk": 0, "spe": 0},
+        "evs": {"hp":248,"atk":0,"def":8,"spa":0,"spd":252,"spe":0}
+      },
+      "Assault Vest": {
+        "moves": ["Sludge Bomb", "Psychic Noise", "Ice Beam", "Flamethrower"],
+        "ability": "Regenerator",
+        "item": "Assault Vest",
+        "nature": "Calm",
+        "ivs": { "atk": 0},
+        "evs": {"hp":248,"atk":0,"def":36,"spa":0,"spd":224,"spe":0}
       }
     }
   }
