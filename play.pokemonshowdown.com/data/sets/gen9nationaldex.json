@@ -1050,6 +1050,16 @@
         "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
       }
     },
-    "Greninja": {}
+    "Greninja": {
+      "Choice Specs": {
+        "moves": ["Hydro Pump", "Dark Pulse", "Ice Beam", "Flip Turn"],
+        "ability": "Protean",
+        "item": "Choice Specs",
+        "gender": "M",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spd": 4, "spe": 252 }
+      }
+    }
   }
 }
