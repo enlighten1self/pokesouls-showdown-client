@@ -565,7 +565,7 @@
       }
     },
     "Slowbro-Mega": {
-      "Defensive Pivot": {
+      "Defensive": {
         "moves": ["Calm Mind", "Scald", "Psychic", "Slack Off"],
         "ability": "Regenerator",
         "item": "Slowbronite",
@@ -939,6 +939,113 @@
         "moves": ["Plasma Fists", "Flare Blitz", "Knock Off", "Volt Switch"],
         "ability": "Thermal Exchange",
         "item": "Choice Band",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Bellzong": {
+      "Tricky Reception": {
+        "moves": ["Doom Desire", "Earth Power", "Tricky Reception", "Stealth Rock"],
+        "ability": "Earth Eater",
+        "item": "Occa Berry",
+        "nature": "Relaxed",
+        "ivs": { "atk": 0, "spe": 0},
+        "evs": {"hp":252,"atk":0,"def":252,"spa":0,"spd":4,"spe":0}
+      }
+    },
+    "Blaziken": {
+      "Swords Dance": {
+        "moves": ["Swords Dance", "Close Combat", "Flare Blitz", "Thunder Punch"],
+        "ability": "Speed Boost",
+        "item": "Electrium Z",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Bulking Blade": {
+      "Choice Specs": {
+        "moves": ["Sludge Wave", "Secret Sword", "Flamethrower", "Dark Pulse"],
+        "ability": "Protosynthesis",
+        "item": "Choice Specs",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spd": 4, "spe": 252 }
+      },
+      "Swords Dance": {
+        "moves": ["Swords Dance", "Close Combat", "Gunk Shot", "Knock Off"],
+        "ability": "Protosynthesis",
+        "item": "Booster Energy",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Celestial Orbit": {
+      "Choice Specs": {
+        "moves": ["Earth Power", "Psyshock", "Ice Beam", "Volt Switch"],
+        "ability": "Neuro Drive",
+        "item": "Choice Specs",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Ceruledge": {
+      "Swords Dance": {
+        "moves": ["Swords Dance", "Bitter Blade", "Poltergeist", "Endure"],
+        "ability": "Weak Armor",
+        "item": "Ghostium Z",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Charizard-Mega-X": {
+      "Setup Sweeper": {
+        "moves": ["Flare Blitz", "Roost", "Dragon Claw", "Dragon Dance"],
+        "ability": "Blaze",
+        "item": "Charizardite X",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      }
+    },
+    "Chrono Venom": {
+      "Choice Band": {
+        "moves": ["Gunk Shot", "Close Combat", "Knock Off", "Ice Punch"],
+        "ability": "Neuro Drive",
+        "item": "Choice Band",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Dondozo": {
+      "FatFish": {
+        "moves": ["Curse", "Rest", "Sleep Talk", "Waterfall"],
+        "ability": "Unaware",
+        "item": "Heavy-Duty Boots",
+        "nature": "Impish",
+        "evs": {"hp":248,"atk":0,"def":252,"spa":0,"spd":8,"spe":0}
+      }
+    },
+    "Flaming Wrath": {
+      "Setup Sweeper": {
+        "moves": ["Bitter Blade", "Knock Off", "Headlong Rush", "Dragon Dance"],
+        "ability": "Protomorphosis",
+        "item": "Booster Energy",
+        "nature": "Jolly",
+        "evs": { "atk": 252, "spe": 252, "spd": 4 }
+      }
+    },
+    "Frostiken": {
+      "Choice Band": {
+        "moves": ["Triple Axel", "Flare Blitz", "Close Combat", "U-turn"],
+        "ability": "Tough Claws",
+        "item": "Choice Band",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Choice Scarf": {
+        "moves": ["Triple Axel", "Flare Blitz", "Close Combat", "U-turn"],
+        "ability": "Tough Claws",
+        "item": "Choice Scarf",
         "nature": "Jolly",
         "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
       }
