@@ -591,6 +591,316 @@
         "ivs": { "atk": 0},
         "evs": {"hp":248,"atk":0,"def":36,"spa":0,"spd":224,"spe":0}
       }
+    },
+    "Spectoise-Mega": {
+      "Utility": {
+        "moves": ["Hex", "Scald", "Slack Off", "Rapid Spin"],
+        "ability": "Shell Armor",
+        "item": "Spectoisite",
+        "nature": "Bold",
+        "ivs": { "atk": 0},
+        "evs": {"hp":252,"atk":0,"def":252,"spa":4,"spd":0,"spe":0}
+      }
+    },
+    "Tapu Koko": {
+      "Offensive Pivot": {
+        "moves": ["Thunderbolt", "Roost", "Hidden Power Ice", "U-turn"],
+        "ability": "Electric Surge",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      },
+      "Choice Specs": {
+        "moves": ["Thunderbolt", "Dazzling Gleam", "Hidden Power Ice", "Volt Switch"],
+        "ability": "Electric Surge",
+        "item": "Choice Specs",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      },
+      "Dual Screens": {
+        "moves": ["Reflect", "Light Screen", "U-turn", "Taunt"],
+        "ability": "Electric Surge",
+        "item": "Light Clay",
+        "nature": "Jolly",
+        "evs": {"hp":252,"atk":0,"def":4,"spa":0,"spd":0,"spe":252}
+      }
+    },
+    "Tapu Lele": {
+      "Choice Scarf": {
+        "moves": ["Psychic", "Moonblast", "Focus Blast", "Hidden Power Fire"],
+        "ability": "Psychic Surge",
+        "item": "Choice Scarf",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      },
+      "Choice Specs": {
+        "moves": ["Psychic", "Moonblast", "Focus Blast", "Psyshock"],
+        "ability": "Psychic Surge",
+        "item": "Choice Specs",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      },
+      "Offensive Z-Move": {
+        "moves": ["Moonblast", "Focus Blast", "Psyshock", "Calm Mind"],
+        "ability": "Psychic Surge",
+        "item": "Psychium Z",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Terapagos": {
+      "Offensive Utility": {
+        "moves": ["Tera Starstorm", "Flamethrower", "Ice Beam", "Rapid Spin"],
+        "ability": "Tera Shift",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Terapagos-Terastal": {
+      "Offensive Utility": {
+        "moves": ["Tera Starstorm", "Flamethrower", "Ice Beam", "Rapid Spin"],
+        "ability": "Tera Shift",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Thalassigon": {
+      "SubPlot": {
+        "moves": ["Scald", "Flash Cannon", "Nasty Plot", "Substitute"],
+        "ability": "Regenerative",
+        "item": "Leftovers",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Titanium Delta": {
+      "Assault Vest": {
+        "moves": ["Aura Sphere", "Flash Cannon", "Ice Beam", "Flip Turn"],
+        "ability": "Neuro Drive",
+        "item": "Assault Vest",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":128,"atk":0,"def":0,"spa":92,"spd":88,"spe":200}
+      }
+    },
+    "Tornadus-Therian": {
+      "Pivot": {
+        "moves": ["Bleakwind Storm", "U-turn", "Knock Off", "Defog"],
+        "ability": "Regenerator",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "evs": {"hp":184,"atk":0,"def":108,"spa":0,"spd":0,"spe":216}
+      },
+      "Nasty Plot": {
+        "moves": ["Nasty Plot", "Hurricane", "Heat Wave", "Focus Blast"],
+        "ability": "Regenerator",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      },
+      "Assault Vest": {
+        "moves": ["Bleakwind Storm", "U-turn", "Heat Wave", "Knock Off"],
+        "ability": "Regenerator",
+        "item": "Assault Vest",
+        "nature": "Timid",
+        "evs": {"hp":252,"atk":0,"def":40,"spa":0,"spd":0,"spe":216}
+      }
+    },
+    "Toxapex": {
+      "The Pex": {
+        "moves": ["Scald", "Toxic", "Haze", "Recover"],
+        "ability": "Regenerator",
+        "item": "Heavy-Duty Boots",
+        "nature": "Bold",
+        "ivs": { "atk": 0},
+        "evs": {"hp":248,"atk":0,"def":136,"spa":0,"spd":124,"spe":0}
+      }
+    },
+    "Typhtesla": {
+      "Offensive Pivot": {
+        "moves": ["Thunderbolt", "Plasma Flare", "Hidden Power Ice", "Volt Switch"],
+        "ability": "Electric Surge",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      },
+      "Choice Scarf": {
+        "moves": ["Thunderbolt", "Plasma Flare", "Hidden Power Ice", "Volt Switch"],
+        "ability": "Electric Surge",
+        "item": "Choice Specs",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Typhtesla-Mega": {
+      "Offensive Pivot": {
+        "moves": ["Thunderbolt", "Plasma Flare", "Hidden Power Ice", "Volt Switch"],
+        "ability": "Electric Surge",
+        "item": "Typhteslatite",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Ultigigas": {
+      "Assault Vest": {
+        "moves": ["Hidden Power Ice", "Bullet Punch", "Stone Edge", "Knock Off"],
+        "ability": "Technician",
+        "item": "Assault Vest",
+        "nature": "Hasty",
+        "evs": {"hp":0,"atk":244,"def":0,"spa":12,"spd":0,"spe":252}
+      }
+    },
+    "Urshifu-Rapid-Strike": {
+      "Choice Scarf": {
+        "moves": ["Surging Strikes", "Close Combat", "U-turn", "Ice Spinner"],
+        "ability": "Unseen Fist",
+        "item": "Choice Scarf",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Swords Dance": {
+        "moves": ["Surging Strikes", "Close Combat", "Trailblaze", "Swords Dance"],
+        "ability": "Unseen Fist",
+        "item": "Protective Pads",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Choice Band": {
+        "moves": ["Surging Strikes", "Close Combat", "U-turn", "Aqua Jet"],
+        "ability": "Unseen Fist",
+        "item": "Choice Band",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Volcarona": {
+      "Offensive Quiver Dance": {
+        "moves": ["Quiver Dance", "Flamethrower", "Bug Buzz", "Hidden Power Ground"],
+        "ability": "Flame Body",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      },
+      "Bulky Quiver Dance": {
+        "moves": ["Quiver Dance", "Flamethrower", "Roost", "Hidden Power Ground"],
+        "ability": "Flame Body",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":248,"atk":0,"def":200,"spa":0,"spd":0,"spe":60}
+      },
+      "Substitute + Swarm": {
+        "moves": ["Quiver Dance", "Flamethrower", "Bug Buzz", "Substitute"],
+        "ability": "Swarm",
+        "item": "Buginium Z",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Weavile": {
+      "Choice Band": {
+        "moves": ["Triple Axel", "Knock Off", "Ice Shard", "Pursuit"],
+        "ability": "Pressure",
+        "item": "Choice Band",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Swords Dance": {
+        "moves": ["Triple Axel", "Knock Off", "Swords Dance", "Low Kick"],
+        "ability": "Pressure",
+        "item": "Heavy-Duty Boots",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Withorde": {
+      "Swords Dance": {
+        "moves": ["Stainless Slash", "Sacred Sword", "Shadow Sneak", "Swords Dance"],
+        "ability": "Sharpness",
+        "item": "Heavy-Duty Boots",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Choice Scarf": {
+        "moves": ["Stainless Slash", "Sacred Sword", "Ice Punch", "Trick"],
+        "ability": "Sharpness",
+        "item": "Choice Scarf",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Lead": {
+        "moves": ["Stainless Slash", "Sacred Sword", "Shadow Sneak", "Thunder Wave"],
+        "ability": "Sharpness",
+        "item": "Focus Sash",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      }
+    },
+    "Withorde-Mega": {
+      "Bulky Swords Dance": {
+        "moves": ["Stainless Slash", "Drain Punch", "Ice Punch", "Swords Dance"],
+        "ability": "Sharpness",
+        "item": "Withordite",
+        "nature": "Adamant",
+        "evs": {"hp":252,"atk":96,"def":40,"spa":0,"spd":76,"spe":44}
+      }
+    },
+    "Wyrmperior": {
+      "Offensive": {
+        "moves": ["Flamethrower", "Draco Meteor", "Hidden Power Ground", "Morning Sun"],
+        "ability": "Natural Cure",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Wyrmperior-Mega": {
+      "Offensive": {
+        "moves": ["Flamethrower", "Draco Meteor", "Hidden Power Ground", "Morning Sun"],
+        "ability": "Natural Cure",
+        "item": "Wyrmperionite",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+      }
+    },
+    "Zamazenta": {
+      "All-Out Attacker + Boots": {
+        "moves": ["Close Combat", "Crunch", "Stone Edge", "Ice Fang"],
+        "ability": "Dauntless Shield",
+        "item": "Heavy-Duty Boots",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "All-Out Attacker + Life Orb": {
+        "moves": ["Close Combat", "Crunch", "Stone Edge", "Ice Fang"],
+        "ability": "Dauntless Shield",
+        "item": "Life Orb",
+        "nature": "Jolly",
+        "evs": {"hp":0,"atk":252,"def":0,"spa":0,"spd":4,"spe":252}
+      },
+      "Iron Defense + Body Press": {
+        "moves": ["Iron Defense", "Body Press", "Crunch", "Substitute"],
+        "ability": "Dauntless Shield",
+        "item": "Leftovers",
+        "nature": "Jolly",
+        "evs": {"hp":252,"atk":0,"def":0,"spa":0,"spd":4,"spe":252}
+      }
     }
   }
 }
