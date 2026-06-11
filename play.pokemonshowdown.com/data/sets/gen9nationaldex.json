@@ -2118,7 +2118,7 @@
         "ability": "Pressure",
         "item": "Focus Sash",
         "nature": "Jolly",
-        "evs": { "hp": 12, "atk": 0, "def": 92, "spa": 152, "spd": 0, "spe": 252 }
+        "evs": { "hp": 12, "atk": 152, "def": 92, "spa": 0, "spd": 0, "spe": 252 }
       }
     },
     "Pumpkasaur": {
