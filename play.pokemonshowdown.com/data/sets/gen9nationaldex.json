@@ -1607,6 +1607,547 @@
         "nature": "Naive",
         "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 4, "spd": 0, "spe": 252 }
       }
+    },
+    "Ting-Lu": {
+      "Defensive Hazard Setter": {
+        "moves": ["Earthquake", "Ruination", "Stealth Rock", "Whirlwind"],
+        "ability": "Vessel of Ruin",
+        "item": "Leftovers",
+        "nature": "Careful",
+        "evs": { "hp": 252, "atk": 0, "def": 4, "spa": 0, "spd": 252, "spe": 0 }
+      }
+    },
+    "Tyranitar": {
+      "Choice Band": {
+        "moves": ["Stone Edge", "Knock Off", "Pursuit", "Low Kick"],
+        "ability": "Sand Stream",
+        "item": "Choice Band",
+        "nature": "Adamant",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Tyranitar-Mega": {
+      "Offensive Utility": {
+        "moves": ["Stone Edge", "Knock Off", "Pursuit", "Stealth Rock"],
+        "ability": "Sand Stream",
+        "item": "Tyranitarite",
+        "nature": "Adamant",
+        "evs": { "hp": 92, "atk": 252, "def": 0, "spa": 0, "spd": 0, "spe": 164 }
+      }
+    },
+    "Ursaluna": {
+      "Swords Dance": {
+        "moves": ["Swords Dance", "Headlong Rush", "Facade", "Fire Punch"],
+        "ability": "Guts",
+        "item": "Flame Orb",
+        "nature": "Adamant",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      },
+      "Trick Room Sweeper": {
+        "moves": ["Swords Dance", "Headlong Rush", "Facade", "Fire Punch"],
+        "ability": "Guts",
+        "item": "Flame Orb",
+        "nature": "Brave",
+        "ivs": { "spe": 0},
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Venusaur": {
+      "Chlorophyll Sweeper": {
+        "moves": ["Growth", "Giga Drain", "Weather Ball", "Sludge Bomb"],
+        "ability": "Chlorophyll",
+        "item": "Life Orb",
+        "nature": "Modest",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 0, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Venusaur-Mega": {
+      "Tank": {
+        "moves": ["Giga Drain", "Earth Power", "Synthesis", "Sludge Bomb"],
+        "ability": "Chlorophyll",
+        "item": "Venusaurite",
+        "nature": "Modest",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 252, "atk": 0, "def": 0, "spa": 156, "spd": 0, "spe": 100 }
+      }
+    },
+    "Victini": {
+      "Choice Scarf": {
+        "moves": ["V-create", "U-turn", "Bolt Strike", "Final Gambit"],
+        "ability": "Victory Star",
+        "item": "Choice Scarf",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      },
+      "Pivot": {
+        "moves": ["V-create", "U-turn", "Bolt Strike", "Encore"],
+        "ability": "Victory Star",
+        "item": "Heavy-Duty Boots",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      },
+      "Z Celebrate": {
+        "moves": ["Celebrate", "Searing Shot", "Stored Power", "Focus Blast"],
+        "ability": "Victory Star",
+        "item": "Normalium Z",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 0, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Zapdos-Galar": {
+      "Pivot": {
+        "moves": ["Brave Bird", "Close Combat", "U-turn", "Knock Off"],
+        "ability": "Defiant",
+        "item": "Choice Scarf",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Zapoleon": {
+      "Offensive Utility": {
+        "moves": ["Scald", "Volt Switch", "Ice Beam", "Roost"],
+        "ability": "Volt Absorb",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 176, "atk": 0, "def": 0, "spa": 252, "spd": 0, "spe": 80 }
+      }
+    },
+    "Zapoleon-Mega": {
+      "Offensive": {
+        "moves": ["Thunderbolt", "Ice Beam", "Volt Switch", "Roost"],
+        "ability": "Volt Absorb",
+        "item": "Zapoleonite",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 0, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Archaludon": {
+      "Rain Wallbreaker": {
+        "moves": ["Draco Meteor", "Flash Cannon", "Electro Shot", "Body Press"],
+        "ability": "Stamina",
+        "item": "Assault Vest",
+        "nature": "Modest",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 80, "atk": 0, "def": 0, "spa": 252, "spd": 0, "spe": 176 }
+      }
+    },
+    "Basculegion": {
+      "Choice Scarf": {
+        "moves": ["Wave Crash", "Shadow Ball", "Aqua Jet", "Flip Turn"],
+        "ability": "Adaptability",
+        "item": "Choice Scarf",
+        "nature": "Naive",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 4, "spd": 0, "spe": 252 }
+      }
+    },
+    "Basculegion-F": {
+      "Choice Scarf": {
+        "moves": ["Hydro Pump", "Shadow Ball", "Ice Beam", "Flip Turn"],
+        "ability": "Adaptability",
+        "item": "Choice Scarf",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 0, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Blissey": {
+      "Pink Blob": {
+        "moves": ["Seismic Toss", "Soft-Boiled", "Toxic", "Stealth Rock"],
+        "ability": "Natural Cure",
+        "item": "Heavy-Duty Boots",
+        "nature": "Calm",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 4, "atk": 0, "def": 252, "spa": 0, "spd": 252, "spe": 0 }
+      }
+    },
+    "Glimmora": {
+      "Lead": {
+        "moves": ["Stealth Rock", "Mortal Spin", "Power Gem", "Earth Power"],
+        "ability": "Toxic Debris",
+        "item": "Focus Sash",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 0, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Glimmora-Mega": {
+      "Offensive": {
+        "moves": ["Power Gem", "Sludge Wave", "Energy Ball", "Earth Power"],
+        "ability": "Toxic Debris",
+        "item": "Glimmoranite",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 0, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Lokix": {
+      "Offensive Pivot": {
+        "moves": ["First Impression", "U-turn", "Knock Off", "Sucker Punch"],
+        "ability": "Tinted Lens",
+        "item": "Heavy-Duty Boots",
+        "nature": "Adamant",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Sableye": {
+      "Defensive": {
+        "moves": ["Knock Off", "Will-O-Wisp", "Parting Shot", "Recover"],
+        "ability": "Prankster",
+        "item": "Heavy-Duty Boots",
+        "nature": "Relaxed",
+        "ivs": { "spe": 0},
+        "evs": { "hp": 248, "atk": 0, "def": 252, "spa": 0, "spd": 8, "spe": 0 }
+      }
+    },
+    "Sableye-Mega": {
+      "Defensive": {
+        "moves": ["Knock Off", "Will-O-Wisp", "Parting Shot", "Recover"],
+        "ability": "Prankster",
+        "item": "Sablenite",
+        "nature": "Relaxed",
+        "ivs": { "spe": 0},
+        "evs": { "hp": 248, "atk": 0, "def": 252, "spa": 0, "spd": 8, "spe": 0 }
+      }
+    },
+    "Sceptile-Mega": {
+      "Offensive": {
+        "moves": ["Leaf Storm", "Dragon Pulse", "Focus Blast", "Hidden Power Fire"],
+        "ability": "Overgrow",
+        "item": "Sceptilite",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 0, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Slowking": {
+      "Defensive Pivot": {
+        "moves": ["Scald", "Future Sight", "Teleport", "Thunder Wave"],
+        "ability": "Regenerator",
+        "item": "Heavy-Duty Boots",
+        "nature": "Relaxed",
+        "ivs": { "atk": 0, "spe": 0},
+        "evs": {"hp":248,"atk":0,"def":188,"spa":0,"spd":68,"spe":0}
+      }
+    },
+    "Stratozone": {
+      "Rain Setter": {
+        "moves": ["Thunder", "Hurricane", "Recover", "Volt Switch"],
+        "ability": "Drizzle",
+        "item": "Damp Rock",
+        "nature": "Calm",
+        "ivs": { "atk": 0 },
+        "evs": {"hp":248,"atk":0,"def":0,"spa":8,"spd":252,"spe":0}
+      }
+    },
+    "Tangrowth": {
+      "Physically Defensive": {
+        "moves": ["Giga Drain", "Knock Off", "Focus Blast", "Stun Spore"],
+        "ability": "Regenerator",
+        "item": "Rocky Helmet",
+        "nature": "Relaxed",
+        "ivs": { "atk": 0, "spe": 0},
+        "evs": {"hp":244,"atk":0,"def":252,"spa":0,"spd":12,"spe":0}
+      }
+    },
+    "Chansey": {
+      "Little Pink Blob": {
+        "moves": ["Seismic Toss", "Soft-Boiled", "Toxic", "Stealth Rock"],
+        "ability": "Natural Cure",
+        "item": "Eviolite",
+        "nature": "Bold",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 248, "atk": 0, "def": 252, "spa": 0, "spd": 8, "spe": 0 }
+      }
+    },
+    "Crawdaunt": {
+      "Wallbreaker": {
+        "moves": ["Crabhammer", "Knock Off", "Swords Dance", "Aqua Jet"],
+        "ability": "Adaptability",
+        "item": "Mystic Water",
+        "nature": "Adamant",
+        "evs": { "hp": 4, "atk": 252, "def": 0, "spa": 0, "spd": 0, "spe": 252 }
+      }
+    },
+    "Kringuin": {
+      "Defensive": {
+        "moves": ["Freeze-Dry", "Spikes", "Roost", "Rapid Spin"],
+        "ability": "Magic Bounce",
+        "item": "Heavy-Duty Boots",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 248, "atk": 0, "def": 0, "spa": 0, "spd": 8, "spe": 252 }
+      },
+      "Emergency Spin": {
+        "moves": ["Freeze-Dry", "Toxic", "Roost", "Rapid Spin"],
+        "ability": "Magic Bounce",
+        "item": "Eject Button",
+        "nature": "Timid",
+        "ivs": { "atk": 0},
+        "evs": { "hp": 248, "atk": 0, "def": 0, "spa": 0, "spd": 8, "spe": 252 }
+      }
+    },
+    "Sinistcha": {
+      "Calm Mind": {
+        "moves": ["Calm Mind", "Matcha Gotcha", "Shadow Ball", "Strength Sap"],
+        "ability": "Heatproof",
+        "item": "Heavy-Duty Boots",
+        "nature": "Bold",
+        "ivs": { "atk": 0 },
+        "evs": { "hp":248, "atk":0, "def":252, "spa":0, "spd":8, "spe":0 }
+      }
+    },
+    "Skeledirge": {
+      "Unaware Wall": {
+        "moves": ["Torch Song", "Hex", "Recover", "Will-O-Wisp"],
+        "ability": "Unaware",
+        "item": "Heavy-Duty Boots",
+        "nature": "Bold",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 248, "atk": 0, "def": 44, "spa": 0, "spd": 216, "spe": 0 }
+      }
+    },
+    "Weezing-Galar": {
+      "Defensive": {
+        "moves": ["Strange Steam", "Pain Split", "Defog", "Will-O-Wisp"],
+        "ability": "Neutralizing Gas",
+        "item": "Black Sludge",
+        "nature": "Bold",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 252, "atk": 0, "def": 252, "spa": 0, "spd": 4, "spe": 0 }
+      }
+    },
+    "Acideon": {
+      "Defensive": {
+        "moves": ["Sludge Bomb", "Protect", "Wish", "Toxic"],
+        "ability": "Corrosion",
+        "item": "Heavy-Duty Boots",
+        "nature": "Calm",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 252, "atk": 0, "def": 4, "spa": 0, "spd": 252, "spe": 0 }
+      }
+    },
+    "Arctozolt": {
+      "Slush Rush": {
+        "moves": ["Bolt Beak", "Blizzard", "Low Kick", "Substitute"],
+        "ability": "Slush Rush",
+        "item": "Heavy-Duty Boots",
+        "nature": "Naive",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 4, "spd": 0, "spe": 252 }
+      }
+    },
+    "Barraskewda": {
+      "Rain Sweeper": {
+        "moves": ["Liquidation", "Flip Turn", "Aqua Jet", "Close Combat"],
+        "ability": "Swift Swim",
+        "item": "Choice Band",
+        "nature": "Adamant",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 4, "spd": 0, "spe": 252 }
+      }
+    },
+    "Camerupt-Mega": {
+      "Trick Room Sweeper": {
+        "moves": ["Fire Blast", "Earth Power", "Hidden Power Ice", "Flamethrower"],
+        "ability": "Solid Rock",
+        "item": "Cameruptite",
+        "nature": "Quiet",
+        "ivs": { "atk": 0, "spe": 0 },
+        "evs": { "hp": 252, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 0 }
+      }
+    },
+    "Crabominable-Mega": {
+      "Trick Room Sweeper": {
+        "moves": ["Ice Hammer", "Drain Punch", "First Impression", "Mach Punch"],
+        "ability": "Anger Point",
+        "item": "Crabominite",
+        "nature": "Brave",
+        "ivs": { "spe": 0 },
+        "evs": { "hp": 252, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 0 }
+      }
+    },
+    "Ditto": {
+      "Choice Scarf": {
+        "moves": ["Transform"],
+        "ability": "Imposter",
+        "item": "Choice Scarf",
+        "nature": "Relaxed",
+        "ivs": { "spe": 0 },
+        "evs": { "hp": 248, "atk": 8, "def": 252, "spa": 0, "spd": 0, "spe": 0 }
+      }
+    },
+    "Dracozolt": {
+      "Sand Rush": {
+        "moves": ["Bolt Beak", "Draco Meteor", "Fire Blast", "Substitute"],
+        "ability": "Sand Rush",
+        "item": "Life Orb",
+        "nature": "Naive",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 4, "spd": 0, "spe": 252 }
+      }
+    },
+    "Ninetales": {
+      "Sun Setter": {
+        "moves": ["Weather Ball", "Will-O-Wisp", "Encore", "Healing Wish"],
+        "ability": "Drought",
+        "item": "Heat Rock",
+        "nature": "Timid",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 0, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Ninetales-Alola": {
+      "Aurora Veil": {
+        "moves": ["Freeze-Dry", "Moonblast", "Encore", "Aurora Veil"],
+        "ability": "Snow Warning",
+        "item": "Light Clay",
+        "nature": "Timid",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 252, "atk": 0, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      },
+      "Snow Setter": {
+        "moves": ["Freeze-Dry", "Moonblast", "Encore", "Aurora Veil"],
+        "ability": "Snow Warning",
+        "item": "Icy Rock",
+        "nature": "Timid",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 252, "atk": 0, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Muk-Alola": {
+      "Assault Vest": {
+        "moves": ["Poison Jab", "Knock Off", "Pursuit", "Fire Punch"],
+        "ability": "Poison Touch",
+        "item": "Assault Vest",
+        "nature": "Adamant",
+        "evs": { "hp": 0, "atk": 252, "def": 4, "spa": 0, "spd": 252, "spe": 0 }
+      }
+    },
+    "Pelipper": {
+      "Rain Setter": {
+        "moves": ["Scald", "U-turn", "Roost", "Defog"],
+        "ability": "Drizzle",
+        "item": "Damp Rock",
+        "nature": "Relaxed",
+        "ivs": { "spe": 0 },
+        "evs": { "hp": 248, "atk": 0, "def": 252, "spa": 0, "spd": 8, "spe": 0 }
+      }
+    },
+    "Politoed": {
+      "Rain Setter": {
+        "moves": ["Scald", "Encore", "Ice Beam", "Rest"],
+        "ability": "Drizzle",
+        "item": "Damp Rock",
+        "nature": "Bold",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 248, "atk": 0, "def": 252, "spa": 0, "spd": 8, "spe": 0 }
+      }
+    },
+    "Pyukumuku": {
+      "Unaware Trapper": {
+        "moves": ["Block", "Spite", "Recover", "Rest"],
+        "ability": "Unaware",
+        "item": "Leftovers",
+        "nature": "Bold",
+        "ivs": { "atk": 0 },
+        "evs": {"hp":252,"atk":0,"def":252,"spa":0,"spd":4,"spe":0}
+      }
+    },
+    "Quagsire": {
+      "Unaware Wall": {
+        "moves": ["Scald", "Earthquake", "Recover", "Toxic"],
+        "ability": "Unaware",
+        "item": "Heavy-Duty Boots",
+        "nature": "Relaxed",
+        "evs": {"hp":252,"atk":0,"def":252,"spa":0,"spd":4,"spe":0}
+      }
+    },
+    "Regieleki": {
+      "Dual Screens": {
+        "moves": ["Reflect", "Light Screen", "Rapid Spin", "Explosion"],
+        "ability": "Transistor",
+        "item": "Light Clay",
+        "nature": "Jolly",
+        "evs": {"hp":252,"atk":0,"def":4,"spa":0,"spd":0,"spe":252}
+      }
+    },
+    "Shedinja": {
+      "Dual Status": {
+        "moves": ["Toxic", "Will-O-Wisp", "Hex", "Protect"],
+        "ability": "Wonder Guard",
+        "item": "Heavy-Duty Boots",
+        "nature": "Mild",
+        "ivs": { "atk": 0, "def": 0, "spd": 0 },
+        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":0,"spe":252}
+      }
+    },
+    "Shuckle": {
+      "Sticky Web Setter": {
+        "moves": ["Sticky Web", "Stealth Rock", "Encore", "Final Gambit"],
+        "ability": "Sturdy",
+        "item": "Mental Herb",
+        "nature": "Bold",
+        "ivs": { "atk": 0 },
+        "evs": {"hp":252,"atk":0,"def":252,"spa":0,"spd":4,"spe":0}
+      }
+    },
+    "Araquanid": {
+      "Sticky Web Setter": {
+        "moves": ["Sticky Web", "Surf", "Endure", "Magic Coat"],
+        "ability": "Water Bubble",
+        "item": "Custap Berry",
+        "nature": "Modest",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 252, "atk": 0, "def": 40, "spa": 216, "spd": 0, "spe": 0}
+      }
+    },
+    "Ribombee": {
+      "Sticky Web Setter": {
+        "moves": ["Sticky Web", "Moonblast", "Skill Swap", "Stun Spore"],
+        "ability": "Shield Dust",
+        "item": "Focus Sash",
+        "nature": "Timid",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 0, "atk": 0, "def": 192, "spa": 64, "spd": 0, "spe": 252 }
+      }
+    },
+    "Hiveon": {
+      "Sticky Web Setter": {
+        "moves": ["Sticky Web", "Megahorn", "Spikes", "Taunt"],
+        "ability": "Pressure",
+        "item": "Focus Sash",
+        "nature": "Jolly",
+        "evs": { "hp": 12, "atk": 0, "def": 92, "spa": 152, "spd": 0, "spe": 252 }
+      }
+    },
+    "Pumpkasaur": {
+      "Chlorophyll Sweeper": {
+        "moves": ["Swords Dance", "Earthquake", "Pumpkin Mash", "Power Whip"],
+        "ability": "Chlorophyll",
+        "item": "Life Orb",
+        "nature": "Adamant",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Pumpkasaur-Mega": {
+      "Tank": {
+        "moves": ["Pumpkin Mash", "Earthquake", "Toxic", "Synthesis"],
+        "ability": "Chlorophyll",
+        "item": "Pumpkasaurite",
+        "nature": "Impish",
+        "evs": { "hp": 252, "atk": 0, "def": 160, "spa": 0, "spd": 0, "spe": 96 }
+      }
+    },
+    "Chocotomp": {
+      "Defensive": {
+        "moves": ["Earthquake", "Flip Turn", "Stealth Rock", "Shore Up"],
+        "ability": "Water Absorb",
+        "item": "Eviolite",
+        "nature": "Sassy",
+        "ivs": { "spe": 0},
+        "evs": { "hp": 252, "spd": 252, "def": 4 }
+      }
     }
   }
 }
