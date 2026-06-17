@@ -740,6 +740,17 @@ const BattlePokemonIconIndexes: {[id: string]: number} = {
 	scovillainmega: 1512 + 201,
 	glimmoramega: 1512 + 202,
 	emboarmega: 1512 + 203,
+	raichumegax: 1512 + 204,
+	raichumegay: 1512 + 205,
+	staraptormega: 1512 + 206,
+	scolipedemega: 1512 + 207,
+	scraftymega: 1512 + 208,
+	eelektrossmega: 1512 + 209,
+	pyroarmega: 1512 + 210,
+	malamarmega: 1512 + 211,
+	barbaraclemega: 1512 + 212,
+	dragalgemega: 1512 + 213,
+	falinksmega: 1512 + 214,
 };
 
 const BattlePokemonIconIndexesLeft: {[id: string]: number} = {

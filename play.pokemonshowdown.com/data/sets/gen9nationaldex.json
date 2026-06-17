@@ -2148,6 +2148,122 @@
         "ivs": { "spe": 0},
         "evs": { "hp": 252, "spd": 252, "def": 4 }
       }
+    },
+    "Cofagrigus": {
+      "Defensive Pivot": {
+        "moves": ["Parting Shot", "Will-O-Wisp", "Hex", "Pain Split"],
+        "ability": "Mummy",
+        "item": "Heavy-Duty Boots",
+        "nature": "Bold",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 252, "atk": 0, "def": 252, "spa": 0, "spd": 4, "spe": 0 }
+      }
+    },
+    "Weeping Woods": {
+      "Choice Band": {
+        "moves": ["Power Whip", "Stone Edge", "Earthquake", "Knock Off"],
+        "ability": "Protomorphosis",
+        "item": "Choice Band",
+        "nature": "Adamant",
+        "evs": { "hp": 252, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 0 }
+      }
+    },
+    "Bloodtales": {
+      "Pivot": {
+        "moves": ["Spectral Tail", "Knock Off", "Spikes", "Parting Shot"],
+        "ability": "Intimidate",
+        "item": "Heavy-Duty Boots",
+        "nature": "Jolly",
+        "evs": { "hp": 252, "atk": 0, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
+    },
+    "Phroggeist-Bushigo": {
+      "Defensive": {
+        "moves": ["Soul Secretion", "Hex", "Will-O-Wisp", "Stealth Rock"],
+        "ability": "Competitive",
+        "item": "Leftovers",
+        "nature": "Calm",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 248, "atk": 0, "def": 68, "spa": 0, "spd": 192, "spe": 0 }
+      }
+    },
+    "Freezing King": {
+      "Choice Specs": {
+        "moves": ["Freeze-Dry", "Earth Power", "Fire Blast", "Surf"],
+        "ability": "Protomorphosis",
+        "item": "Choice Specs",
+        "nature": "Timid",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 24, "atk": 0, "def": 0, "spa": 252, "spd": 0, "spe": 232 }
+      }
+    },
+    "Buzzwole": {
+      "Defensive": {
+        "moves": ["Close Combat", "Ice Punch", "Earthquake", "Roost"],
+        "ability": "Beast Boost",
+        "item": "Heavy-Duty Boots",
+        "nature": "Impish",
+        "evs": { "hp": 252, "atk": 0, "def": 124, "spa": 0, "spd": 0, "spe": 132 }
+      }
+    },
+    "Latias": {
+      "Choice Scarf": {
+        "moves": ["Draco Meteor", "Aura Sphere", "Trick", "Healing Wish"],
+        "ability": "Levitate",
+        "item": "Choice Scarf",
+        "nature": "Timid",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 0, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Latias-Mega": {
+      "Calm Mind": {
+        "moves": ["Calm Mind", "Aura Sphere", "Psyshock", "Recover"],
+        "ability": "Levitate",
+        "item": "Latiasite",
+        "nature": "Timid",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 248, "atk": 0, "def": 0, "spa": 8, "spd": 0, "spe": 252 }
+      }
+    },
+    "Malabyss": {
+      "Choice Specs": {
+        "moves": ["Hydro Pump", "Dark Pulse", "Psychic Noise", "Flip Turn"],
+        "ability": "Psionic",
+        "item": "Choice Specs",
+        "nature": "Timid",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 0, "atk": 0, "def": 0, "spa": 252, "spd": 4, "spe": 252 }
+      }
+    },
+    "Altaria-Mega": {
+      "Dual Status": {
+        "moves": ["Hyper Voice", "Will-O-Wisp", "Mist", "Roost"],
+        "ability": "Natural Cure",
+        "item": "Altarianite",
+        "nature": "Calm",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 252, "atk": 0, "def": 4, "spa": 0, "spd": 252, "spe": 0 }
+      }
+    },
+    "Skarmory": {
+      "Physical Wall": {
+        "moves": ["Iron Defense", "Body Press", "Spikes", "Roost"],
+        "ability": "Sturdy",
+        "item": "Rocky Helmet",
+        "nature": "Impish",
+        "ivs": { "atk": 0 },
+        "evs": { "hp": 252, "atk": 0, "def": 160, "spa": 0, "spd": 0, "spe": 96 }
+      }
+    },
+    "Skarmory-Mega": {
+      "Swords Dance": {
+        "moves": ["Swords Dance", "Drill Run", "Brave Bird", "Rock Slide"],
+        "ability": "Weak Armor",
+        "item": "Skarmorite",
+        "nature": "Jolly",
+        "evs": { "hp": 0, "atk": 252, "def": 0, "spa": 0, "spd": 4, "spe": 252 }
+      }
     }
   }
 }
