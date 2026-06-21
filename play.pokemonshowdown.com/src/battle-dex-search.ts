@@ -1090,6 +1090,15 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			}
 		}
 
+		if (dex.gen >= 5) {
+			if ((format === 'stabonusmons' || format.startsWith('stabonusmons')) && table.STABonusMonsBans) {
+				tierSet = tierSet.filter(([type, id]) => {
+					if (id in table.STABonusMonsBans) return false;
+					return true;
+				});
+			}
+		}
+
 		// Filter out Gmax Pokemon from standard tier selection
 		if (!/^(battlestadium|vgc|doublesubers)/g.test(format)) {
 			tierSet = tierSet.filter(([type, id]) => {
@@ -1617,6 +1626,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		const isSTABmons = (format.includes('stabmons') || format === 'staaabmons');
 		const isConvergence = (format.includes('convergence') || format === 'convergence');
 		const isfranticmovepools = (format.includes('franticmovepools') || format === 'franticmovepools');
+		const isSTABonusMons = (format.includes('stabonusmons') || format === 'stabonusmons');
 		const isTradebacks = format.includes('tradebacks');
 		const regionBornLegality = dex.gen >= 6 &&
 			(/^battle(spot|stadium|festival)/.test(format) || format.startsWith('bss') ||
@@ -1796,6 +1806,53 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 						moves.push(id);
 					}
 				}
+			}
+		}
+		if (isSTABonusMons) {
+			for (let id in this.getTable()) {
+				const move = dex.moves.get(id);
+				if (moves.includes(move.id)) continue;
+				if (move.gen > dex.gen) continue;
+				if (move.isZ || move.isMax || (move.isNonstandard && move.isNonstandard !== 'Unobtainable')) continue;
+				const speciesTypes: string[] = [];
+				const moveTypes: string[] = [];
+				for (let i = dex.gen; i >= species.gen && i >= move.gen; i--) {
+					const genDex = Dex.forGen(i);
+					moveTypes.push(genDex.moves.get(move.name).type);
+					const pokemon = genDex.species.get(species.name);
+					if (this.set?.teraType) {
+						speciesTypes.push(this.set.teraType);
+					}
+					let baseSpecies = genDex.species.get(pokemon.changesFrom || pokemon.name);
+					if (!pokemon.battleOnly) speciesTypes.push(...pokemon.types);
+					let prevo = pokemon.prevo;
+					while (prevo) {
+						const prevoSpecies = genDex.species.get(prevo);
+						speciesTypes.push(...prevoSpecies.types);
+						prevo = prevoSpecies.prevo;
+					}
+					if (pokemon.battleOnly && typeof pokemon.battleOnly === 'string') {
+						species = dex.species.get(pokemon.battleOnly);
+					}
+					const excludedForme = (s: Species) => [
+						'Alola', 'Alola-Totem', 'Galar', 'Galar-Zen', 'Hisui', 'Paldea', 'Paldea-Combat', 'Paldea-Blaze', 'Paldea-Aqua',
+					].includes(s.forme);
+					if (baseSpecies.otherFormes && !['Wormadam', 'Urshifu'].includes(baseSpecies.baseSpecies)) {
+						if (!excludedForme(species)) speciesTypes.push(...baseSpecies.types);
+						for (const formeName of baseSpecies.otherFormes) {
+							const forme = dex.species.get(formeName);
+							if (!forme.battleOnly && !excludedForme(forme)) speciesTypes.push(...forme.types);
+						}
+					}
+				}
+				let valid = false;
+				for (let type of moveTypes) {
+					if (speciesTypes.includes(type)) {
+						valid = true;
+						break;
+					}
+				}
+				if (valid) moves.push(id);
 			}
 		}
 		moves.sort();
