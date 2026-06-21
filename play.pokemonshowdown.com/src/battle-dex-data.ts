@@ -1693,32 +1693,7 @@ class Species implements Effect {
 			hp: 0, atk: 0, def: 0, spa: 0, spd: 0, spe: 0,
 		};
 		
-		const formatId = (window as any)?.Battle?.format?.id;
-		
-		if (formatId === 'gen9nationaldextiershift') {
-			let boost = 0;
-			switch (data.tier) {
-				case 'UU': case '(UU)': case 'BUBL': boost = 15; break;
-				case 'BU': case 'RUBL': boost = 20; break;
-				case 'RU': case 'NUBL': boost = 25; break;
-				case 'NU': case 'PUBL': boost = 30; break;
-				case 'PU': case 'ZUBL': case 'ZU': case 'NFE': case 'LC': boost = 35; break;
-			}
-		
-			this.baseStats = {
-				hp: rawBaseStats.hp, // HP untouched
-				atk: rawBaseStats.atk + boost,
-				def: rawBaseStats.def + boost,
-				spa: rawBaseStats.spa + boost,
-				spd: rawBaseStats.spd + boost,
-				spe: rawBaseStats.spe + boost,
-			};
-		} else {
-			this.baseStats = rawBaseStats;
-		}
-
-		this.bst = this.baseStats.hp + this.baseStats.atk + this.baseStats.def +
-			this.baseStats.spa + this.baseStats.spd + this.baseStats.spe;
+		this.bst = rawBaseStats
 		this.weightkg = data.weightkg || 0;
 
 		this.heightm = data.heightm || 0;

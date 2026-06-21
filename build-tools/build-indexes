@@ -362,6 +362,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		const convergenceBans = {};
 		const franticMovepoolsBans = {};
 		const STABonusMonsBans = {};
+		const TierShiftBans = {};
 		const nonstandardMoves = [];
 		for (const id of pokemon) {
 			const species = Dex.mod(gen).species.get(id);
@@ -512,6 +513,13 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 					STABonusMonsBans[species.id] = 1;
 				}
 			}
+
+			if (genNum >= 5) {
+				const TierShift = Dex.formats.get(gen + (isNatDex ? 'nationaldex' : '') + 'tiershift');
+				if (TierShift.exists && Dex.formats.getRuleTable(TierShift).isBannedSpecies(species)) {
+					TierShiftBans[species.id] = 1;
+				}
+			}
 		}
 
 		nonstandardMoves.push(...Object.keys(Dex.data.Moves).filter(id => {
@@ -535,6 +543,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen' + genNum + 'natdex'].convergenceBans = convergenceBans;
 			BattleTeambuilderTable['gen' + genNum + 'natdex'].franticMovepoolsBans = franticMovepoolsBans;
 			BattleTeambuilderTable['gen' + genNum + 'natdex'].STABonusMonsBans = STABonusMonsBans;
+			BattleTeambuilderTable['gen' + genNum + 'natdex'].TierShiftBans = TierShiftBans;
 			BattleTeambuilderTable['gen' + genNum + 'natdex'].formatSlices = formatSlices;
 		} else if (isMetBattle) {
 			BattleTeambuilderTable[gen + 'metronome'] = {};
@@ -589,6 +598,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable.convergenceBans = convergenceBans;
 			BattleTeambuilderTable.franticMovepoolsBans = franticMovepoolsBans;
 			BattleTeambuilderTable.STABonusMonsBans = STABonusMonsBans;
+			BattleTeambuilderTable.TierShiftBans = TierShiftBans;
 			BattleTeambuilderTable.formatSlices = formatSlices;
 		} else {
 			BattleTeambuilderTable[gen] = {};
@@ -602,6 +612,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 				BattleTeambuilderTable[gen].convergenceBans = convergenceBans;
 				BattleTeambuilderTable[gen].franticMovepoolsBans = franticMovepoolsBans;
 				BattleTeambuilderTable[gen].STABonusMonsBans = STABonusMonsBans;
+				BattleTeambuilderTable[gen].TierShiftBans = TierShiftBans;
 			}
 			if (isSSDLC1 || isPreDLC || isSVDLC1) {
 				BattleTeambuilderTable[gen].nonstandardMoves = nonstandardMoves;

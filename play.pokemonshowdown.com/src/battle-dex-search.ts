@@ -1099,6 +1099,15 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			}
 		}
 
+		if (dex.gen >= 5) {
+			if ((format === 'tiershift' || format.startsWith('tiershift')) && table.TierShiftBans) {
+				tierSet = tierSet.filter(([type, id]) => {
+					if (id in table.TierShiftBans) return false;
+					return true;
+				});
+			}
+		}
+
 		// Filter out Gmax Pokemon from standard tier selection
 		if (!/^(battlestadium|vgc|doublesubers)/g.test(format)) {
 			tierSet = tierSet.filter(([type, id]) => {
@@ -1627,6 +1636,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		const isConvergence = (format.includes('convergence') || format === 'convergence');
 		const isfranticmovepools = (format.includes('franticmovepools') || format === 'franticmovepools');
 		const isSTABonusMons = (format.includes('stabonusmons') || format === 'stabonusmons');
+		const isTierShift = (format.includes('tiershift') || format === 'tiershift');
 		const isTradebacks = format.includes('tradebacks');
 		const regionBornLegality = dex.gen >= 6 &&
 			(/^battle(spot|stadium|festival)/.test(format) || format.startsWith('bss') ||
@@ -1853,6 +1863,21 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 					}
 				}
 				if (valid) moves.push(id);
+			}
+		}
+		if (isTierShift) {
+			for (let id in this.getTable()) {
+				const pokemon = dex.species.get(id);
+				const boosts: {[tier: string]: number} = {
+					uu: 15, bubl: 15, bu: 20, rubl: 20, ru: 25,
+					nubl: 25, nu: 30, publ: 30, pu: 35, zubl: 35,
+					zu: 35, nfe: 35, lc: 35,
+				};
+				return pokemon.baseStats.atk + (boosts[pokemon.tier] ?? 0), 
+				pokemon.baseStats.def + (boosts[pokemon.tier] ?? 0),
+				pokemon.baseStats.spa + (boosts[pokemon.tier] ?? 0),
+				pokemon.baseStats.spd + (boosts[pokemon.tier] ?? 0),
+				pokemon.baseStats.spe + (boosts[pokemon.tier] ?? 0);
 			}
 		}
 		moves.sort();
