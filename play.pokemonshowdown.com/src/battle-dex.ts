@@ -738,6 +738,15 @@ fxPrefix = 'https://raw.githubusercontent.com/SanjiTheLord/cobblesouls-showdown-
 			id = toID(pokemon.volatiles.formechange[1]);
 		}
 		let fainted = ((pokemon as Pokemon | ServerPokemon)?.fainted ? `;opacity:.3;filter:grayscale(100%) brightness(.5)` : ``);
+		const isFemale = (pokemon as any)?.gender === 'F';
+		if (isFemale) {
+			if (['unfezant', 'frillish', 'jellicent', 'meowstic', 'pyroar'].includes(id)) {
+				id = toID(String(id) + 'f');
+			}
+		}
+		//if (facingLeft) {
+		//	id = toID(String(id) + '-left');
+		//}
 		return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons/${id}.png) no-repeat center center${fainted};background-size:40px 30px;`;
 	}
 
