@@ -737,12 +737,8 @@ fxPrefix = 'https://raw.githubusercontent.com/SanjiTheLord/cobblesouls-showdown-
 			// @ts-ignore
 			id = toID(pokemon.volatiles.formechange[1]);
 		}
-		let num = this.getPokemonIconNum(id, pokemon?.gender === 'F', facingLeft);
-
-		let top = Math.floor(num / 12) * 30;
-		let left = (num % 12) * 40;
 		let fainted = ((pokemon as Pokemon | ServerPokemon)?.fainted ? `;opacity:.3;filter:grayscale(100%) brightness(.5)` : ``);
-		return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-sheet.png?v16) no-repeat scroll -${left}px -${top}px${fainted}`;
+		return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons/${id}.png) no-repeat center center${fainted};background-size:40px 30px;`;
 	}
 
 	getTeambuilderSpriteData(pokemon: any, gen: number = 0): TeambuilderSpriteData {
