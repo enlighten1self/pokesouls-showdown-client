@@ -162,9 +162,8 @@ class TeamTextbox extends preact.Component<{team: Team}> {
 					if (!info.species) return null;
 					const prevOffset = i === 0 ? 8 : this.setInfo[i - 1].bottomY;
 					const species = info.species;
-					const num = Dex.getPokemonIcon(toID(species));
 
-					const iconStyle = `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons/${num}.png)`;
+					const iconStyle = `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons/${toID(species)}.png)`;
 
 					return <span class="picon" style={
 						`top:${prevOffset + 1}px;left:50px;position:absolute;${iconStyle}`
