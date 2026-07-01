@@ -362,7 +362,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		const convergenceBans = {};
 		const franticMovepoolsBans = {};
 		const STABonusMonsBans = {};
-		const PokebilitiesSTAAABonusMonsBans = {};
 		const TierShiftBans = {};
 		const nonstandardMoves = [];
 		for (const id of pokemon) {
@@ -516,13 +515,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			}
 
 			if (genNum >= 5) {
-				const pokebilitiesstaaabonusmons = Dex.formats.get(gen + (isNatDex ? 'nationaldex' : '') + 'pokebilitiesstaaabonusmons');
-				if (pokebilitiesstaaabonusmons.exists && Dex.formats.getRuleTable('pokebilitiesstaaabonusmons').isBannedSpecies(species)) {
-					PokebilitiesSTAAABonusMonsBans[species.id] = 1;
-				}
-			}
-
-			if (genNum >= 5) {
 				const TierShift = Dex.formats.get(gen + (isNatDex ? 'nationaldex' : '') + 'tiershift');
 				if (TierShift.exists && Dex.formats.getRuleTable(TierShift).isBannedSpecies(species)) {
 					TierShiftBans[species.id] = 1;
@@ -551,7 +543,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen' + genNum + 'natdex'].convergenceBans = convergenceBans;
 			BattleTeambuilderTable['gen' + genNum + 'natdex'].franticMovepoolsBans = franticMovepoolsBans;
 			BattleTeambuilderTable['gen' + genNum + 'natdex'].STABonusMonsBans = STABonusMonsBans;
-			BattleTeambuilderTable['gen' + genNum + 'natdex'].PokebilitiesSTAAABonusMonsBans = PokebilitiesSTAAABonusMonsBans;
 			BattleTeambuilderTable['gen' + genNum + 'natdex'].TierShiftBans = TierShiftBans;
 			BattleTeambuilderTable['gen' + genNum + 'natdex'].formatSlices = formatSlices;
 		} else if (isMetBattle) {
@@ -607,7 +598,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable.convergenceBans = convergenceBans;
 			BattleTeambuilderTable.franticMovepoolsBans = franticMovepoolsBans;
 			BattleTeambuilderTable.STABonusMonsBans = STABonusMonsBans;
-			BattleTeambuilderTable.PokebilitiesSTAAABonusMonsBans = PokebilitiesSTAAABonusMonsBans;
 			BattleTeambuilderTable.TierShiftBans = TierShiftBans;
 			BattleTeambuilderTable.formatSlices = formatSlices;
 		} else {
@@ -622,7 +612,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 				BattleTeambuilderTable[gen].convergenceBans = convergenceBans;
 				BattleTeambuilderTable[gen].franticMovepoolsBans = franticMovepoolsBans;
 				BattleTeambuilderTable[gen].STABonusMonsBans = STABonusMonsBans;
-				BattleTeambuilderTable[gen].PokebilitiesSTAAABonusMonsBans = PokebilitiesSTAAABonusMonsBans;
 				BattleTeambuilderTable[gen].TierShiftBans = TierShiftBans;
 			}
 			if (isSSDLC1 || isPreDLC || isSVDLC1) {

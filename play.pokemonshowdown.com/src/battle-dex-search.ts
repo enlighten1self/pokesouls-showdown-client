@@ -1100,15 +1100,6 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		}
 
 		if (dex.gen >= 5) {
-			if ((format === 'pokebilitiesstaaabonusmons' || format.startsWith('pokebilitiesstaaabonusmons')) && table.PokebilitiesSTAAABonusMonsBans) {
-				tierSet = tierSet.filter(([type, id]) => {
-					if (id in table.PokebilitiesSTAAABonusMonsBans) return false;
-					return true;
-				});
-			}
-		}
-
-		if (dex.gen >= 5) {
 			if ((format === 'tiershift' || format.startsWith('tiershift')) && table.TierShiftBans) {
 				tierSet = tierSet.filter(([type, id]) => {
 					if (id in table.TierShiftBans) return false;
