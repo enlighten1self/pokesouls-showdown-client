@@ -870,107 +870,26 @@ fxPrefix = 'https://raw.githubusercontent.com/SanjiTheLord/cobblesouls-showdown-
 	}
 
 	getTypeIcon(type: string | null, b?: boolean) { // b is just for utilichart.js
-		let num = 0;
 		type = this.types.get(type).name;
-		//let sanitizedType = type.replace(/\?/g, '%3f');
 		if (!type) type = '???';
-		switch (type) {
-			case '???': 
-				num = 0
-				break;
-			case 'Bird':
-				num = 1
-				break;
-			case 'Bug':
-				num = 2
-				break;
-			case 'Dark': 
-				num = 3
-				break;
-			case 'Dragon':
-				num = 4
-				break;
-			case 'Electric':
-				num = 5
-				break;
-			case 'Fairy':
-				num = 6
-				break;
-			case 'Fighting':
-				num = 7
-				break;
-			case 'Fire': 
-				num = 8
-				break;
-			case 'Flying':
-				num = 9
-				break;
-			case 'Ghost':
-				num = 10
-				break;
-			case 'Grass':
-				num = 11
-				break;
-			case 'Ground':
-				num = 12
-				break;
-			case 'Ice': 
-				num = 13
-				break;
-			case 'Normal':
-				num = 14
-				break;
-			case 'Poison':
-				num = 15
-				break;
-			case 'Psychic':
-				num = 16
-				break;
-			case 'Rock':
-				num = 17
-				break;
-			case 'Steel': 
-				num = 18
-				break;
-			case 'Stellar':
-				num = 19
-				break;
-			case 'Water':
-				num = 20
-				break;
-			default:
-				num = 0
-				break;
-		}
-		let top = Math.floor(num / 12) * 14;
-		let left = (num % 12) * 32;
-
-		return 'background:transparent url(' + Dex.resourcePrefix + 'sprites/typeicon-sheet.png) no-repeat scroll -' + left + 'px -' + top + 'px';
+		let sanitizedType = type.replace(/\?/g, '%3f');
+		return `<img src="${Dex.resourcePrefix}sprites/types/${sanitizedType}.png" alt="${type}" height="14" width="32" class="pixelated${b ? ' b' : ''}" />`;
 	}
 
 	getCategoryIcon(category: string | null) {
-		let num = 0;
 		const categoryID = toID(category);
 		let sanitizedCategory = '';
 		switch (categoryID) {
 		case 'physical':
-			num = 0
-			break;
 		case 'special':
-			num = 1
-			break;
 		case 'status':
-			num = 2
 			sanitizedCategory = categoryID.charAt(0).toUpperCase() + categoryID.slice(1);
 			break;
 		default:
-			num = 2
 			sanitizedCategory = 'undefined';
 			break;
 		}
-		let top = num * 16;
-		let left = 0;
-		return 'background:transparent url(' + Dex.resourcePrefix + 'sprites/catagoryicon-sheet.png) no-repeat scroll -' + left + 'px -' + top + 'px';
+		return `<img src="${Dex.resourcePrefix}sprites/categories/${sanitizedCategory}.png" alt="${sanitizedCategory}" height="14" width="32" class="pixelated" />`;
 	}
 
 	getPokeballs() {
