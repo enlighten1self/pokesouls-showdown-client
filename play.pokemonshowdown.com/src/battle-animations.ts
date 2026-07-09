@@ -17,38 +17,6 @@ import {BattleMoveAnims} from './battle-animations-moves';
 import {BattleLog} from './battle-log';
 import {BattleBGM, BattleSound} from './battle-sound';
 
-function getTypeIconStyle(type: string | null | undefined) {
-	let num = 0;
-	const typeName = type || '???';
-	switch (typeName) {
-	case '???': num = 0; break;
-	case 'Bird': num = 1; break;
-	case 'Bug': num = 2; break;
-	case 'Dark': num = 3; break;
-	case 'Dragon': num = 4; break;
-	case 'Electric': num = 5; break;
-	case 'Fairy': num = 6; break;
-	case 'Fighting': num = 7; break;
-	case 'Fire': num = 8; break;
-	case 'Flying': num = 9; break;
-	case 'Ghost': num = 10; break;
-	case 'Grass': num = 11; break;
-	case 'Ground': num = 12; break;
-	case 'Ice': num = 13; break;
-	case 'Normal': num = 14; break;
-	case 'Poison': num = 15; break;
-	case 'Psychic': num = 16; break;
-	case 'Rock': num = 17; break;
-	case 'Steel': num = 18; break;
-	case 'Stellar': num = 19; break;
-	case 'Water': num = 20; break;
-	default: num = 0; break;
-	}
-	const top = Math.floor(num / 12) * 14;
-	const left = (num % 12) * 32;
-	return `display:inline-block;width:32px;height:14px;vertical-align:text-bottom;background:transparent url(${Dex.resourcePrefix}sprites/typeicon-sheet.png) no-repeat scroll -${left}px -${top}px`;
-}
-
 /*
 
 Most of this file is: CC0 (public domain)
@@ -1400,7 +1368,7 @@ export class BattleScene implements BattleSceneStub {
 
 	typeAnim(pokemon: Pokemon, types: string) {
 		const result = BattleLog.escapeHTML(types).split('/').map(type =>
-			`<span class="pixelated" style="${getTypeIconStyle(type)}" title="${BattleLog.escapeHTML(type)}"></span>`
+			'<img src="' + Dex.resourcePrefix + 'sprites/types/' + type + '.png" alt="' + type + '" class="pixelated" />'
 		).join(' ');
 		this.resultAnim(pokemon, result, 'neutral');
 	}
