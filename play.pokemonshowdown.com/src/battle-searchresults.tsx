@@ -7,6 +7,51 @@
  * @license AGPLv3
  */
 
+function getTypeIconStyle(type: string | null | undefined) {
+	let num = 0;
+	const typeName = type || '???';
+	switch (typeName) {
+	case '???': num = 0; break;
+	case 'Bird': num = 1; break;
+	case 'Bug': num = 2; break;
+	case 'Dark': num = 3; break;
+	case 'Dragon': num = 4; break;
+	case 'Electric': num = 5; break;
+	case 'Fairy': num = 6; break;
+	case 'Fighting': num = 7; break;
+	case 'Fire': num = 8; break;
+	case 'Flying': num = 9; break;
+	case 'Ghost': num = 10; break;
+	case 'Grass': num = 11; break;
+	case 'Ground': num = 12; break;
+	case 'Ice': num = 13; break;
+	case 'Normal': num = 14; break;
+	case 'Poison': num = 15; break;
+	case 'Psychic': num = 16; break;
+	case 'Rock': num = 17; break;
+	case 'Steel': num = 18; break;
+	case 'Stellar': num = 19; break;
+	case 'Water': num = 20; break;
+	default: num = 0; break;
+	}
+	const top = Math.floor(num / 12) * 14;
+	const left = (num % 12) * 32;
+	return `display:inline-block;width:32px;height:14px;vertical-align:text-bottom;background:transparent url(${Dex.resourcePrefix}sprites/typeicon-sheet.png) no-repeat scroll -${left}px -${top}px`;
+}
+
+function getCategoryIconStyle(category: string | null | undefined) {
+	let num = 0;
+	const categoryID = toID(category);
+	switch (categoryID) {
+	case 'physical': num = 0; break;
+	case 'special': num = 1; break;
+	case 'status': num = 2; break;
+	default: num = 2; break;
+	}
+	const top = num * 16;
+	return `display:inline-block;width:32px;height:14px;vertical-align:text-bottom;background:transparent url(${Dex.resourcePrefix}sprites/catagoryicon-sheet.png) no-repeat scroll 0px -${top}px`;
+}
+
 class PSSearchResults extends preact.Component<{search: DexSearch}> {
 	readonly URL_ROOT = `//${Config.routes.dex}/`;
 
@@ -77,7 +122,7 @@ class PSSearchResults extends preact.Component<{search: DexSearch}> {
 
 			<span class="col typecol">
 				{pokemon.types.map(type =>
-					<img src={`${Dex.resourcePrefix}sprites/types/${type}.png`} alt={type} height="14" width="32" class="pixelated" />
+					<span class="pixelated" style={getTypeIconStyle(type)} title={type} aria-label={type} />
 				)}
 			</span>
 
@@ -203,8 +248,8 @@ class PSSearchResults extends preact.Component<{search: DexSearch}> {
 			<span class="col movenamecol">{this.renderName(move.name, matchStart, matchEnd, tagStart)}</span>
 
 			<span class="col typecol">
-				<img src={`${Dex.resourcePrefix}sprites/types/${move.type}.png`} alt={move.type} height="14" width="32" class="pixelated" />
-				<img src={`${Dex.resourcePrefix}sprites/categories/${move.category}.png`} alt={move.category} height="14" width="32" class="pixelated" />
+				<span class="pixelated" style={getTypeIconStyle(move.type)} title={move.type} aria-label={move.type} />
+				<span class="pixelated" style={getCategoryIconStyle(move.category)} title={move.category} aria-label={move.category} />
 			</span>
 
 			<span class="col labelcol">
@@ -230,7 +275,7 @@ class PSSearchResults extends preact.Component<{search: DexSearch}> {
 			<span class="col namecol">{this.renderName(name, matchStart, matchEnd)}</span>
 
 			<span class="col typecol">
-				<img src={`${Dex.resourcePrefix}sprites/types/${name}.png`} alt={name} height="14" width="32" class="pixelated" />
+				<span class="pixelated" style={getTypeIconStyle(name)} title={name} aria-label={name} />
 			</span>
 
 			{errorMessage}

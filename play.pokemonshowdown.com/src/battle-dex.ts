@@ -198,6 +198,43 @@ fxPrefix = 'https://raw.githubusercontent.com/SanjiTheLord/cobblesouls-showdown-
 
     loadedSpriteData = {xy: 1, bw: 0};
     moddedDexes: {[mod: string]: ModdedDex} = {};
+    pokemonIconCache: {[url: string]: 'loading' | 'loaded' | 'error'} = {};
+    pokemonIconQueue: string[] = [];
+    pokemonIconQueueTimer: number | null = null;
+
+	preloadPokemonIcon(url: string) {
+		if (!url || typeof window === 'undefined' || !window.Image || this.pokemonIconCache[url]) return;
+		this.pokemonIconCache[url] = 'loading';
+		this.pokemonIconQueue.push(url);
+		if (this.pokemonIconQueueTimer !== null) return;
+		this.pokemonIconQueueTimer = window.setTimeout(this.preloadPokemonIconBatch, 0);
+	}
+
+	preloadPokemonIconBatch() {
+		this.pokemonIconQueueTimer = null;
+		const urls = this.pokemonIconQueue.splice(0);
+		for (const iconUrl of urls) {
+			if (this.pokemonIconCache[iconUrl] !== 'loading') continue;
+			const image = new window.Image();
+			(image as any)._iconUrl = iconUrl;
+			image.decoding = 'async';
+			image.onload = this.handlePokemonIconLoad;
+			image.onerror = this.handlePokemonIconError;
+			image.src = iconUrl;
+		}
+	}
+
+	handlePokemonIconLoad = (event: Event) => {
+		const image = event.currentTarget as HTMLImageElement | null;
+		const iconUrl = (image as any)?._iconUrl;
+		if (iconUrl) this.pokemonIconCache[iconUrl] = 'loaded';
+	}
+
+	handlePokemonIconError = (event: Event) => {
+		const image = event.currentTarget as HTMLImageElement | null;
+		const iconUrl = (image as any)?._iconUrl;
+		if (iconUrl) this.pokemonIconCache[iconUrl] = 'error';
+	}
 
 	mod(modid: ID): ModdedDex {
 		if (modid === 'gen9') return this;
@@ -737,17 +774,26 @@ fxPrefix = 'https://raw.githubusercontent.com/SanjiTheLord/cobblesouls-showdown-
 			// @ts-ignore
 			id = toID(pokemon.volatiles.formechange[1]);
 		}
-		let fainted = ((pokemon as Pokemon | ServerPokemon)?.fainted ? `;opacity:.3;filter:grayscale(100%) brightness(.5)` : ``);
-		const isFemale = (pokemon as any)?.gender === 'F';
-		if (isFemale) {
-			if (['unfezant', 'frillish', 'jellicent', 'meowstic', 'pyroar'].includes(id)) {
-				id = toID(String(id) + 'f');
-			}
-		}
+		//let fainted = ((pokemon as Pokemon | ServerPokemon)?.fainted ? `;opacity:.3;filter:grayscale(100%) brightness(.5)` : ``);
+		let num = this.getPokemonIconNum(id, pokemon?.gender === 'F', facingLeft);
+
+		let top = Math.floor(num / 12) * 30;
+		let left = (num % 12) * 40;
+		let fainted = ((pokemon as Pokemon | ServerPokemon)?.fainted ?
+			`;opacity:.3;filter:grayscale(100%) brightness(.5)` : ``);
+		return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons-sheet.png) no-repeat scroll -${left}px -${top}px${fainted}`;
+		//const isFemale = (pokemon as any)?.gender === 'F';
+		//if (isFemale) {
+		//	if (['unfezant', 'frillish', 'jellicent', 'meowstic', 'pyroar'].includes(id)) {
+		//		id = toID(String(id) + 'f');
+		//	}
+		//}
 		//if (facingLeft) {
 		//	id = toID(String(id) + '-left');
 		//}
-		return `background:transparent url(${Dex.resourcePrefix}sprites/pokemonicons/${id}.png) no-repeat center center${fainted};background-size:40px 30px;`;
+		//const iconUrl = `${Dex.resourcePrefix}sprites/pokemonicons/${id}.png`;
+		//Dex.preloadPokemonIcon(iconUrl);
+		//return `background:transparent url(${iconUrl}) no-repeat center center${fainted};background-size:40px 30px;`;
 	}
 
 	getTeambuilderSpriteData(pokemon: any, gen: number = 0): TeambuilderSpriteData {
@@ -824,26 +870,107 @@ fxPrefix = 'https://raw.githubusercontent.com/SanjiTheLord/cobblesouls-showdown-
 	}
 
 	getTypeIcon(type: string | null, b?: boolean) { // b is just for utilichart.js
+		let num = 0;
 		type = this.types.get(type).name;
+		//let sanitizedType = type.replace(/\?/g, '%3f');
 		if (!type) type = '???';
-		let sanitizedType = type.replace(/\?/g, '%3f');
-		return `<img src="${Dex.resourcePrefix}sprites/types/${sanitizedType}.png" alt="${type}" height="14" width="32" class="pixelated${b ? ' b' : ''}" />`;
+		switch (type) {
+			case '???': 
+				num = 0
+				break;
+			case 'Bird':
+				num = 1
+				break;
+			case 'Bug':
+				num = 2
+				break;
+			case 'Dark': 
+				num = 3
+				break;
+			case 'Dragon':
+				num = 4
+				break;
+			case 'Electric':
+				num = 5
+				break;
+			case 'Fairy':
+				num = 6
+				break;
+			case 'Fighting':
+				num = 7
+				break;
+			case 'Fire': 
+				num = 8
+				break;
+			case 'Flying':
+				num = 9
+				break;
+			case 'Ghost':
+				num = 10
+				break;
+			case 'Grass':
+				num = 11
+				break;
+			case 'Ground':
+				num = 12
+				break;
+			case 'Ice': 
+				num = 13
+				break;
+			case 'Normal':
+				num = 14
+				break;
+			case 'Poison':
+				num = 15
+				break;
+			case 'Psychic':
+				num = 16
+				break;
+			case 'Rock':
+				num = 17
+				break;
+			case 'Steel': 
+				num = 18
+				break;
+			case 'Stellar':
+				num = 19
+				break;
+			case 'Water':
+				num = 20
+				break;
+			default:
+				num = 0
+				break;
+		}
+		let top = Math.floor(num / 12) * 14;
+		let left = (num % 12) * 32;
+
+		return 'background:transparent url(' + Dex.resourcePrefix + 'sprites/typeicon-sheet.png) no-repeat scroll -' + left + 'px -' + top + 'px';
 	}
 
 	getCategoryIcon(category: string | null) {
+		let num = 0;
 		const categoryID = toID(category);
 		let sanitizedCategory = '';
 		switch (categoryID) {
 		case 'physical':
+			num = 0
+			break;
 		case 'special':
+			num = 1
+			break;
 		case 'status':
+			num = 2
 			sanitizedCategory = categoryID.charAt(0).toUpperCase() + categoryID.slice(1);
 			break;
 		default:
+			num = 2
 			sanitizedCategory = 'undefined';
 			break;
 		}
-		return `<img src="${Dex.resourcePrefix}sprites/categories/${sanitizedCategory}.png" alt="${sanitizedCategory}" height="14" width="32" class="pixelated" />`;
+		let top = num * 16;
+		let left = 0;
+		return 'background:transparent url(' + Dex.resourcePrefix + 'sprites/catagoryicon-sheet.png) no-repeat scroll -' + left + 'px -' + top + 'px';
 	}
 
 	getPokeballs() {
