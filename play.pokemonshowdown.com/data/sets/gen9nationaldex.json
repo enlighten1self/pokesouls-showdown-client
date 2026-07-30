@@ -509,10 +509,10 @@
       "Utility": {
         "moves": ["Hydro Pump", "Parabolic Charge", "Will-O-Wisp", "Parting Shot"],
         "ability": "Levitate",
-        "item": "Heavy-Duty Boots",
+        "item": "Leftovers",
         "nature": "Timid",
         "ivs": { "atk": 0},
-        "evs": {"hp":0,"atk":0,"def":0,"spa":252,"spd":4,"spe":252}
+        "evs": {"hp":252,"atk":0,"def":0,"spa":0,"spd":4,"spe":252}
       }
     },
     "Samurott-Hisui": {
