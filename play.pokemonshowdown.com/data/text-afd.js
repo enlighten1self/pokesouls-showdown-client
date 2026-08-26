@@ -270,6 +270,12 @@ exports.BattleTextAFD = {
 		end: "  The sunlight faded.",
 		upkeep: "  (The sunlight is strong!)",
 	},
+	fog: {
+		weatherName: "Fog",
+		start: "  a Fog Creeped In!",
+		end: "  The Fog faded.",
+		upkeep: "  (The Fog is Dense!)",
+	},
 	raindance: {
 		weatherName: "Rain",
 		start: "  It started to rain!",

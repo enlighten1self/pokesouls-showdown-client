@@ -751,6 +751,20 @@ const BattlePokemonIconIndexes: {[id: string]: number} = {
 	barbaraclemega: 1512 + 212,
 	dragalgemega: 1512 + 213,
 	falinksmega: 1512 + 214,
+
+	tapumana: 1512 + 215,
+	gourdfather: 1512 + 216,
+	thrashanchor: 1512 + 217,
+	thraggoyle: 1512 + 218,
+	plasmonarch: 1512 + 219,
+	endolith: 1512 + 220,
+	volcanerite: 1512 + 221,
+	igknight: 1512 + 222,
+	reanimite: 1512 + 223,
+	grimferno: 1512 + 224,
+	troideath: 1512 + 225,
+	egyptiacrush: 1512 + 226,
+	leviabyss: 1512 + 227,
 };
 
 const BattlePokemonIconIndexesLeft: {[id: string]: number} = {

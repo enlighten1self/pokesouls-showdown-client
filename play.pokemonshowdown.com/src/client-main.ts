@@ -178,6 +178,7 @@ class PSTeams extends PSStreamModel<'team' | 'format'> {
 		const formatid = toID(format);
 		if (!window.BattleFormats) return formatid;
 		const formatEntry = BattleFormats[formatid];
+		if (formatid === 'gen9nationaldextest') return 'gen9nationaldextest';
 		return formatEntry?.teambuilderFormat || formatid;
 	}
 	getKey(name: string) {

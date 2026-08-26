@@ -441,6 +441,10 @@ License: GPLv2
 	background: #E6E0AC url(../fx/weather-sandstorm.png) no-repeat scroll left top;
 	color: #554433;
 }
+.fogweather {
+	background: #b5b4b2a6 url(../fx/weather-fog.png) no-repeat scroll left top;
+	color: #60605fcd;
+}
 .snowweather,
 .hailweather {
 	background: #AADDEE url(../fx/weather-hail.png) no-repeat scroll left top;
@@ -464,6 +468,10 @@ License: GPLv2
 }
 .psychicterrainweather {
 	background: #CCAAEE url(../fx/weather-psychicterrain.png) no-repeat scroll left top;
+	color: #441155;
+}
+.arcaneterrainweather {
+	background: #8948cb url(../fx/weather-arcaneterrain.png) no-repeat scroll left top;
 	color: #441155;
 }
 .gravityweather {
