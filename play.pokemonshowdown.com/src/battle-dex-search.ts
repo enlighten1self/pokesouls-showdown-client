@@ -636,7 +636,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		}
 		if (format === 'nationaldextest') {
 			this.formatType = 'natdextest';
-			format = '' as ID;
+			if (!format) format = 'ou' as ID;
 		} else if (format.includes('nationaldex') || format.startsWith('nd') || format.includes('natdex')) {
 			if (format !== 'nationaldexdoubles') {
 				format = (format.startsWith('nd') ? format.slice(2) :
@@ -953,7 +953,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		} else if (this.formatType === 'letsgo') {
 			table = table['gen7letsgo'];
 		} else if (this.formatType === 'natdex' || this.formatType === 'natdextest') {
-			table = table['gen' + dex.gen + 'natdex'];
+			table = table[this.formatType === 'natdextest' ? 'gen9nationaldextest' : 'gen' + dex.gen + 'natdex'];
 		} else if (this.formatType === 'metronome') {
 			table = table['gen' + dex.gen + 'metronome'];
 		} else if (this.formatType === 'nfe') {
