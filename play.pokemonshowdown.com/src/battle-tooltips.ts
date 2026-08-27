@@ -1585,7 +1585,7 @@ class BattleTooltips {
 					if (value.abilityModify(0, 'Aerilate')) moveType = 'Flying';
 					if (value.abilityModify(0, 'Galvanize')) moveType = 'Electric';
 					if (value.abilityModify(0, 'Pixilate')) moveType = 'Fairy';
-					if (value.abilityModify(0, 'Dragonize')) moveType = 'Fairy';
+					if (value.abilityModify(0, 'Dragonize')) moveType = 'Dragon';
 					if (value.abilityModify(0, 'Refrigerate')) moveType = 'Ice';
 				}
 				if (value.abilityModify(0, 'Normalize')) moveType = 'Normal';

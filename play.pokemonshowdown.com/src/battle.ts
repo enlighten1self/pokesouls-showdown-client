@@ -2792,6 +2792,13 @@ export class Battle {
 					poke.removeVolatile('neurodrivespd' as ID);
 					poke.removeVolatile('neurodrivespe' as ID);
 					break;
+				case 'mysticdrive':
+					poke.removeVolatile('mysticdriveatk' as ID);
+					poke.removeVolatile('mysticdrivedef' as ID);
+					poke.removeVolatile('mysticdrivespa' as ID);
+					poke.removeVolatile('mysticdrivespd' as ID);
+					poke.removeVolatile('mysticdrivespe' as ID);
+					break;
 				case 'protomorphosis':
 					poke.removeVolatile('protomorphosisatk' as ID);
 					poke.removeVolatile('protomorphosisdef' as ID);

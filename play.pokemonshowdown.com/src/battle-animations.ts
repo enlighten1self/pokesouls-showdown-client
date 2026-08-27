@@ -1819,6 +1819,12 @@ export class PokemonSprite extends Sprite {
 		neurodrivespd: ['Neuro Drive: SpD', 'good'],
 		neurodrivespe: ['Neuro Drive: Spe', 'good'],
 
+		mysticdriveatk: ['Mystic Drive: Atk', 'good'],
+		mysticdrivedef: ['Mystic Drive: Def', 'good'],
+		mysticdrivespa: ['Mystic Drive: SpA', 'good'],
+		mysticdrivespd: ['Mystic Drive: SpD', 'good'],
+		mysticdrivespe: ['Mystic Drive: Spe', 'good'],
+
 		fallen1: ['Fallen: 1', 'good'],
 		fallen2: ['Fallen: 2', 'good'],
 		fallen3: ['Fallen: 3', 'good'],
