@@ -539,6 +539,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		if (isNatDex || isTestFormat || (isPreDLC && genNum === 9.41) || (isSVDLC1 && genNum === 9.411)) {
 			const tableId = isTestFormat ? 'gen9nationaldextest' : 'gen' + genNum + 'natdex';
 			BattleTeambuilderTable[tableId] = {};
+			if (isTestFormat) BattleTeambuilderTable[TESTFORMAT] = BattleTeambuilderTable[tableId];
 			BattleTeambuilderTable[tableId].tiers = tiers;
 			BattleTeambuilderTable[tableId].overrideTier = overrideTier;
 			BattleTeambuilderTable[tableId].items = items;
@@ -1209,7 +1210,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 	// Mods
 	//
 
-	for (const mod of ['gen7letsgo', 'gen8bdsp', 'testFormat']) {
+	for (const mod of ['gen7letsgo', 'gen8bdsp', 'testformat']) {
 		const modDex = Dex.mod(mod);
 		const modData = modDex.data;
 		const parentDex = Dex.forGen(modDex.gen);
