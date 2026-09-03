@@ -1095,6 +1095,15 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		}
 
 		if (dex.gen >= 5) {
+			if ((format === 'retro' || format.startsWith('retro')) && table.retroBans) {
+				tierSet = tierSet.filter(([type, id]) => {
+					if (id in table.retroBans) return false;
+					return true;
+				});
+			}
+		}
+
+		if (dex.gen >= 5) {
 			if ((format === 'stabonusmons' || format.startsWith('stabonusmons')) && table.STABonusMonsBans) {
 				tierSet = tierSet.filter(([type, id]) => {
 					if (id in table.STABonusMonsBans) return false;

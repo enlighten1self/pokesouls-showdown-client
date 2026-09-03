@@ -365,6 +365,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		const STABmonsBans = {};
 		const convergenceBans = {};
 		const franticMovepoolsBans = {};
+		const retroBans = {};
 		const STABonusMonsBans = {};
 		const TierShiftBans = {};
 		const nonstandardMoves = [];
@@ -512,6 +513,13 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			}
 
 			if (genNum >= 5) {
+				const retro = Dex.formats.get(formatGen + (isNatDex || isTestFormat ? 'nationaldex' : '') + 'retro');
+				if (retro.exists && Dex.formats.getRuleTable(retro).isBannedSpecies(species)) {
+					retroBans[species.id] = 1;
+				}
+			}
+
+			if (genNum >= 5) {
 				const STABonusMons = Dex.formats.get(formatGen + (isNatDex || isTestFormat ? 'nationaldex' : '') + 'stabonusmons');
 				if (STABonusMons.exists && Dex.formats.getRuleTable(STABonusMons).isBannedSpecies(species)) {
 					STABonusMonsBans[species.id] = 1;
@@ -548,6 +556,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable[tableId].STABmonsBans = STABmonsBans;
 			BattleTeambuilderTable[tableId].convergenceBans = convergenceBans;
 			BattleTeambuilderTable[tableId].franticMovepoolsBans = franticMovepoolsBans;
+			BattleTeambuilderTable[tableId].retroBans = retroBans;
 			BattleTeambuilderTable[tableId].STABonusMonsBans = STABonusMonsBans;
 			BattleTeambuilderTable[tableId].TierShiftBans = TierShiftBans;
 			BattleTeambuilderTable[tableId].formatSlices = formatSlices;
@@ -603,6 +612,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable.STABmonsBans = STABmonsBans;
 			BattleTeambuilderTable.convergenceBans = convergenceBans;
 			BattleTeambuilderTable.franticMovepoolsBans = franticMovepoolsBans;
+			BattleTeambuilderTable.retroBans = retroBans;
 			BattleTeambuilderTable.STABonusMonsBans = STABonusMonsBans;
 			BattleTeambuilderTable.TierShiftBans = TierShiftBans;
 			BattleTeambuilderTable.formatSlices = formatSlices;
@@ -616,7 +626,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 				BattleTeambuilderTable[gen].monotypeBans = monotypeBans;
 				BattleTeambuilderTable[gen].STABmonsBans = STABmonsBans;
 				BattleTeambuilderTable[gen].convergenceBans = convergenceBans;
-				BattleTeambuilderTable[gen].franticMovepoolsBans = franticMovepoolsBans;
+				BattleTeambuilderTable[gen].retroBans = retroBans;
 				BattleTeambuilderTable[gen].STABonusMonsBans = STABonusMonsBans;
 				BattleTeambuilderTable[gen].TierShiftBans = TierShiftBans;
 			}
