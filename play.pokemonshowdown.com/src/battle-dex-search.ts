@@ -634,6 +634,10 @@ abstract class BattleTypedSearch<T extends SearchType> {
 			this.formatType = 'letsgo';
 			this.dex = Dex.mod('gen7letsgo' as ID);
 		}
+		if (format === 'retro' || format.startsWith('retro')) {
+			this.formatType = 'natdex';
+			this.dex = Dex.mod('retro' as ID);
+		}
 		if (format === 'nationaldextest') {
 			this.formatType = 'natdextest';
 			if (!format) format = 'ou' as ID;
@@ -825,7 +829,8 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		}
 		let table = window.BattleTeambuilderTable;
 		const gen = this.dex.gen;
-		const tableKey = this.formatType === 'doubles' ? `gen${gen}doubles` :
+		const tableKey = this.dex.modid === 'retro' ? 'gen9natdex' :
+			this.formatType === 'doubles' ? `gen${gen}doubles` :
 			this.formatType === 'letsgo' ? 'gen7letsgo' :
 			this.formatType === 'bdsp' ? 'gen8bdsp' :
 			this.formatType === 'bdspdoubles' ? 'gen8bdspdoubles' :
