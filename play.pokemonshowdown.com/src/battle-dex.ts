@@ -917,8 +917,8 @@ class ModdedDex {
 	pokeballs: string[] | null = null;
 	constructor(modid: ID) {
 		this.modid = modid;
-		const gen = parseInt(modid.substr(3, 1), 10);
-		if (!modid.startsWith('gen') || !gen) throw new Error("Unsupported modid");
+		const gen = modid === 'retro' ? 9 : parseInt(modid.substr(3, 1), 10);
+		if ((modid !== 'retro' && !modid.startsWith('gen')) || !gen) throw new Error("Unsupported modid");
 		this.gen = gen;
 	}
 	moves = {

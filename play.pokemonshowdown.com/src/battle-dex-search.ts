@@ -643,6 +643,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 					format.includes('natdex') ? format.slice(6) : format.slice(11)) as ID;
 			}
 			this.formatType = 'natdex';
+			if (format === 'retro' || format.startsWith('retro')) this.dex = Dex.mod('retro' as ID);
 			if (!format) format = 'ou' as ID;
 		}
 		if (format.includes('doubles') && this.dex.gen > 4 && !this.formatType) this.formatType = 'doubles';
