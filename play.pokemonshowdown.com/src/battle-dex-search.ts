@@ -1297,6 +1297,7 @@ class BattleItemSearch extends BattleTypedSearch<'item'> {
 		let table = BattleTeambuilderTable;
 		if (this.formatType?.includes('retro')) {
 			table = table['gen9retro'];
+		}
 		if (this.formatType?.startsWith('bdsp')) {
 			table = table['gen8bdsp'];
 		} else if (this.formatType === 'natdex' || this.formatType === 'natdextest') {

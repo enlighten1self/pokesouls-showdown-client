@@ -345,7 +345,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		const isPreDLC = (genIdent === 9.4 || genIdent === 9.41 || genIdent === -9.4);
 		const isSVDLC1 = (genIdent === 9.401 || genIdent === 9.411 || genIdent === -9.401);
 		const isNatDex = ('' + genIdent).endsWith('.1') && genIdent > 8;
-		const isRetro = ('' + genIdent).endsWith('.2') && genIdent > 8;
 		const isStadium = ('' + genIdent).endsWith('.04');
 		const isDoubles = (genIdent < 0);
 		const isVGC = ('' + genIdent).endsWith('.5');
@@ -357,7 +356,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			if (isSSDLC1) genStr += 'dlc1';
 			if (isLetsGo) genStr += 'letsgo';
 			if (isBDSP) genStr += 'bdsp';
-			if (isRetro) genStr += 'retro';
 			if (isPreDLC) genStr += 'predlc';
 			if (isSVDLC1) genStr += 'dlc1';
 			if (isStadium) genStr += 'stadium' + (genNum > 1 ? genNum : '');
@@ -590,11 +588,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen8bdsp'].overrideTier = overrideTier;
 			BattleTeambuilderTable['gen8bdsp'].monotypeBans = monotypeBans;
 			BattleTeambuilderTable['gen8bdsp'].formatSlices = formatSlices;
-		} else if (isRetro && !isDoubles) {
-			BattleTeambuilderTable['gen9retro'].tiers = tiers;
-			BattleTeambuilderTable['gen9retro'].items = items;
-			BattleTeambuilderTable['gen9retro'].overrideTier = overrideTier;
-			BattleTeambuilderTable['gen9retro'].formatSlices = formatSlices;
 		} else if (isVGC) {
 			BattleTeambuilderTable[gen + 'vgc'] = {};
 			BattleTeambuilderTable[gen + 'vgc'].tiers = tiers;
@@ -1234,6 +1227,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 	// Mods
 	//
 
+	BattleTeambuilderTable.gen9retro = {...BattleTeambuilderTable.gen9natdex};
 	for (const mod of ['gen7letsgo', 'gen8bdsp', 'testformat', 'gen9retro']) {
 		const modDex = Dex.mod(mod);
 		const modData = modDex.data;
