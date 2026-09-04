@@ -110,7 +110,7 @@ class PSTeambuilder {
 		return buf;
 	}
 
-	static unpackTeam(buf: string) {
+	static unpackTeam(buf: string, dex: ModdedDex | typeof Dex = Dex) {
 		if (!buf) return [];
 
 		let team: PokemonSet[] = [];
@@ -125,24 +125,24 @@ class PSTeambuilder {
 			set.name = parts[0];
 
 			// species
-			set.species = Dex.species.get(parts[1]).name || set.name;
+			set.species = dex.species.get(parts[1]).name || set.name;
 
 			// item
-			set.item = Dex.items.get(parts[2]).name;
+			set.item = dex.items.get(parts[2]).name;
 
 			// ability
-			const species = Dex.species.get(set.species);
+			const species = dex.species.get(set.species);
 			set.ability = parts[3] === '-' ?
 				'' :
 				(species.baseSpecies === 'Zygarde' && parts[3] === 'H') ?
 				'Power Construct' :
 				['', '0', '1', 'H', 'S'].includes(parts[3]) ?
 				species.abilities[parts[3] as '0' || '0'] || (parts[3] === '' ? '' : '!!!ERROR!!!') :
-				Dex.abilities.get(parts[3]).name;
+				dex.abilities.get(parts[3]).name;
 
 			// moves
 			set.moves = parts[4].split(',').map(moveid =>
-				Dex.moves.get(moveid).name
+				dex.moves.get(moveid).name
 			);
 
 			// nature

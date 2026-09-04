@@ -35,6 +35,9 @@
 					if (this.curTeam.format.includes('bdsp')) {
 						this.curTeam.dex = Dex.mod('gen8bdsp');
 					}
+					if (this.curTeam.format.includes('retro')) {
+						this.curTeam.dex = Dex.mod('retro');
+					}
 					Storage.activeSetList = this.curSetList;
 				}
 			},
@@ -745,6 +748,9 @@
 				if (this.curTeam.format.includes('bdsp')) {
 					this.curTeam.dex = Dex.mod('gen8bdsp');
 				}
+				if (this.curTeam.format.includes('retro')) {
+					this.curTeam.dex = Dex.mod('retro');
+				}
 				Storage.activeSetList = this.curSetList = Storage.unpackTeam(this.curTeam.team);
 				this.curTeamIndex = i;
 				this.update();
@@ -1257,6 +1263,7 @@
 				var species = this.curTeam.dex.species.get(set.species);
 				var isLetsGo = this.curTeam.format.includes('letsgo');
 				var isBDSP = this.curTeam.format.includes('bdsp');
+				var isRetro = this.curTeam.format.includes('retro');
 				var isNatDex = this.curTeam.format.includes('nationaldex') || this.curTeam.format.includes('natdex');
 				var buf = '<li value="' + i + '" style="position:relative;">';
 				if (!set.species) {
@@ -1639,6 +1646,9 @@
 				}
 				if (this.curTeam.format.includes('bdsp')) {
 					this.curTeam.dex = Dex.mod('gen8bdsp');
+				}
+				if (this.curTeam.format.includes('retro')) {
+					this.curTeam.dex = Dex.mod('retro');
 				}
 				this.save();
 				if (this.curTeam.gen === 5 && !Dex.loadedSpriteData['bw']) Dex.loadSpriteData('bw');
@@ -3257,6 +3267,7 @@
 				var set = this.curSet;
 				var isLetsGo = this.curTeam.format.includes('letsgo');
 				var isBDSP = this.curTeam.format.includes('bdsp');
+				var isRetro = this.curTeam.format.includes('retro');
 				var isNatDex = this.curTeam.format.includes('nationaldex') || this.curTeam.format.includes('natdex');
 				var isHackmons = this.curTeam.format.includes('hackmons') || this.curTeam.format.endsWith('bh');
 				var species = this.curTeam.dex.species.get(set.species);
@@ -3363,6 +3374,7 @@
 				var species = this.curTeam.dex.species.get(set.species);
 				var isLetsGo = this.curTeam.format.includes('letsgo');
 				var isBDSP = this.curTeam.format.includes('bdsp');
+				var isRetro = this.curTeam.format.includes('retro');
 				var isNatDex = this.curTeam.format.includes('nationaldex') || this.curTeam.format.includes('natdex');
 
 				// level
@@ -3683,6 +3695,7 @@
 					var baseFormat = this.curTeam.format;
 					if (baseFormat.substr(0, 3) === 'gen') baseFormat = baseFormat.substr(4);
 					if (baseFormat.substr(0, 4) === 'bdsp') baseFormat = baseFormat.substr(4);
+					if (baseFormat.substr(0, 5) === 'retro') baseFormat = baseFormat.substr(5);
 					if (baseFormat.substr(0, 8) === 'pokebank') baseFormat = baseFormat.substr(8);
 					if (baseFormat.substr(0, 6) === 'natdex') baseFormat = baseFormat.substr(6);
 					if (baseFormat.substr(0, 11) === 'nationaldex') baseFormat = baseFormat.substr(11);
@@ -3718,6 +3731,7 @@
 					var baseFormat = this.curTeam.format;
 					if (baseFormat.substr(0, 3) === 'gen') baseFormat = baseFormat.substr(4);
 					if (baseFormat.substr(0, 4) === 'bdsp') baseFormat = baseFormat.substr(4);
+					if (baseFormat.substr(0, 5) === 'retro') baseFormat = baseFormat.substr(5);
 					if (baseFormat.substr(0, 8) === 'pokebank') baseFormat = baseFormat.substr(8);
 					if (baseFormat.substr(0, 6) === 'natdex') baseFormat = baseFormat.substr(6);
 					if (baseFormat.substr(0, 11) === 'nationaldex') baseFormat = baseFormat.substr(11);
@@ -3948,6 +3962,7 @@
 					var format = window.BattleFormats && window.BattleFormats[baseFormat];
 					if (baseFormat.substr(0, 3) === 'gen') baseFormat = baseFormat.substr(4);
 					if (baseFormat.substr(0, 4) === 'bdsp') baseFormat = baseFormat.substr(4);
+					if (baseFormat.substr(0, 5) === 'retro') baseFormat = baseFormat.substr(5);
 					if (baseFormat.substr(0, 8) === 'pokebank') baseFormat = baseFormat.substr(8);
 					if (baseFormat.substr(0, 6) === 'natdex') baseFormat = baseFormat.substr(6);
 					if (baseFormat.substr(0, 11) === 'nationaldex') baseFormat = baseFormat.substr(11);
