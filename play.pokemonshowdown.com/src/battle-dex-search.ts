@@ -641,7 +641,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		}
 		if (format === 'retro' || format.startsWith('retro')) {
 			this.formatType = 'retro';
-			this.dex = Dex.mod('retro' as ID);
+			this.dex = Dex.mod('gen9retro' as ID);
 		}
 		if (format === 'nationaldextest') {
 			this.formatType = 'natdextest';
@@ -652,7 +652,6 @@ abstract class BattleTypedSearch<T extends SearchType> {
 					format.includes('natdex') ? format.slice(6) : format.slice(11)) as ID;
 			}
 			this.formatType = 'natdex';
-			if (format === 'retro' || format.startsWith('retro')) this.dex = Dex.mod('retro' as ID);
 			if (!format) format = 'ou' as ID;
 		}
 		if (format.includes('doubles') && this.dex.gen > 4 && !this.formatType) this.formatType = 'doubles';
@@ -968,7 +967,7 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 		} else if (this.formatType === 'natdex' || this.formatType === 'natdextest') {
 			table = table[this.formatType === 'natdextest' ? 'gen9nationaldextest' : 'gen' + dex.gen + 'natdex'];
 		} else if (this.formatType?.includes('retro')) {
-			table = table[this.formatType === 'retro' ? 'gen9nationaldexretro' : 'gen' + dex.gen + 'natdex'];
+			table = table['gen9retro'];
 		} else if (this.formatType === 'metronome') {
 			table = table['gen' + dex.gen + 'metronome'];
 		} else if (this.formatType === 'nfe') {
@@ -1104,15 +1103,6 @@ class BattlePokemonSearch extends BattleTypedSearch<'pokemon'> {
 			if ((format === 'franticmovepools' || format.startsWith('franticmovepools')) && table.franticMovepoolsBans) {
 				tierSet = tierSet.filter(([type, id]) => {
 					if (id in table.franticMovepoolsBans) return false;
-					return true;
-				});
-			}
-		}
-
-		if (dex.gen >= 5) {
-			if ((format === 'retro' || format.startsWith('retro')) && table.retroBans) {
-				tierSet = tierSet.filter(([type, id]) => {
-					if (id in table.retroBans) return false;
 					return true;
 				});
 			}
