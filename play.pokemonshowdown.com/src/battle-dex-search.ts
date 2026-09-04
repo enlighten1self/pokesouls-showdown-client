@@ -631,7 +631,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		if (format.includes('retro')) {
 			this.formatType = 'retro';
 			format = format.slice(5) as ID;
-			this.dex = Dex.mod('retro' as ID);
+			this.dex = Dex.mod('gen9retro' as ID);
 		}
 		if (format === 'partnersincrime') this.formatType = 'doubles';
 		if (format.startsWith('ffa') || format === 'freeforall') this.formatType = 'doubles';
@@ -759,7 +759,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 	protected firstLearnsetid(speciesid: ID) {
 		let table = BattleTeambuilderTable;
 		if (this.formatType?.startsWith('bdsp')) table = table['gen8bdsp'];
-		if (this.formatType?.startsWith('retro')) table = table['retro'];
+		if (this.formatType?.startsWith('retro')) table = table['gen9retro'];
 		if (this.formatType === 'letsgo') table = table['gen7letsgo'];
 		if (speciesid in table.learnsets) return speciesid;
 		const species = this.dex.species.get(speciesid);
@@ -818,7 +818,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		while (learnsetid) {
 			let table = BattleTeambuilderTable;
 			if (this.formatType?.startsWith('bdsp')) table = table['gen8bdsp'];
-			if (this.formatType?.startsWith('retro')) table = table['retro'];
+			if (this.formatType?.startsWith('retro')) table = table['gen9retro'];
 			if (this.formatType === 'letsgo') table = table['gen7letsgo'];
 			let learnset = table.learnsets[learnsetid];
 			if (learnset && (moveid in learnset) && (!this.format.startsWith('tradebacks') ? learnset[moveid].includes(genChar) :
@@ -836,7 +836,7 @@ abstract class BattleTypedSearch<T extends SearchType> {
 		}
 		let table = window.BattleTeambuilderTable;
 		const gen = this.dex.gen;
-		const tableKey = this.dex.modid === 'retro' ? 'retro' :
+		const tableKey = this.dex.modid === 'retro' ? 'gen9retro' :
 			this.formatType === 'doubles' ? `gen${gen}doubles` :
 			this.formatType === 'letsgo' ? 'gen7letsgo' :
 			this.formatType === 'bdsp' ? 'gen8bdsp' :
@@ -1296,10 +1296,10 @@ class BattleItemSearch extends BattleTypedSearch<'item'> {
 	getDefaultResults(): SearchRow[] {
 		let table = BattleTeambuilderTable;
 		if (this.formatType?.includes('retro')) {
-			table = table['retro'];
+			table = table['gen9retro'];
 		if (this.formatType?.startsWith('bdsp')) {
 			table = table['gen8bdsp'];
-		} else if (this.formatType === 'natdex' || this.formatType === 'natdextest' || this.formatType === 'retro') {
+		} else if (this.formatType === 'natdex' || this.formatType === 'natdextest') {
 			table = table['gen' + this.dex.gen + 'natdex'];
 		} else if (this.formatType === 'metronome') {
 			table = table['gen' + this.dex.gen + 'metronome'];
@@ -1680,7 +1680,7 @@ class BattleMoveSearch extends BattleTypedSearch<'move'> {
 		let gen = '' + dex.gen;
 		let lsetTable = BattleTeambuilderTable;
 		if (this.formatType?.startsWith('bdsp')) lsetTable = lsetTable['gen8bdsp'];
-		if (this.formatType?.includes('retro')) lsetTable = lsetTable['retro'];
+		if (this.formatType?.includes('retro')) lsetTable = lsetTable['gen9retro'];
 		if (this.formatType === 'letsgo') lsetTable = lsetTable['gen7letsgo'];
 		if (this.formatType?.startsWith('ssdlc1')) lsetTable = lsetTable['gen8dlc1'];
 		if (this.formatType?.startsWith('predlc')) lsetTable = lsetTable['gen9predlc'];

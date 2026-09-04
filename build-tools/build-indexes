@@ -374,7 +374,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 		const STABmonsBans = {};
 		const convergenceBans = {};
 		const franticMovepoolsBans = {};
-		const retroBans = {};
 		const STABonusMonsBans = {};
 		const TierShiftBans = {};
 		const nonstandardMoves = [];
@@ -522,13 +521,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			}
 
 			if (genNum >= 5) {
-				const retro = Dex.formats.get(formatGen + (isNatDex || isTestFormat ? 'nationaldex' : '') + 'retro');
-				if (retro.exists && Dex.formats.getRuleTable(retro).isBannedSpecies(species)) {
-					retroBans[species.id] = 1;
-				}
-			}
-
-			if (genNum >= 5) {
 				const STABonusMons = Dex.formats.get(formatGen + (isNatDex || isTestFormat ? 'nationaldex' : '') + 'stabonusmons');
 				if (STABonusMons.exists && Dex.formats.getRuleTable(STABonusMons).isBannedSpecies(species)) {
 					STABonusMonsBans[species.id] = 1;
@@ -565,7 +557,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable[tableId].STABmonsBans = STABmonsBans;
 			BattleTeambuilderTable[tableId].convergenceBans = convergenceBans;
 			BattleTeambuilderTable[tableId].franticMovepoolsBans = franticMovepoolsBans;
-			BattleTeambuilderTable[tableId].retroBans = retroBans;
 			BattleTeambuilderTable[tableId].STABonusMonsBans = STABonusMonsBans;
 			BattleTeambuilderTable[tableId].TierShiftBans = TierShiftBans;
 			BattleTeambuilderTable[tableId].formatSlices = formatSlices;
@@ -598,14 +589,14 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen8bdsp'].overrideTier = overrideTier;
 			BattleTeambuilderTable['gen8bdsp'].monotypeBans = monotypeBans;
 			BattleTeambuilderTable['gen8bdsp'].formatSlices = formatSlices;
-		} else if (isNatDex && isRetro && !isDoubles) {
-			BattleTeambuilderTable['retro'] = {};
-			BattleTeambuilderTable['retro'].learnsets = {};
-			BattleTeambuilderTable['retro'].tiers = tiers;
-			BattleTeambuilderTable['retro'].items = items;
-			BattleTeambuilderTable['retro'].overrideTier = overrideTier;
-			BattleTeambuilderTable['retro'].monotypeBans = monotypeBans;
-			BattleTeambuilderTable['retro'].formatSlices = formatSlices;
+		} else if (isRetro && !isDoubles) {
+			BattleTeambuilderTable['gen9retro'] = {};
+			BattleTeambuilderTable['gen9retro'].learnsets = {};
+			BattleTeambuilderTable['gen9retro'].tiers = tiers;
+			BattleTeambuilderTable['gen9retro'].items = items;
+			BattleTeambuilderTable['gen9retro'].overrideTier = overrideTier;
+			BattleTeambuilderTable['gen9retro'].monotypeBans = monotypeBans;
+			BattleTeambuilderTable['gen9retro'].formatSlices = formatSlices;
 		} else if (isVGC) {
 			BattleTeambuilderTable[gen + 'vgc'] = {};
 			BattleTeambuilderTable[gen + 'vgc'].tiers = tiers;
@@ -629,7 +620,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable.STABmonsBans = STABmonsBans;
 			BattleTeambuilderTable.convergenceBans = convergenceBans;
 			BattleTeambuilderTable.franticMovepoolsBans = franticMovepoolsBans;
-			BattleTeambuilderTable.retroBans = retroBans;
 			BattleTeambuilderTable.STABonusMonsBans = STABonusMonsBans;
 			BattleTeambuilderTable.TierShiftBans = TierShiftBans;
 			BattleTeambuilderTable.formatSlices = formatSlices;
@@ -643,7 +633,6 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 				BattleTeambuilderTable[gen].monotypeBans = monotypeBans;
 				BattleTeambuilderTable[gen].STABmonsBans = STABmonsBans;
 				BattleTeambuilderTable[gen].convergenceBans = convergenceBans;
-				BattleTeambuilderTable[gen].retroBans = retroBans;
 				BattleTeambuilderTable[gen].STABonusMonsBans = STABonusMonsBans;
 				BattleTeambuilderTable[gen].TierShiftBans = TierShiftBans;
 			}
@@ -1013,6 +1002,16 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 			BattleTeambuilderTable['gen8bdsp'].learnsets[id][moveid] = '8g';
 		}
 	}
+	//const RetroLearnsets = Dex.mod('gen9retro').data.Learnsets;
+	//for (const id in RetroLearnsets) {
+	//	const species = Dex.mod('gen9retro').species.get(id);
+	//	if (species.isNonstandard && !['Unobtainable', 'CAP'].includes(species.isNonstandard)) continue;
+	//	const learnset = RetroLearnsets[id].learnset;
+	//	BattleTeambuilderTable['gen9retro'].learnsets[id] = {};
+	//	for (const moveid in learnset) {
+	//		BattleTeambuilderTable['gen9retro'].learnsets[id][moveid] = '8g';
+	//	}
+	//}
 	const SSDLC1Learnsets = Dex.mod('gen8dlc1').data.Learnsets;
 	for (const id in SSDLC1Learnsets) {
 		const learnset = SSDLC1Learnsets[id].learnset;
@@ -1237,8 +1236,7 @@ process.stdout.write("Building `data/teambuilder-tables.js`... ");
 	// Mods
 	//
 
-	BattleTeambuilderTable.retro = {};
-	for (const mod of ['gen7letsgo', 'gen8bdsp', 'testformat', 'retro']) {
+	for (const mod of ['gen7letsgo', 'gen8bdsp', 'testformat', 'gen9retro']) {
 		const modDex = Dex.mod(mod);
 		const modData = modDex.data;
 		const parentDex = Dex.forGen(modDex.gen);
